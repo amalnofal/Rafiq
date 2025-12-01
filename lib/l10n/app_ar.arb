@@ -1,0 +1,314 @@
+{
+  "@@locale": "ar",
+
+  "rafiq": "رفيق",
+  "@rafiq": {
+    "description": "App name",
+    "type": "text"
+  },
+
+  "pet_care_assistant": "مساعد الذكي للعناية بحيوانك الأليف",
+  "@pet_care_assistant": {
+    "description": "Smart assistant for taking care of your pet",
+    "type": "text"
+  },
+
+  "no_account_question": "ليس لديك حساب؟ ",
+  "@no_account_question": {
+    "description": "Text asking the user if they don't have an account",
+    "type": "text"
+  },  
+
+  "create_new_account": "إنشاء حساب جديد",
+  "@create_new_account": {
+    "description": "Button label to create a new account",
+    "type": "text"
+  },
+
+  "login_with_email": "تسجيل الدخول بالبريد الإلكتروني",
+  "@login_with_email": {
+    "description": "Button label to log in using email",
+    "type": "text"
+  },
+
+  "login_with_apple": "تسجيل الدخول بحساب Apple",
+  "@login_with_apple": {
+  "description": "Button label to log in using Apple account",
+  "type": "text"
+  },
+  
+  "login_with_google": "تسجيل الدخول بحساب جوجل",
+  "@login_with_google": {
+    "description": "Button label to log in using Google account",
+    "type": "text"
+  },
+
+  "welcome": "مرحباً",
+  "@welcome": {
+    "description": "Greeting message shown on home or login screen",
+    "type": "text"
+  },
+
+  "login": "تسجيل الدخول",
+  "@login": {
+    "description": "Button or menu item for logging in",
+    "type": "text"
+  },
+
+  "logout": "تسجيل الخروج",
+  "@logout": {
+    "description": "Button or menu item for logging out",
+    "type": "text"
+  },
+
+  "profile": "الملف الشخصي",
+  "@profile": {
+    "description": "Profile page title",
+    "type": "text"
+  },
+
+  "settings": "الإعدادات",
+  "@settings": {
+    "description": "Settings page title",
+    "type": "text"
+  },
+
+  "language": "اللغة",
+  "@language": {
+    "description": "Label for language selection",
+    "type": "text"
+  },
+
+  "lan": "العربية",
+  "@lan": {
+    "description": "Short name for Arabic language",
+    "type": "text"
+  },
+
+  "choose_lan": "اختر اللغة",
+  "@choose_lan": {
+    "description": "Prompt to choose a language",
+    "type": "text"
+  },
+
+  "lan_note": "💡 سيتم تطبيق اللغة المختارة فوراً على جميع أجزاء التطبيق.",
+  "@lan_note": {
+    "description": "Note about immediate language change",
+    "type": "text"
+  },
+
+  "dark_mode": "الوضع الليلي",
+  "@dark_mode": {
+    "description": "Toggle for dark mode",
+    "type": "text"
+  },
+
+  "general": "عام",
+  "@general": {
+    "description": "General settings section title",
+    "type": "text"
+  },
+
+  "notifications": "الإشعارات",
+  "@notifications": {
+    "description": "Notifications section title",
+    "type": "text"
+  },
+
+  "enable_Notifications": "تفعيل الإشعارات",
+  "@enable_Notifications": {
+    "description": "Label for enabling notifications",
+    "type": "text"
+  },
+
+  "account": "الحساب",
+  "@account": {
+    "description": "Account section title",
+    "type": "text"
+  },
+
+  "account_management": "إدارة الحساب",
+  "@account_management": {
+    "description": "Account management section title",
+    "type": "text"
+  },
+
+  "account_information": "معلومات الحساب",
+  "@account_information": {
+    "description": "Account information section title",
+    "type": "text"
+  },
+
+  "personal_info": "المعلومات الشخصية",
+  "@personal_info": {
+    "description": "Personal information label",
+    "type": "text"
+  },
+
+  "name": "الاسم",
+  "@name": {
+    "description": "User's name label",
+    "type": "text"
+  },
+
+  "email": "البريد الإلكتروني",
+  "@email": {
+    "description": "User's email label",
+    "type": "text"
+  },
+
+  "phone": "الهاتف",
+  "@phone": {
+    "description": "User's phone number label",
+    "type": "text"
+  },
+
+  "phone_number": "رقم الهاتف",
+  "@phone_number": {
+    "description": "Full phone number label",
+    "type": "text"
+  },
+
+  "privacy_security": "الخصوصية والأمان",
+  "@privacy_security": {
+    "description": "Privacy and security section title",
+    "type": "text"
+  },
+
+  "password": "كلمة المرور",
+  "@password": {
+    "description": "Password label",
+    "type": "text"
+  },
+
+  "privacy": "الخصوصية",
+  "@privacy": {
+    "description": "Privacy label",
+    "type": "text"
+  },
+
+  "join_date": "تاريخ الانضمام",
+  "@join_date": {
+    "description": "User join date label",
+    "type": "text"
+  },
+
+  "version": "الإصدار",
+  "@version": {
+    "description": "App version label",
+    "type": "text"
+  },
+
+  "last_update": "آخر تحديث",
+  "@last_update": {
+    "description": "Last update label",
+    "type": "text"
+  },
+
+  "danger_zone": "منطقة الخطر",
+  "@danger_zone": {
+    "description": "Danger zone section title",
+    "type": "text"
+  },
+
+  "save_changes": "حفظ التغييرات",
+  "@save_changes": {
+    "description": "Button label to save changes",
+    "type": "text"
+  },
+
+  "changes_saved": "تم حفظ التغييرات",
+  "@changes_saved": {
+    "description": "Message shown when the user successfully saves changes",
+    "type": "text"
+  },
+
+  "delete_account": "حذف الحساب",
+  "@delete_account": {
+    "description": "Button label to delete account",
+    "type": "text"
+  },
+
+  "warning_delete_account": "هذا الإجراء لا يمكن التراجع عنه",
+  "@warning_delete_account": {
+    "description": "Warning message for deleting account",
+    "type": "text"
+  },
+
+  "privacy_note": "🔒 نحن نحترم خصوصيتك. يمكنك التحكم في المعلومات التي تشاركها مع المجتمع في أي وقت.",
+  "@privacy_note": {
+    "description": "Privacy info note shown to the user",
+    "type": "text"
+  },
+
+  "profile_public": "ملف تعريف عام",
+  "@profile_public": {
+    "description": "Option to allow others to view user's profile",
+    "type": "text"
+  },
+
+  "profile_public_sub": "السماح للآخرين برؤية ملفك",
+  "@profile_public_sub": {
+    "description": "Subtitle for public profile option",
+    "type": "text"
+  },
+
+  "show_email": "إظهار البريد الإلكتروني",
+  "@show_email": {
+    "description": "Option to show email in profile",
+    "type": "text"
+  },
+
+  "show_email_sub": "عرض بريدك في الملف الشخصي",
+  "@show_email_sub": {
+    "description": "Subtitle for email visibility option",
+    "type": "text"
+  },
+
+  "show_phone": "إظهار رقم الهاتف",
+  "@show_phone": {
+    "description": "Option to show phone number in profile",
+    "type": "text"
+  },
+
+  "show_phone_sub": "عرض رقمك في الملف الشخصي",
+  "@show_phone_sub": {
+    "description": "Subtitle for phone number visibility option",
+    "type": "text"
+  },
+
+  "allow_messages": "السماح بالرسائل",
+  "@allow_messages": {
+    "description": "Option to receive messages from users",
+    "type": "text"
+  },
+
+  "allow_messages_sub": "استقبال رسائل من المستخدمين",
+  "@allow_messages_sub": {
+    "description": "Subtitle explaining the message receiving option",
+    "type": "text"
+  },
+
+  "change_password": "تغيير كلمة المرور",
+  "@change_password": {
+    "description": "Title for change password screen",
+    "type": "text"
+  },
+
+  "password_last_update": "آخر تحديث: {time}",
+  "@password_last_update": {
+    "description": "Shows last password update time dynamically",
+    "type": "text",
+    "placeholders": {
+      "time": {
+        "description": "Relative time string such as 'منذ 3 أشهر'"
+      }
+    }
+  },
+
+  "log_out": "تسجيل خروج",
+  "@log_out": {
+    "description": "Action to log out",
+    "type": "text"
+  }
+}

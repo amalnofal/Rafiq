@@ -1,0 +1,314 @@
+{
+  "@@locale": "en",
+
+  "rafiq": "Rafiq",
+  "@rafiq": {
+    "description": "App name",
+    "type": "text"
+  },
+
+  "pet_care_assistant": "Smart assistant for taking care of your pet",
+  "@pet_care_assistant": {
+    "description": "Smart assistant for taking care of your pet",
+    "type": "text"
+  },
+
+  "no_account_question": "Don't have an account? ",
+  "@no_account_question": {
+    "description": "Text asking the user if they don't have an account",
+    "type": "text"
+  },
+
+  "create_new_account": "Create a new account",
+  "@create_new_account": {
+    "description": "Button label to create a new account",
+    "type": "text"
+  },
+
+  "login_with_email": "Log in with Email",
+  "@login_with_email": {
+    "description": "Button label to log in using email",
+    "type": "text"
+  },
+
+  "login_with_apple": "Log in with Apple",
+  "@login_with_apple": {
+    "description": "Button label to log in using Apple account",
+    "type": "text"
+  },
+
+  "login_with_google": "Log in with Google",
+  "@login_with_google": {
+    "description": "Button label to log in using Google account",
+    "type": "text"
+  },
+
+  "welcome": "Welcome",
+  "@welcome": {
+    "description": "Greeting message shown on home or login screen",
+    "type": "text"
+  },
+
+  "login": "Login",
+  "@login": {
+    "description": "Button or menu item for logging in",
+    "type": "text"
+  },
+
+  "logout": "Logout",
+  "@logout": {
+    "description": "Button or menu item for logging out",
+    "type": "text"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "Profile page title",
+    "type": "text"
+  },
+
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings page title",
+    "type": "text"
+  },
+
+  "language": "Language",
+  "@language": {
+    "description": "Label for language selection",
+    "type": "text"
+  },
+
+  "lan": "English",
+  "@lan": {
+    "description": "Short name for English language",
+    "type": "text"
+  },
+
+  "choose_lan": "Choose language",
+  "@choose_lan": {
+    "description": "Prompt to choose a language",
+    "type": "text"
+  },
+
+  "lan_note": "💡 The selected language will be applied immediately to all parts of the app.",
+  "@lan_note": {
+    "description": "Note about immediate language change",
+    "type": "text"
+  },
+
+  "dark_mode": "Dark Mode",
+  "@dark_mode": {
+    "description": "Toggle for dark mode",
+    "type": "text"
+  },
+
+  "general": "General",
+  "@general": {
+    "description": "General settings section title",
+    "type": "text"
+  },
+
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications section title",
+    "type": "text"
+  },
+
+  "enable_Notifications": "Enable notifications",
+  "@enable_Notifications": {
+    "description": "Label for enabling notifications",
+    "type": "text"
+  },
+
+  "account": "Account",
+  "@account": {
+    "description": "Account section title",
+    "type": "text"
+  },
+
+  "account_management": "Account Management",
+  "@account_management": {
+    "description": "Account management section title",
+    "type": "text"
+  },
+
+  "account_information": "Account Information",
+  "@account_information": {
+    "description": "Account information section title",
+    "type": "text"
+  },
+
+  "personal_info": "Personal Information",
+  "@personal_info": {
+    "description": "Personal information label",
+    "type": "text"
+  },
+
+  "name": "Name",
+  "@name": {
+    "description": "User's name label",
+    "type": "text"
+  },
+
+  "email": "Email",
+  "@email": {
+    "description": "User's email label",
+    "type": "text"
+  },
+
+  "phone": "Phone",
+  "@phone": {
+    "description": "User's phone number label",
+    "type": "text"
+  },
+
+  "phone_number": "Phone number",
+  "@phone_number": {
+    "description": "Full phone number label",
+    "type": "text"
+  },
+
+  "privacy_security": "Privacy & Security",
+  "@privacy_security": {
+    "description": "Privacy and security section title",
+    "type": "text"
+  },
+
+  "password": "Password",
+  "@password": {
+    "description": "Password label",
+    "type": "text"
+  },
+
+  "privacy": "Privacy",
+  "@privacy": {
+    "description": "Privacy label",
+    "type": "text"
+  },
+
+  "join_date": "Join Date",
+  "@join_date": {
+    "description": "User join date label",
+    "type": "text"
+  },
+
+  "version": "Version",
+  "@version": {
+    "description": "App version label",
+    "type": "text"
+  },
+
+  "last_update": "Last update",
+  "@last_update": {
+    "description": "Last update label",
+    "type": "text"
+  },
+
+  "danger_zone": "Danger Zone",
+  "@danger_zone": {
+    "description": "Danger zone section title",
+    "type": "text"
+  },
+
+  "save_changes": "Save Changes",
+  "@save_changes": {
+    "description": "Button label to save changes",
+    "type": "text"
+  },
+
+  "changes_saved": "Changes saved successfully",
+  "@changes_saved": {
+    "description": "Message shown when the user successfully saves changes",
+    "type": "text"
+  },
+
+  "delete_account": "Delete Account",
+  "@delete_account": {
+    "description": "Button label to delete account",
+    "type": "text"
+  },
+
+  "warning_delete_account": "This action cannot be undone",
+  "@warning_delete_account": {
+    "description": "Warning message for deleting account",
+    "type": "text"
+  },
+
+  "privacy_note": "🔒 We respect your privacy. You can control the information you share with the community at any time.",
+  "@privacy_note": {
+    "description": "Privacy info note shown to the user",
+    "type": "text"
+  },
+
+  "profile_public": "Public Profile",
+  "@profile_public": {
+    "description": "Option to allow others to view user's profile",
+    "type": "text"
+  },
+
+  "profile_public_sub": "Allow others to view your profile",
+  "@profile_public_sub": {
+    "description": "Subtitle for public profile option",
+    "type": "text"
+  },
+
+  "show_email": "Show Email",
+  "@show_email": {
+    "description": "Option to show email in profile",
+    "type": "text"
+  },
+
+  "show_email_sub": "Display your email on your profile",
+  "@show_email_sub": {
+    "description": "Subtitle for email visibility option",
+    "type": "text"
+  },
+
+  "show_phone": "Show Phone Number",
+  "@show_phone": {
+    "description": "Option to show phone number in profile",
+    "type": "text"
+  },
+
+  "show_phone_sub": "Display your phone number on your profile",
+  "@show_phone_sub": {
+    "description": "Subtitle for phone number visibility option",
+    "type": "text"
+  },
+
+  "allow_messages": "Allow Messages",
+  "@allow_messages": {
+    "description": "Option to receive messages from users",
+    "type": "text"
+  },
+
+  "allow_messages_sub": "Receive messages from other users",
+  "@allow_messages_sub": {
+    "description": "Subtitle explaining the message receiving option",
+    "type": "text"
+  },
+
+  "change_password": "Change Password",
+  "@change_password": {
+    "description": "Title for change password screen",
+    "type": "text"
+  },
+
+  "password_last_update": "Last updated: {time}",
+  "@password_last_update": {
+    "description": "Shows last password update time dynamically",
+    "type": "text",
+    "placeholders": {
+      "time": {
+        "description": "Relative time string such as '3 months ago'"
+      }
+    }
+  },
+
+  "log_out": "Log Out",
+  "@log_out": {
+    "description": "Action to log out",
+    "type": "text"
+  }
+}
