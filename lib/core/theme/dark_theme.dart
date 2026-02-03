@@ -5,58 +5,74 @@ import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/constants/text_styles.dart';
 
 // ============================================================================
-// DARK THEME
+// DARK THEME - محدّث حسب الثيم الجديد
 // ============================================================================
 class DarkTheme {
   static ThemeData getTheme(BuildContext context) {
-    // تعريف اللون الجديد لـ BorderSide (40% شفافية) لتجنب تحذير withOpacity
-    // نستخدم kDarkContentSecondary كقاعدة للحدود الخافتة
-    final Color inputBorderColorDark = AppColors.kDarkContentSecondary
-        .withAlpha(0x66);
+    final Color inputBorderColorDark = AppColors.kDarkBorder;
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       fontFamily: AppTextStyles.appfont,
 
-      // Color Scheme
+      hintColor: AppColors.kDarkContentSecondary,
+      // Color Scheme - محدّث بالألوان الجديدة
       colorScheme: ColorScheme.dark(
-        primary: AppColors.kPrimaryLight,
-        primaryContainer: AppColors.kBrandPrimary,
-        secondary: AppColors.kAccentBeige,
-        secondaryContainer: AppColors.kSurfaceAlt,
+        // اللون الأساسي الزيتوني الغامق الجديد
+        primary: AppColors.kDarkBrandPrimary,
+        primaryContainer: AppColors.kDarkSurfaceCard,
+
+        // الألوان الثانوية
+        secondary: AppColors.kDarkContainer,
+
+        tertiary: AppColors.kDarkSurfaceCard,
+
+        tertiaryContainer: AppColors.kStatusSuccessDark,
+        onTertiaryContainer: AppColors.kContentGreenDark,
+
+        // السطح والخلفيات
         surface: AppColors.kDarkSurfaceCard,
+        surfaceContainerHighest: AppColors.kDarkContainer,
+        surfaceContainer: AppColors.kPrimaryDark,
+
+        // حالات الخطأ
         error: AppColors.kStatusError,
+
+        // ألوان النصوص
         onPrimary: AppColors.kDarkContentPrimary,
-        onSecondary: AppColors.kDarkContentPrimary,
+        onPrimaryContainer: AppColors.kDarkBrandPrimary,
+        onSecondary: AppColors.kDarkContentSecondary,
         onSurface: AppColors.kDarkContentPrimary,
         onError: AppColors.kContentInverse,
-        outline: AppColors.kDarkDivider,
+        onTertiary: AppColors.kDarkContentSecondary,
+        // الحدود والظلال
+        outline: AppColors.kDarkBorder,
+        outlineVariant: AppColors.kDarkDivider,
         shadow: AppColors.kShadowOverlay,
+
+        // onSurfaceVariant: AppColors.kDarkContentSecondary,
       ),
 
-      // Scaffold Background
+      // Scaffold Background - الخلفية السوداء الداكنة
       scaffoldBackgroundColor: AppColors.kDarkSurfaceBackground,
-
-      // App Bar Theme - استخدام الأبعاد المتجاوبة
+      shadowColor: Colors.transparent,
+      // App Bar Theme
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.kDarkSurfaceCard,
+        backgroundColor: AppColors.kDarkContainer,
         foregroundColor: AppColors.kDarkContentPrimary,
-        elevation: AppDimensions.elevationS, // استخدام بُعد الـ Elevation
-        shadowColor: AppColors.kShadowOverlay,
         surfaceTintColor: Colors.transparent,
         toolbarHeight: AppDimensions.appBarHeight,
         titleTextStyle: AppTextStyles.headlineLarge(
-          // استخدام ستايل متجاوب
           color: AppColors.kDarkContentPrimary,
         ),
         iconTheme: IconThemeData(
-          color: AppColors.kPrimaryLight,
+          color: AppColors.kDarkBrandPrimary,
           size: AppDimensions.iconM,
         ),
       ),
 
-      // TextTheme - استخدام AppTextStyles لجميع الستايلات
+      // TextTheme
       textTheme: TextTheme(
         displayLarge: AppTextStyles.displayLarge(
           color: AppColors.kDarkContentPrimary,
@@ -77,62 +93,75 @@ class DarkTheme {
           color: AppColors.kDarkContentPrimary,
         ),
         bodyMedium: AppTextStyles.bodyMedium(
-          color: AppColors.kDarkContentSecondary,
+          color: AppColors.kDarkContentPrimary,
         ),
         bodySmall: AppTextStyles.bodySmall(
-          color: AppColors.kDarkContentSecondary,
+          color: AppColors.kDarkContentPrimary,
+        ),
+        titleLarge: AppTextStyles.titleLarge(
+          color: AppColors.kDarkBrandPrimary,
+        ),
+        titleMedium: AppTextStyles.titleMedium(
+          color: AppColors.kDarkBrandPrimary,
+        ),
+        titleSmall: AppTextStyles.titleSmall(
+          color: AppColors.kDarkBrandPrimary,
         ),
         labelLarge: AppTextStyles.labelLarge(
-          color: AppColors.kDarkContentPrimary,
+          color: AppColors.kDarkContentSecondary,
         ),
         labelMedium: AppTextStyles.labelMedium(
-          color: AppColors.kDarkContentPrimary,
+          color: AppColors.kDarkContentSecondary,
         ),
         labelSmall: AppTextStyles.labelSmall(
           color: AppColors.kDarkContentSecondary,
         ),
       ),
 
-      // Card Theme
+      // Card Theme - محدّث
       cardTheme: CardThemeData(
         color: AppColors.kDarkSurfaceCard,
-        elevation: AppDimensions.elevationS,
-        shadowColor: AppColors.kShadowOverlay,
+        elevation: 0,
+        // shadowColor: AppColors.kShadowOverlay,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radius),
+          // side: BorderSide(color: AppColors.kDarkBorder, width: 1),
         ),
         margin: EdgeInsets.zero,
       ),
 
-      // Elevated Button Theme - استخدام الأبعاد والستايلات المتجاوبة
+      // Elevated Button Theme - باللون الزيتوني الغامق الجديد
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.kPrimaryLight,
-          foregroundColor: AppColors.kDarkContentPrimary,
-          elevation: AppDimensions.elevationS,
-          shadowColor: AppColors.kShadowOverlay,
-          padding: EdgeInsets.symmetric(
-            horizontal: AppDimensions.paddingXL,
-            vertical: AppDimensions.paddingM,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppDimensions.radius),
-          ),
-          textStyle: AppTextStyles.buttonLarge(
-            color: AppColors.kDarkContentPrimary,
-          ),
-          minimumSize: Size.fromHeight(AppDimensions.buttonHeight),
-        ),
+        style:
+            ElevatedButton.styleFrom(
+              backgroundColor: AppColors.kDarkBrandPrimary,
+              foregroundColor: AppColors.kContentInverse,
+              elevation: AppDimensions.elevationS,
+              shadowColor: AppColors.kShadowOverlay,
+              padding: EdgeInsets.symmetric(
+                horizontal: AppDimensions.paddingXL,
+                vertical: AppDimensions.paddingM,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(AppDimensions.radius),
+              ),
+              textStyle: AppTextStyles.buttonLarge(
+                color: AppColors.kContentInverse,
+              ),
+              minimumSize: Size.fromHeight(AppDimensions.buttonHeight),
+            ).copyWith(
+              // تأثير الضغط
+              overlayColor: WidgetStateProperty.all(
+                AppColors.kDarkBrandPrimaryDarker.withValues(alpha: 0.2),
+              ),
+            ),
       ),
 
-      // Outlined Button Theme - استخدام الأبعاد والستايلات المتجاوبة
+      // Outlined Button Theme
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.kPrimaryLight,
-          side: BorderSide(
-            color: AppColors.kPrimaryLight,
-            width: 1.5.w,
-          ), // العرض متجاوب
+          foregroundColor: AppColors.kDarkBrandPrimary,
+          side: BorderSide(color: AppColors.kDarkBrandPrimary, width: 1.5.w),
           padding: EdgeInsets.symmetric(
             horizontal: AppDimensions.paddingXL,
             vertical: AppDimensions.paddingM,
@@ -140,49 +169,46 @@ class DarkTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppDimensions.radiusM),
           ),
-          textStyle: AppTextStyles.button(
-            color: AppColors.kPrimaryLight,
-          ), // ستايل متجاوب
+          textStyle: AppTextStyles.button(color: AppColors.kDarkBrandPrimary),
           minimumSize: Size.fromHeight(AppDimensions.buttonHeight),
         ),
       ),
 
-      // Text Button Theme - استخدام الستايلات المتجاوبة
+      // Text Button Theme
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: AppColors.kPrimaryLight,
+          foregroundColor: AppColors.kDarkBrandPrimary,
           padding: EdgeInsets.symmetric(
             horizontal: AppDimensions.padding,
             vertical: AppDimensions.paddingS,
           ),
-          textStyle: AppTextStyles.button(
-            color: AppColors.kPrimaryLight,
-          ), // ستايل متجاوب
+          textStyle: AppTextStyles.button(color: AppColors.kDarkBrandPrimary),
         ),
       ),
 
-      // Input Decoration Theme - تم تصحيح استخدام Opacity والستايلات المتجاوبة
+      // Input Decoration Theme - محدّث
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.kDarkSurfaceCard,
+        focusColor: AppColors.kDarkSurfaceCard,
+        fillColor: AppColors.kDarkInputBackground,
         contentPadding: EdgeInsets.symmetric(
           horizontal: AppDimensions.padding,
           vertical: AppDimensions.paddingM,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          borderSide: BorderSide(color: inputBorderColorDark), // اللون المصحح
+          borderSide: BorderSide(color: inputBorderColorDark),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          borderSide: BorderSide(color: inputBorderColorDark), // اللون المصحح
+          borderSide: BorderSide(color: inputBorderColorDark),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
           borderSide: BorderSide(
-            color: AppColors.kPrimaryLight,
+            color: AppColors.kDarkBrandPrimary,
             width: 2.w,
-          ), // العرض متجاوب
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -190,49 +216,46 @@ class DarkTheme {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          borderSide: BorderSide(
-            color: AppColors.kStatusError,
-            width: 2.w,
-          ), // العرض متجاوب
+          borderSide: BorderSide(color: AppColors.kStatusError, width: 2.w),
         ),
         hintStyle: AppTextStyles.bodyMedium(
           color: AppColors.kDarkContentSecondary,
-        ), // ستايل متجاوب
+        ),
         labelStyle: AppTextStyles.bodyMedium(
           color: AppColors.kDarkContentSecondary,
-        ), // ستايل متجاوب
+        ),
       ),
 
-      // Bottom Navigation Bar Theme - استخدام الستايلات المتجاوبة
+      // Bottom Navigation Bar Theme - محدّث
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: AppColors.kDarkSurfaceCard,
-        selectedItemColor: AppColors.kPrimaryLight,
+        selectedItemColor: AppColors.kDarkBrandPrimary,
         unselectedItemColor: AppColors.kDarkContentSecondary,
         selectedLabelStyle: AppTextStyles.labelSmall(
-          color: AppColors.kPrimaryLight,
-        ), // ستايل متجاوب
+          color: AppColors.kDarkBrandPrimary,
+        ),
         unselectedLabelStyle: AppTextStyles.labelSmall(
           color: AppColors.kDarkContentSecondary,
-        ), // ستايل متجاوب
+        ),
         type: BottomNavigationBarType.fixed,
         elevation: AppDimensions.elevationL,
       ),
 
       // Floating Action Button Theme
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: AppColors.kPrimaryLight,
-        foregroundColor: AppColors.kDarkContentPrimary,
+        backgroundColor: AppColors.kDarkBrandPrimary,
+        foregroundColor: AppColors.kContentInverse,
         elevation: AppDimensions.elevation,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusCircle),
         ),
       ),
 
-      // Divider Theme - استخدام الأبعاد المتجاوبة
+      // Divider Theme
       dividerTheme: DividerThemeData(
         color: AppColors.kDarkDivider,
-        thickness: 1.h, // متجاوب
-        space: 1.h, // متجاوب
+        thickness: 1.3.h,
+        space: 1.h,
       ),
 
       // Icon Theme
@@ -241,24 +264,24 @@ class DarkTheme {
         size: AppDimensions.iconM,
       ),
 
-      // Progress Indicator Theme
+      // Progress Indicator Theme - محدّث
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: AppColors.kPrimaryLight,
+        color: AppColors.kDarkBrandPrimary,
         linearTrackColor: AppColors.kDarkDivider,
         circularTrackColor: AppColors.kDarkDivider,
       ),
 
-      // Chip Theme - استخدام الستايلات المتجاوبة
+      // Chip Theme - محدّث
       chipTheme: ChipThemeData(
-        backgroundColor: AppColors.kDarkSurfaceCard,
-        selectedColor: AppColors.kPrimaryLight,
+        backgroundColor: AppColors.kDarkContainer,
+        selectedColor: AppColors.kDarkBrandPrimary,
         disabledColor: AppColors.kDarkDivider,
         labelStyle: AppTextStyles.labelMedium(
           color: AppColors.kDarkContentPrimary,
-        ), // ستايل متجاوب
+        ),
         secondaryLabelStyle: AppTextStyles.labelMedium(
           color: AppColors.kDarkContentPrimary,
-        ), // ستايل متجاوب
+        ),
         padding: EdgeInsets.symmetric(
           horizontal: AppDimensions.paddingM,
           vertical: AppDimensions.paddingS,
@@ -266,10 +289,12 @@ class DarkTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusL),
         ),
+        side: BorderSide(color: AppColors.kDarkBorder),
       ),
 
-      // Dialog Theme - استخدام الستايلات المتجاوبة
+      // Dialog Theme
       dialogTheme: DialogThemeData(
+        insetPadding: EdgeInsets.symmetric(horizontal: AppDimensions.padding),
         backgroundColor: AppColors.kDarkSurfaceCard,
         elevation: AppDimensions.elevationL,
         shape: RoundedRectangleBorder(
@@ -277,10 +302,58 @@ class DarkTheme {
         ),
         titleTextStyle: AppTextStyles.headlineLarge(
           color: AppColors.kDarkContentPrimary,
-        ), // ستايل متجاوب
+        ),
         contentTextStyle: AppTextStyles.bodyMedium(
           color: AppColors.kDarkContentSecondary,
-        ), // ستايل متجاوب
+        ),
+      ),
+
+      // Date Picker Theme
+      datePickerTheme: DatePickerThemeData(
+        backgroundColor: AppColors.kDarkSurfaceCard,
+        headerBackgroundColor: AppColors.kDarkSurfaceCard,
+        headerForegroundColor: AppColors.kContentInverse,
+        surfaceTintColor: Colors.transparent,
+
+        weekdayStyle: AppTextStyles.titleLarge(
+          color: AppColors.kDarkContentPrimary,
+        ),
+
+        yearStyle: AppTextStyles.headlineLarge(
+          color: AppColors.kDarkContentPrimary,
+        ),
+
+        dayStyle: AppTextStyles.bodyLarge(
+          color: AppColors.kDarkContentSecondary,
+        ),
+
+        dayForegroundColor: WidgetStateProperty.all(
+          AppColors.kDarkContentSecondary,
+        ),
+        yearForegroundColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.kContentInverse;
+          }
+          return AppColors.kDarkContentPrimary;
+        }),
+        headerHeadlineStyle: AppTextStyles.headlineLarge(
+          color: AppColors.kDarkContentPrimary,
+        ),
+
+        headerHelpStyle: AppTextStyles.bodyMedium(
+          color: AppColors.kDarkContentSecondary,
+        ),
+
+        confirmButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(
+            AppColors.kDarkContentPrimary,
+          ),
+        ),
+        cancelButtonStyle: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(
+            AppColors.kDarkContentSecondary,
+          ),
+        ),
       ),
 
       // Bottom Sheet Theme
@@ -294,22 +367,69 @@ class DarkTheme {
         ),
       ),
 
-      // Tab Bar Theme - استخدام الستايلات المتجاوبة
+      // Tab Bar Theme - محدّث
       tabBarTheme: TabBarThemeData(
-        labelColor: AppColors.kPrimaryLight,
+        labelColor: AppColors.kDarkBrandPrimary,
         unselectedLabelColor: AppColors.kDarkContentSecondary,
         labelStyle: AppTextStyles.bodyMedium(
-          color: AppColors.kPrimaryLight,
-        ), // ستايل متجاوب
+          color: AppColors.kDarkBrandPrimary,
+        ),
         unselectedLabelStyle: AppTextStyles.bodyMedium(
           color: AppColors.kDarkContentSecondary,
-        ), // ستايل متجاوب
+        ),
         indicator: UnderlineTabIndicator(
           borderSide: BorderSide(
-            color: AppColors.kPrimaryLight,
+            color: AppColors.kDarkBrandPrimary,
             width: 3.w,
-          ), // العرض متجاوب
+          ),
         ),
+      ),
+
+      // Switch Theme - محدّث
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.kContentInverse;
+          }
+          return AppColors.kDarkContentSecondary;
+        }),
+        trackColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.kDarkBrandPrimary;
+          }
+          return AppColors.kDarkSwitchBackground;
+        }),
+      ),
+
+      // Slider Theme - محدّث
+      sliderTheme: SliderThemeData(
+        activeTrackColor: AppColors.kDarkBrandPrimary,
+        inactiveTrackColor: AppColors.kDarkContainer,
+        thumbColor: AppColors.kDarkBrandPrimary,
+        overlayColor: AppColors.kDarkBrandPrimary.withValues(alpha: 0.2),
+        valueIndicatorColor: AppColors.kDarkBrandPrimary,
+      ),
+
+      // Radio Theme - محدّث
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.kDarkBrandPrimary;
+          }
+          return AppColors.kDarkContentSecondary;
+        }),
+      ),
+
+      // Checkbox Theme - محدّث
+      checkboxTheme: CheckboxThemeData(
+        fillColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppColors.kDarkBrandPrimary;
+          }
+          return Colors.transparent;
+        }),
+        checkColor: WidgetStateProperty.all(AppColors.kContentInverse),
+        side: BorderSide(color: AppColors.kDarkBorder, width: 2),
       ),
     );
   }

@@ -6,30 +6,31 @@ import 'package:rafiq/core/constants/text_styles.dart';
 
 class LightTheme {
   static ThemeData getTheme(BuildContext context) {
-    // تعريف اللون الجديد لـ BorderSide (40% شفافية) مباشرة لتجنب withOpacity
-    // القيمة 0x66 هي قيمة Alpha channel لـ 40%
-    final Color inputBorderColor = AppColors.kContentSecondary.withAlpha(0x66);
-
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       fontFamily: AppTextStyles.appfont,
 
-      // Color Scheme - الألوان الوظيفية الجديدة
+      hintColor: AppColors.kContentSecondary.withValues(alpha: 0.5),
+      // Color Scheme
       colorScheme: ColorScheme.light(
         primary: AppColors.kBrandPrimary,
-        primaryContainer: AppColors.kBrandPrimary,
-        secondary: AppColors.kAccentBeige,
-        secondaryContainer: AppColors.kSurfaceAlt,
-        tertiary: AppColors.kDarkSurfaceBackground,
+        primaryContainer: AppColors.kSurfaceAlt,
+        secondary: AppColors.kSurfaceCard,
+        tertiary: AppColors.kAccentBeige,
         surface: AppColors.kSurfaceCard,
         error: AppColors.kStatusError,
         onPrimary: AppColors.kContentInverse,
-        onSecondary: AppColors.kContentPrimary,
+        onSecondary: AppColors.kBrandPrimary,
         onSurface: AppColors.kContentPrimary,
         onError: AppColors.kContentInverse,
-        outline: AppColors.kBorderDefault,
+        outline: AppColors.kAccentBeige,
         shadow: AppColors.kShadowOverlay,
+        surfaceContainer: AppColors.kPrimaryLight,
+
+        tertiaryContainer: AppColors.kStatusSuccess,
+        onTertiaryContainer: AppColors.kContentSuccess,
+        onTertiary: AppColors.kContentSecondary,
       ),
 
       scaffoldBackgroundColor: AppColors.kSurfaceBackground,
@@ -50,7 +51,6 @@ class LightTheme {
         ),
       ),
 
-      // TextTheme - تم استخدام AppTextStyles لتعريف الستايلات بشكل صحيح
       textTheme: TextTheme(
         displayLarge: AppTextStyles.displayLarge(
           color: AppColors.kContentPrimary,
@@ -67,14 +67,17 @@ class LightTheme {
         headlineSmall: AppTextStyles.headlineSmall(
           color: AppColors.kContentPrimary,
         ),
+        titleLarge: AppTextStyles.titleLarge(color: AppColors.kBrandPrimary),
+        titleMedium: AppTextStyles.titleMedium(color: AppColors.kBrandPrimary),
+        titleSmall: AppTextStyles.titleSmall(color: AppColors.kBrandPrimary),
         bodyLarge: AppTextStyles.bodyLarge(color: AppColors.kContentPrimary),
-        bodyMedium: AppTextStyles.bodyMedium(
+        bodyMedium: AppTextStyles.bodyMedium(color: AppColors.kContentPrimary),
+        bodySmall: AppTextStyles.bodySmall(color: AppColors.kContentPrimary),
+        labelLarge: AppTextStyles.labelLarge(
           color: AppColors.kContentSecondary,
         ),
-        bodySmall: AppTextStyles.bodySmall(color: AppColors.kContentSecondary),
-        labelLarge: AppTextStyles.labelLarge(color: AppColors.kContentPrimary),
         labelMedium: AppTextStyles.labelMedium(
-          color: AppColors.kContentPrimary,
+          color: AppColors.kContentSecondary,
         ),
         labelSmall: AppTextStyles.labelSmall(
           color: AppColors.kContentSecondary,
@@ -82,8 +85,8 @@ class LightTheme {
       ),
 
       cardTheme: CardThemeData(
-        color: AppColors.kSurfaceCard,
-        elevation: AppDimensions.elevationS,
+        color: AppColors.kSurfaceAlt,
+        elevation: 0,
         shadowColor: AppColors.kShadowOverlay,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radius),
@@ -141,23 +144,25 @@ class LightTheme {
         ),
       ),
 
-      // InputDecorationTheme - تم تصحيح استخدام Opacity
+      // InputDecorationTheme
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.kSurfaceBackground,
+        fillColor: AppColors.kSurfaceCard.withValues(alpha: 0.8),
+        focusColor: AppColors.kSurfaceCard,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          // تم استبدال .withOpacity(0.4) بـ withAlpha(0x66)
-          borderSide: BorderSide(color: inputBorderColor),
+          borderSide: BorderSide(
+            color: AppColors.kBrandPrimary.withValues(alpha: 0.1),
+            width: 2.w,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          // تم استبدال .withOpacity(0.4) بـ withAlpha(0x66)
-          borderSide: BorderSide(color: inputBorderColor),
+          borderSide: BorderSide(color: Color(0xFFD4CDB8), width: 1.5.w),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          borderSide: BorderSide(color: AppColors.kBrandPrimary, width: 2.w),
+          borderSide: BorderSide(color: AppColors.kBrandPrimary, width: 1.5.w),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
@@ -165,9 +170,17 @@ class LightTheme {
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppDimensions.radiusM),
-          borderSide: BorderSide(color: AppColors.kStatusError, width: 2.w),
+          borderSide: BorderSide(color: AppColors.kStatusError, width: 1.5.w),
         ),
-        hintStyle: AppTextStyles.bodyMedium(color: AppColors.kContentSecondary),
+        hintStyle: AppTextStyles.bodyLarge(
+          color: AppColors.kContentSecondary.withValues(alpha: 0.5),
+        ),
+        labelStyle: AppTextStyles.bodyLarge(
+          color: AppColors.kContentSecondary.withValues(alpha: 0.5),
+        ),
+        floatingLabelStyle: AppTextStyles.bodyLarge(
+          color: AppColors.kContentSecondary,
+        ),
       ),
 
       // BottomNavigationBarTheme
@@ -198,13 +211,13 @@ class LightTheme {
       // DividerTheme
       dividerTheme: DividerThemeData(
         color: AppColors.kDividerDefault,
-        thickness: 1.h,
+        thickness: 1.3.h,
         space: 1.h,
       ),
 
       // IconTheme
       iconTheme: IconThemeData(
-        color: AppColors.kContentPrimary,
+        color: AppColors.kBrandPrimary,
         size: AppDimensions.iconM,
       ),
 
@@ -235,6 +248,7 @@ class LightTheme {
 
       // DialogTheme
       dialogTheme: DialogThemeData(
+        insetPadding: EdgeInsets.symmetric(horizontal: AppDimensions.padding),
         backgroundColor: AppColors.kSurfaceCard,
         elevation: AppDimensions.elevationL,
         shape: RoundedRectangleBorder(

@@ -63,26 +63,23 @@ class AppDimensions {
   // 3. ICON SIZES
   // ============================================================================
 
-  /// Icon Extra Small (16.w)
-  static double get iconXS => 16.w;
+  /// Icon Extra Small (14.w)
+  static double get iconXS => 14.w;
 
-  /// Icon Small (20.w)
-  static double get iconS => 20.w;
+  /// Icon Small (16.w)
+  static double get iconS => 16.w;
 
-  /// Icon Medium / Default (24.w)
-  static double get iconM => 24.w;
+  /// Icon Medium / Default (20.w)
+  static double get iconM => 20.w;
 
-  /// Icon (28.w) - تم حذفها وإبقاء M و L
-  // static double get icon => 28.w;
+  /// Icon Large (24.w)
+  static double get iconL => 24.w;
 
-  /// Icon Large (32.w)
-  static double get iconL => 32.w;
+  /// Icon Extra Large (32.w)
+  static double get iconXL => 32.w;
 
-  /// Icon Extra Large (40.w)
-  static double get iconXL => 40.w;
-
-  /// Icon Double Extra Large (48.w)
-  static double get iconXXL => 48.w;
+  /// Icon Double Extra Large (40.w)
+  static double get iconXXL => 40.w;
 
   // ============================================================================
   // 4. AVATAR SIZES
@@ -110,11 +107,11 @@ class AppDimensions {
   // 5. COMPONENT DIMENSIONS (Heights)
   // ============================================================================
 
-  /// Small Button Height (36.h)
-  static double get buttonHeightS => 36.h;
+  /// Small Button Height (48.h)
+  static double get buttonHeightS => 48.h;
 
-  /// Default Button Height (52.h)
-  static double get buttonHeight => 52.h;
+  /// Default Button Height (56.h)
+  static double get buttonHeight => 56.h;
 
   /// Large Button Height (64.h)
   static double get buttonHeightL => 64.h;
@@ -160,7 +157,7 @@ class AppDimensions {
   // ============================================================================
 
   /// Screen Breakpoints (Mobile & Tablet Only)
-  static const double tabletSmallBreakpoint = 600.0; 
+  static const double tabletSmallBreakpoint = 600.0;
 
   /// Check if the device is a mobile phone
   static bool get isMobile => ScreenUtil().screenWidth < tabletSmallBreakpoint;

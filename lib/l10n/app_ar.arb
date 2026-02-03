@@ -21,8 +21,232 @@
 
   "create_new_account": "إنشاء حساب جديد",
   "@create_new_account": {
-    "description": "Button label to create a new account",
+    "description": "App bar title for sign up screen",
     "type": "text"
+  },
+
+  "joinRafiq": "انضم إلى مجتمع رفيق",
+  "@joinRafiq": {
+    "description": "Title text in sign up screen"
+  },
+
+  "signUpSubtitle": "أنشئ حسابك للاستفادة من جميع المميزات",
+  "@signUpSubtitle": {
+    "description": "Subtitle text in sign up screen"
+  },
+
+  "firstName": "الاسم الأول",
+  "@firstName": {
+    "description": "first name label"
+  },
+
+  "lastName": "اسم العائلة",
+  "@lastName": {
+    "description": "last name label"
+  },
+
+    "email": "البريد الإلكتروني",
+  "@email": {
+    "description": "User's email label",
+    "type": "text"
+  },
+
+  "phone_number": "رقم الهاتف",
+  "@phone_number": {
+    "description": "Full phone number label",
+    "type": "text"
+  },
+  "optional": "(اختياري)",
+  "@optional": {},
+
+  "genderLabel": "الجنس",
+  "@genderLabel": {},
+  "male": "ذكر",
+  "@male": {},
+  "female": "أنثى",
+  "@female": {},
+
+  "dateOfBirthLabel": "تاريخ الميلاد",
+  "@dateOfBirthLabel": {},
+  "dobHint": "mm/dd/yyyy",
+  "@dobHint": {},
+
+  "chooseAccountType": "اختر نوع الحساب",
+  "@chooseAccountType": {},
+  "chooseAccountTypeSubtitle": "حدد كيف تريد استخدام التطبيق",
+  "@chooseAccountTypeSubtitle": {},
+
+  "petOwnerTitle": "مالك حيوان أليف",
+  "@petOwnerTitle": {},
+  "petOwnerSubtitle": "أملك حيوانات أليفة وأريد إدارة صحتهم والتواصل مع المجتمع",
+  "@petOwnerSubtitle": {},
+
+  "petInfoTitle": "معلومات حيوانك الأليف",
+  "@petInfoTitle": {},
+  "petInfoSubtitle": "أخبرنا القليل عن صديقك الصغير",
+  "@petInfoSubtitle": {},
+  "petNameHint": "اسم الحيوان الأليف",
+  "@petNameHint": {},
+  "petTypeHint": "النوع (مثلاً: كلب، قطة)",
+  "@petTypeHint": {},
+
+  "vetTitle": "طبيب بيطري",
+  "@vetTitle": {},
+  "vetSubtitle": "أنا طبيب بيطري مرخص وأريد تقديم خدماتي عبر المنصة",
+  "@vetSubtitle": {},
+
+  "professionalInfoTitle": "معلومات مهنية",
+  "@professionalInfoTitle": {},
+  "professionalInfoSubtitle": "قم بتوثيق هويتك المهنية",
+  "@professionalInfoSubtitle": {},
+
+  "specializationLabel": "التخصص",
+  "@specializationLabel": {},
+  "subSpecializationLabel": "التخصص الفرعي",
+  "@subSpecializationLabel": {},
+
+  "idFrontLabel": "صورة البطاقة الشخصية (الوجه الأمامي)",
+  "@idFrontLabel": {},
+  "idBackLabel": "صورة البطاقة الشخصية (الوجه الخلفي)",
+  "@idBackLabel": {},
+  "uploadIdText": "اضغط لرفع الصورة",
+  "@uploadIdText": {},
+  "camera": "الكاميرا",
+  "@camera": {},
+  "gallery": "المعرض",
+  "@gallery": {},
+
+  "vetCardLabel": "صورة الكارنيه البيطري",
+  "@vetCardLabel": {},
+
+  "supportedFormats": "JPG, PNG أو HEIC",
+  "@supportedFormats": {},
+
+  "reviewNote": "سيتم مراجعة معلوماتك المهنية من قبل فريقنا خلال 24-48 ساعة للتحقق من صحة البيانات",
+  "@reviewNote": {},
+
+  "shareInterests": "شاركنا اهتماماتك",
+  "@shareInterests": {},
+  "communityWaiting": "مجتمع رفيق بانتظارك!",
+  "@communityWaiting": {},
+
+  "interestsSubtitle": "أخبرنا بما يهمك لنعرض لك المحتوى المثالي لك",
+  "@interestsSubtitle": {},
+  "selectMultiple":"(يمكنك اختيار أكثر من واحد)",
+  "@selectMultiple": {},
+  "selectInterestError": "يرجى اختيار اهتمام واحد على الأقل للمتابعة",
+  "@selectInterestError": {},
+
+  "password": "كلمة المرور",
+  "@password": {
+    "description": "Password label",
+    "type": "text"
+  },
+
+  "currentPassword": "كلمة المرور الحالية",
+  "@currentPassword": {
+    "description": "Label/Hint for current password field"
+  },
+
+  "newPassword": "كلمة المرور الجديدة",
+  "@newPassword": {
+    "description": "Label/Hint for new password field"
+  },
+
+  "confirmPassword": "تأكيد كلمة المرور",
+  "@confirmPassword": {
+    "description": "confirm password label"
+  },
+
+  "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+  "@passwordsDoNotMatch": {},
+
+  "passwordRequirements": "متطلبات كلمة المرور:",
+  "@passwordRequirements": {},
+  "passwordRuleLength": "على الأقل 8 أحرف",
+  "@passwordRuleLength": {},
+  "passwordRuleCase": "حروف كبيرة وحروف صغيرة",
+  "@passwordRuleCase": {},
+  "passwordRuleNumber": "رقم واحد على الأقل",
+  "@passwordRuleNumber": {},
+
+  "passwordRuleUpperCase": "حرف كبير واحد على الأقل",
+  "@passwordRuleUpperCase": {
+    "description": "Validation rule requiring at least one uppercase letter"
+  },
+  "passwordRuleLowerCase": "حرف صغير واحد على الأقل",
+  "@passwordRuleLowerCase": {
+    "description": "Validation rule requiring at least one lowercase letter"
+  },
+
+  "phoneRuleLength": "رقم هاتف غير صالح",
+  "@phoneRuleLength": {
+    "description": "Validation rule for phone number length"
+  },
+
+  "invalidEmailAddress": "البريد الإلكتروني غير صحيح",
+  "@invalidEmailAddress": {
+    "description": "Error message shown when the email format is incorrect"
+  },
+
+  "nameRequired": "الاسم مطلوب",
+  "@nameRequired": {
+    "description": "Error message when the name field is empty"
+  },
+
+  "nameTooShort": "الاسم قصير جداً",
+  "@nameTooShort": {
+    "description": "Error message when the name is less than the required length"
+  },
+  
+  "fieldRequired": "هذا الحقل مطلوب",
+  "@fieldRequired": {
+    "description": "Error message when a field is empty"
+  },
+
+  "termsAgreementStart": "إنشاء حساب، فإنك توافق على",
+  "@termsAgreementStart": {
+    "description": "First part of terms agreement text"
+  },
+
+  "termsAndConditions": "الشروط والأحكام",
+  "@termsAndConditions": {
+    "description": "Link text for terms"
+  },
+
+  "and": " و ",
+  "@and": {
+    "description": "Conjunction text"
+  },
+
+  "privacyPolicy": "سياسة الخصوصية",
+  "@privacyPolicy": {
+    "description": "Link text for privacy policy"
+  },
+
+  "dontHaveAccount": "ليس لديك حساب؟ ",
+  "@dontHaveAccount": {
+    "description": "Question shown at the bottom of sign in screen"
+  },
+  
+  "createAccountBtn": "إنشاء حساب",
+  "@createAccountBtn": {
+    "description": "Text on the create account button"
+  },
+
+  "or": "أو",
+  "@or": {
+    "description": "Divider text"
+  },
+
+  "signUpWithGoogle": "التسجيل بحساب جوجل",
+  "@signUpWithGoogle": {
+    "description": "Google sign up button text"
+  },
+
+  "signUpWithApple": "التسجيل بحساب Apple",
+  "@signUpWithApple": {
+    "description": "Apple sign up button text"
   },
 
   "login_with_email": "تسجيل الدخول بالبريد الإلكتروني",
@@ -49,12 +273,80 @@
     "type": "text"
   },
 
-  "login": "تسجيل الدخول",
-  "@login": {
-    "description": "Button or menu item for logging in",
-    "type": "text"
+  "alreadyHaveAccount": "لديك حساب بالفعل؟ ",
+  "@alreadyHaveAccount": {
+    "description": "Question shown at the bottom of sign up screen"
   },
 
+  "back": "رجوع",
+  "@back": {
+    "description": "Label for the back button in the app bar/header"
+  },
+
+  "next": "التالي",
+  "@next": {
+    "description": "Label for the next button in the app bar/header"
+  },
+
+  "submitForReviewBtn": "إرسال للمراجعة",
+  "@submitForReviewBtn": {},
+
+  "login": "تسجيل الدخول",
+  "@login": {
+    "description": "App bar title for sign in screen"
+  },
+
+  "startJourney": "ابدأ رحلتك",
+  "@startJourney": {},
+
+  "welcomeBack": "مرحباً بعودتك إلى رفيق",
+  "@welcomeBack": {
+    "description": "Welcome message displayed in the auth header"
+  },
+
+  "signInSubtitle": "سجل الدخول للمتابعة",
+  "@signInSubtitle": {
+    "description": "Subtitle text in sign in screen"
+  },
+
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "@forgotPassword": {
+    "description": "Forgot password text button"
+  },
+
+  "recoverPassword": "استعادة كلمة المرور",
+  "@recoverPassword": {},
+  "enterEmailSubtitle": "أدخل بريدك الإلكتروني",
+  "@enterEmailSubtitle": {},
+  "sendCode": "إرسال رمز التحقق",
+  "@sendCode": {},
+
+  "verificationCodeTitle": "رمز التحقق",
+  "@verificationCodeTitle": {},
+    "verificationCodeSubtitle": "أرسلنا رمزاً إلى{email}",
+    "@verificationCodeSubtitle": {
+      "description": "Subtitle containing the user email",
+      "placeholders": {
+        "email": {
+          "type": "String",
+          "example": "user@example.com"
+        }
+      }
+    },
+  "resendCodeText": "إعادة إرسال الرمز",
+  "@resendCodeText": {},
+    
+  "second": "ثانية ",
+  "@second": {},
+
+  "verifyCodeButton": "تحقق من الرمز",
+  "@verifyCodeButton": {},
+
+  "chooseStrongPassword": "اختر كلمة مرور قوية",
+  "@chooseStrongPassword": {},
+  "changePassword": "تغيير كلمة المرور",
+  "@changePassword": {},
+  
   "logout": "تسجيل الخروج",
   "@logout": {
     "description": "Button or menu item for logging out",
@@ -65,6 +357,217 @@
   "@profile": {
     "description": "Profile page title",
     "type": "text"
+  },
+
+  "home": "الرئيسية",
+  "@home": {
+    "description": "Bottom navigation bar item: Home"
+  },
+
+  "clinics": "العيادات",
+  "@clinics": {
+    "description": "Bottom navigation bar item: Clinics"
+  },
+
+  "vetClinicsTitle": "العيادات البيطرية",
+  "@vetClinicsTitle": {},
+
+  "smartCollar": "الطوق الذكي",
+  "@smartCollar": {
+    "description": "Bottom navigation bar item: Smart Collar"
+  },
+
+  "community": "المجتمع",
+  "@community": {
+    "description": "Bottom navigation bar item: Community"
+  },
+
+  "postContentHint": "ماذا تريد أن تشارك؟",
+  "@postContentHint": {
+    "description": "Hint text shown in the post creation text field"
+  },
+
+  "emptyCommunityText": "لا توجد منشورات بعد",
+  "@emptyCommunityText": { "description": "Text shown when community feed is empty" },
+
+  "newPostTitle": "منشور جديد",
+  "@newPostTitle": {},
+
+  "addPhotoLabel": "أضف صورة",
+  "@addPhotoLabel": {
+    "description": "Label text for the add photo button"
+  },
+
+  "postCreatedSuccess": "تم النشر!",
+  "@postCreatedSuccess": {
+    "description": "Success message shown after creating a new post"
+  },
+
+  "likeAction": "إعجاب",
+  "@likeAction": {
+    "description": "Label for the like button on a post"
+  },
+
+  "deleteAction": "حذف",
+  "@deleteAction": {
+    "description": "Label for the delete button"
+  },
+
+  "editAction": "تعديل",
+  "@editAction": {
+    "description": "Label for the edit button"
+  },
+
+  "editPost": "تعديل المنشور",
+  "@editPost": {
+    "description": "Title or button label for editing a post"
+  },
+
+  "edited": "تم التعديل",
+  "@edited": {
+    "description": "Status text indicating a post or comment has been edited"
+  },
+
+  "editingCommentHint": "تعديل التعليق...",
+  "@editingCommentHint": {
+    "description": "Hint text shown when editing a comment"
+  },
+
+  "replyingToHint": "الرد على",
+  "@replyingToHint": {
+    "description": "Hint text shown when replying to a user"
+  },
+
+  "deletePostTitle": "حذف المنشور؟",
+  "@deletePostTitle": {
+    "description": "Title of the delete confirmation dialog"
+  },
+
+  "deleteDialogMessage": "هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء بعد الحذف.",
+  "@deleteDialogMessage": {
+    "description": "Content message of the delete confirmation dialog"
+  },
+
+  "deleteCommentTitle": "حذف التعليق؟",
+  "@deleteCommentTitle": {
+    "description": "Title of the delete comment confirmation dialog"
+  },
+
+  "deleteCommentMessage": "سيتم إزالة هذا التعليق نهائياً.",
+  "@deleteCommentMessage": {
+    "description": "Content message of the delete comment confirmation dialog"
+  },
+
+  "commentAction": "تعليق",
+  "@commentAction": {
+    "description": "Label for the comment button on a post"
+  },
+
+  "firstCommentPlaceholder": "كن أول من يعلق!",
+  "@firstCommentPlaceholder": {
+    "description": "Placeholder text shown when a post has no comments"
+  },
+
+  "writeCommentHint": "اكتب تعليقاً...",
+  "@writeCommentHint": {
+    "description": "Hint text shown in the comment input field"
+  },
+
+  "replyAction": "رد",
+  "@replyAction": {
+    "description": "Text for the reply button on a comment"
+  },
+
+  "replyingTo": "الرد على",
+  "@replyingTo": {
+    "description": "Text shown when replying to a specific user"
+  },
+  
+  "shareMomentHint": "شارك لحظة مع حيوانك الأليف...",
+  "@shareMomentHint": {},
+
+  "postBtn": "نشر",
+  "@postBtn": {},
+
+  "selectPostCategoriesTitle": "اختر الفئات المناسبة للمنشور",
+  "@selectPostCategoriesTitle": {},
+  "selectCategoryError": "يجب اختيار فئة واحدة على الأقل",
+  "@selectCategoryError": {},
+
+  "categoryHealth": "الصحة والعناية",
+  "@categoryHealth": {},
+  "categoryTraining": "التدريب والسلوك",
+  "@categoryTraining": {},
+  "categoryFood": "التغذية والطعام",
+  "@categoryFood": {},
+  "categoryGrooming": "العناية بالمظهر",
+  "@categoryGrooming": {},
+  "categoryActivities": "الأنشطة والترفيه",
+  "@categoryActivities": {},
+  "categoryAdoption": "التبني والإنقاذ",
+  "@categoryAdoption": {},
+  "categoryTravel": "السفر والتنقل",
+  "@categoryTravel": {},
+  "categoryStories": "القصص والتجارب",
+  "@categoryStories": {},
+
+  "healthSubtitle": "نصائح صحية، تطعيمات، وعناية يومية",
+  "@healthSubtitle": {
+    "description": "Subtitle for Health & Care category"
+  },
+
+  "trainingSubtitle": "طرق التدريب، حل المشاكل السلوكية",
+  "@trainingSubtitle": {
+    "description": "Subtitle for Training & Behavior category"
+  },
+
+  "foodSubtitle": "وصفات صحية، أنظمة غذائية، مراجعات المنتجات",
+  "@foodSubtitle": {
+    "description": "Subtitle for Nutrition & Food category"
+  },
+
+  "groomingSubtitle": "قص الشعر، الاستحمام، والنظافة",
+  "@groomingSubtitle": {
+    "description": "Subtitle for Grooming category"
+  },
+
+  "activitiesSubtitle": "ألعاب، نزهات، وأنشطة ترفيهية",
+  "@activitiesSubtitle": {
+    "description": "Subtitle for Activities & Fun category"
+  },
+
+  "adoptionSubtitle": "قصص تبني، إنقاذ، والبحث عن منازل",
+  "@adoptionSubtitle": {
+    "description": "Subtitle for Adoption & Rescue category"
+  },
+
+  "travelSubtitle": "نصائح السفر مع الحيوانات الأليفة والأماكن المناسبة",
+  "@travelSubtitle": {
+    "description": "Subtitle for Travel category"
+  },
+
+  "storiesSubtitle": "قصص ملهمة، تجارب شخصية، ولحظات مميزة",
+  "@storiesSubtitle": {
+    "description": "Subtitle for Stories & Experiences category"
+  },
+
+  "tagPetTitle": "اختر حيوانك الأليف (اختياري)",
+  "@tagPetTitle": {},
+
+  "postingTipsTitle": "نصائح للمنشورات:",
+  "@postingTipsTitle": {},
+  "tipCategories": "اختر الفئات المناسبة لمنشورك ليصل للمهتمين",
+  "@tipCategories": {},
+  "tipMoments": "شارك لحظاتك المميزة مع حيوانك الأليف",
+  "@tipMoments": {},
+  "tipPhotos": "استخدم صور واضحة وجميلة",
+  "@tipPhotos": {},
+  "tipRespect": "كن محترماً ولطيفاً مع الآخرين",
+  "@tipRespect": {},
+
+  "store": "المتجر",
+  "@store": {
+    "description": "Bottom navigation bar item: Store"
   },
 
   "settings": "الإعدادات",
@@ -151,21 +654,9 @@
     "type": "text"
   },
 
-  "email": "البريد الإلكتروني",
-  "@email": {
-    "description": "User's email label",
-    "type": "text"
-  },
-
   "phone": "الهاتف",
   "@phone": {
     "description": "User's phone number label",
-    "type": "text"
-  },
-
-  "phone_number": "رقم الهاتف",
-  "@phone_number": {
-    "description": "Full phone number label",
     "type": "text"
   },
 
@@ -175,15 +666,15 @@
     "type": "text"
   },
 
-  "password": "كلمة المرور",
-  "@password": {
-    "description": "Password label",
-    "type": "text"
-  },
-
   "privacy": "الخصوصية",
   "@privacy": {
     "description": "Privacy label",
+    "type": "text"
+  },
+
+  "privacy_settings": "إعدادات الخصوصية",
+  "@privacy_settings": {
+    "description": "Privacy settings section title",
     "type": "text"
   },
 
@@ -222,6 +713,22 @@
     "description": "Message shown when the user successfully saves changes",
     "type": "text"
   },
+
+  "confirmAccountDeletion": "تأكيد حذف الحساب",
+  "@confirmAccountDeletion": {
+    "description": "Title of the delete account confirmation dialog"
+  },
+
+  "enterPasswordToConfirm": "يرجى كتابة كلمة المرور للتأكيد.",
+  "@enterPasswordToConfirm": {
+    "description": "Instruction asking the user to enter their password for confirmation"
+  },
+
+  "deleteAccountContent": "سيتم حذف حسابك وجميع بياناتك بشكل نهائي.",
+  "@deleteAccountContent": {
+    "description": "Warning message requesting password entry to confirm deletion"
+  },
+
 
   "delete_account": "حذف الحساب",
   "@delete_account": {
@@ -295,6 +802,18 @@
     "type": "text"
   },
 
+  "save": "حفظ",
+  "@save": {
+    "description": "Button label to save",
+    "type": "text"
+  },
+
+  "cancel": "إلغاء",
+  "@cancel": {
+    "description": "Button label to cancel",
+    "type": "text"
+  },
+
   "password_last_update": "آخر تحديث: {time}",
   "@password_last_update": {
     "description": "Shows last password update time dynamically",
@@ -306,9 +825,63 @@
     }
   },
 
-  "log_out": "تسجيل خروج",
-  "@log_out": {
-    "description": "Action to log out",
-    "type": "text"
-  }
+  "dailyTip": "نصيحة اليوم",
+  "@dailyTip": {
+    "description": "Title for daily tip card"
+  },
+
+  "temperature": "الحرارة",
+  "@temperature": {
+    "description": "Label for body temperature metric"
+  },
+
+  "activity": "النشاط",
+  "@activity": {
+    "description": "Label for physical activity metric"
+  },
+
+  "pulse": "النبض",
+  "@pulse": {
+    "description": "Label for heart rate/pulse metric"
+  },
+
+  
+  "viewDetailedStatistics": "عرض الإحصائيات المفصلة",
+  "@viewDetailedStatistics": {
+    "description": "Button label to navigate to detailed statistics screen"
+  },
+
+  "details": "التفاصيل",
+  "@details": {
+    "description": "Button label to view more details"
+  },
+
+  "latestHealthRecord": "آخر سجل صحي",
+  "@latestHealthRecord": {
+    "description": "Header showing the most recent health data entry"
+  },
+
+  "recordCompleted": "مكتمل",
+  "@recordCompleted": {},
+  "recordIncomplete": "غير مكتمل",
+  "@recordIncomplete": {},
+
+  "healthExcellent": "ممتاز",
+  "@healthExcellent": {},
+  "healthGood": "جيد",
+  "@healthGood": {},
+
+  "upcomingAppointments": "المواعيد القادمة",
+  "@upcomingAppointments": {
+    "description": "Section header for scheduled future appointments"
+  },
+
+  "noSmartCollarTitle": "هذا الحيوان ليس لديه طوق ذكي",
+  "@noSmartCollarTitle": {},
+
+  "orderSmartCollarDescription": "اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!",
+  "@orderSmartCollarDescription": {},
+  
+  "orderNow": "اطلب الآن",
+  "@orderNow": {}
 }

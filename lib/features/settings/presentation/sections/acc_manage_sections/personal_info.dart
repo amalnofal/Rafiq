@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/edit_field.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
-import 'package:rafiq/core/constants/app_colors.dart';
 
 class PersonalInfo extends StatelessWidget {
-  final TextEditingController nameController;
+  // 1. استقبال الكنترولرز الجديدة
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
   final TextEditingController emailController;
   final TextEditingController phoneController;
 
   const PersonalInfo({
     super.key,
-    required this.nameController,
+    required this.firstNameController,
+    required this.lastNameController,
     required this.emailController,
     required this.phoneController,
   });
@@ -18,36 +23,57 @@ class PersonalInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              AppLocalizations.of(context)!.personal_info,
-              // style: TextStyle(color: AppColors.textSecondary),
-            ),
+          Text(
+            AppLocalizations.of(context)!.personal_info,
+            style: Theme.of(context).textTheme.labelMedium,
           ),
 
-          Card(
+          CustomContainer(
+            padding: EdgeInsets.all(16),
             child: Column(
               children: [
-                EditField(
-                  icon: "assets/icons/user_icon.svg",
-                  title: AppLocalizations.of(context)!.name,
-                  controller: nameController,
+                // 2. حقل الاسم الأول
+                Row(
+                  children: [
+                    Expanded(
+                      child: EditField(
+                        // hint: AppLocalizations.of(context)!.firstName,
+                        isFName: true,
+                        icon: "assets/icons/user_icon.svg",
+                        controller: firstNameController,
+                      ),
+                    ),
+                    Expanded(
+                      child: EditField(
+                        // hint: AppLocalizations.of(context)!.lastName,
+                        isLName: true,
+                        icon: "assets/icons/user_icon.svg",
+                        controller: lastNameController,
+                      ),
+                    ),
+                  ],
                 ),
+
                 const Divider(),
+                SizedBox(height: 8.h),
+
+                // 4. حقل الإيميل
                 EditField(
+                  // hint: AppLocalizations.of(context)!.email,
                   icon: "assets/icons/email.svg",
-                  title: AppLocalizations.of(context)!.email,
                   controller: emailController,
                 ),
                 const Divider(),
+                SizedBox(height: 8.h),
+
+                // 5. حقل رقم الهاتف
                 EditField(
+                  // hint: AppLocalizations.of(context)!.phone_number,
                   icon: "assets/icons/phone.svg",
-                  title: AppLocalizations.of(context)!.phone_number,
                   controller: phoneController,
                 ),
               ],

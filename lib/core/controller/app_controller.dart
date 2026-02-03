@@ -22,7 +22,7 @@ class AppController extends ChangeNotifier {
 
     _locale = Locale(savedLang ?? systemLang);
     _isDarkMode = savedTheme ?? false;
-    _notificationsEnabled = savedNotif ?? false;
+    _notificationsEnabled = savedNotif ?? true;
 
     notifyListeners();
   }

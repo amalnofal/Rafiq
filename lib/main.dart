@@ -4,11 +4,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/app_controller.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
-import 'package:rafiq/core/models/user_info.dart';
 import 'package:rafiq/core/theme/app_theme.dart';
-import 'package:rafiq/features/home/presentation/pages/home_screen.dart';
-import 'package:rafiq/features/login/presentation/pages/login_screen.dart';
+import 'package:rafiq/features/auth/presentation/pages/forget_pass.dart';
+import 'package:rafiq/features/auth/presentation/pages/register_screen.dart';
+import 'package:rafiq/features/auth/presentation/pages/welcome_screen.dart';
+import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
+import 'package:rafiq/features/clinics/presentation/pages/clinics_screen.dart';
+import 'package:rafiq/features/collar/presentation/pages/smart_collar_screen.dart';
+import 'package:rafiq/features/community/manager/community_provider.dart';
+import 'package:rafiq/features/community/presentation/pages/community_screen.dart';
+import 'package:rafiq/features/store/presentation/pages/store_screen.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
+import 'package:rafiq/layout/main_layout.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,17 +24,17 @@ void main() async {
   final appController = AppController();
   await appController.loadSettings();
 
-  final currentUser = UserInfo(
-    name: "أحمد محمد",
-    email: "ahmed@example.com",
-    phone: "+966 50 123 4567",
-  );
+  final userProvider = UserProvider();
+  await userProvider.loadUserData();
 
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
+  timeago.setLocaleMessages('en', timeago.EnMessages());
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => appController),
-        ChangeNotifierProvider(create: (_) => UserProvider(user: currentUser)),
+        ChangeNotifierProvider(create: (_) => userProvider),
+        ChangeNotifierProvider(create: (_) => CommunityProvider()),
       ],
       child: const RafiqApp(),
     ),
@@ -43,8 +51,21 @@ class RafiqApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(393, 852),
       minTextAdapt: true,
+      splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          scrollBehavior: const MaterialScrollBehavior().copyWith(
+            overscroll: false, // بيلغي الوهج الأخضر بتاع الأندرويد
+          ),
+
+          builder: (context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(
+                context,
+              ).copyWith(textScaler: const TextScaler.linear(1.0)),
+              child: child!,
+            );
+          },
           debugShowCheckedModeBanner: false,
           title: 'Rafiq - رفيق',
 
@@ -63,16 +84,21 @@ class RafiqApp extends StatelessWidget {
               ? ThemeMode.dark
               : ThemeMode.light,
 
-          initialRoute: '/login',
+          initialRoute: '/welcome',
+
           routes: {
-            '/login': (context) => LoginScreen(),
-            '/home': (context) => HomeScreen(),
+            '/welcome': (context) => const WelcomeScreen(),
+            '/register': (context) => const RegisterScreen(),
+            '/login': (context) => const LoginScreen(),
+            '/home': (context) => const MainLayout(),
+            '/store': (context) => const StoreScreen(),
+            '/clinics': (context) => const ClinicsScreen(),
+            '/collar': (context) => const SmartCollarScreen(),
+            '/community': (context) => const CommunityScreen(),
+            '/forget_pass': (context) => const ForgetPass(),
           },
-          home: child,
         );
       },
-
-      child: const LoginScreen(),
     );
   }
 }

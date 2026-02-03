@@ -16,8 +16,7 @@ class SettingsScreen extends StatelessWidget {
     return RafiqScaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.settings)),
       body: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
+        clipBehavior: Clip.none,
         children: const [
           GeneralSection(),
           NotificationsSection(),

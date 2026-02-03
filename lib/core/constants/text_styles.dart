@@ -76,7 +76,7 @@ class AppTextStyles {
   static TextStyle bodyMedium({Color? color}) {
     return TextStyle(
       fontFamily: appfont,
-      fontSize: 15.sp,
+      fontSize: 14.sp,
       fontWeight: regular,
       color: color,
     );
@@ -85,7 +85,7 @@ class AppTextStyles {
   static TextStyle bodySmall({Color? color}) {
     return TextStyle(
       fontFamily: appfont,
-      fontSize: 14.sp,
+      fontSize: 12.sp,
       fontWeight: regular,
       color: color,
     );
@@ -96,7 +96,7 @@ class AppTextStyles {
     return TextStyle(
       fontFamily: appfont,
       fontSize: 16.sp,
-      fontWeight: medium,
+      fontWeight: regular,
       color: color,
     );
   }
@@ -105,7 +105,7 @@ class AppTextStyles {
     return TextStyle(
       fontFamily: appfont,
       fontSize: 14.sp,
-      fontWeight: medium,
+      fontWeight: regular,
       color: color,
     );
   }
@@ -119,8 +119,9 @@ class AppTextStyles {
     );
   }
 
-  // ========== BUTTON ==========
-  static TextStyle buttonLarge({Color? color}) {
+  // ========== Title ==========
+
+  static TextStyle titleLarge({Color? color}) {
     return TextStyle(
       fontFamily: appfont,
       fontSize: 16.sp,
@@ -129,11 +130,39 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle button({Color? color}) {
+  static TextStyle titleMedium({Color? color}) {
     return TextStyle(
       fontFamily: appfont,
       fontSize: 14.sp,
       fontWeight: medium,
+      color: color,
+    );
+  }
+
+  static TextStyle titleSmall({Color? color}) {
+    return TextStyle(
+      fontFamily: appfont,
+      fontSize: 12.sp,
+      fontWeight: medium,
+      color: color,
+    );
+  }
+
+  // ========== BUTTON ==========
+  static TextStyle buttonLarge({Color? color}) {
+    return TextStyle(
+      fontFamily: appfont,
+      fontSize: 16.sp,
+      fontWeight: regular,
+      color: color,
+    );
+  }
+
+  static TextStyle button({Color? color}) {
+    return TextStyle(
+      fontFamily: appfont,
+      fontSize: 14.sp,
+      fontWeight: regular,
       color: color,
     );
   }

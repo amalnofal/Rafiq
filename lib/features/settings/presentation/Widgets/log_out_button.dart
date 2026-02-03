@@ -12,16 +12,18 @@ class LogOutButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
       child: CustomButton(
-        title: AppLocalizations.of(context)!.log_out,
+        title: AppLocalizations.of(context)!.logout,
         color: Theme.of(context).cardColor,
         txtColor: AppColors.kStatusError,
         icon: 'assets/icons/logout.svg',
         iconColor: AppColors.kStatusError,
+        height: AppDimensions.buttonHeightL,
+        elevation: 1,
         onpressed: () {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            '/login', // اسم الصفحة اللي عايزة ترجعيها
-            (route) => false, // يمسح كل الصفحات القديمة
+            '/welcome',
+            (route) => false,
           );
         },
       ),

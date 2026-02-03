@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomSwitch extends StatefulWidget {
-  final bool? value; // اختياري، لو مش موجود هيستخدم الحالة الداخلية
+  final bool? value;
   final ValueChanged<bool>? onChanged;
 
   const CustomSwitch({super.key, this.value, this.onChanged});
@@ -31,53 +32,52 @@ class _CustomSwitchState extends State<CustomSwitch> {
   Widget build(BuildContext context) {
     final bool displayValue = widget.value ?? _internalValue;
 
-    // 🌟 ألوان حسب الثيم
+    // ألوان حسب الثيم (كما هي في كودك)
     final theme = Theme.of(context);
     final Color backgroundColor = displayValue
         ? theme
               .colorScheme
-              .primaryContainer //الخلفيهON
-        : theme.colorScheme.secondary; // الخلفيهOFF
+              .primary // الخلفيه ON
+        : theme.colorScheme.tertiary; // الخلفيه OFF
+
     final Color circleColor = displayValue
         ? theme
               .colorScheme
-              .onPrimary //الدايرهON
-        : theme.colorScheme.onPrimary; //الدايرهOFF
+              .onPrimary // الدايره ON
+        : theme.colorScheme.onPrimary; // الدايره OFF
 
     return GestureDetector(
       onTap: _toggleSwitch,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 48,
-        height: 28,
+        width: 50.w,
+        height: 28.h,
+        padding: EdgeInsets.all(4.h),
+
         decoration: BoxDecoration(
           color: backgroundColor,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(24.r),
         ),
-        child: Align(
-          alignment: displayValue
-              ? Alignment.centerLeft
-              : Alignment.centerRight,
-          child: Transform.translate(
-            offset: displayValue
-                ? const Offset(3, 0)
-                : const Offset(6, 0), // تحريك الدايرة خارج المحيط
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                color: circleColor,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha(20),
-                    blurRadius: 2,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
+
+        // 2. تغيير محاذاة الدايره بناءً على القيمة
+        alignment: displayValue
+            ? AlignmentDirectional.centerEnd
+            : AlignmentDirectional.centerStart,
+
+        // 3. الدائرة الداخلية
+        child: Container(
+          width: 22.w,
+          height: 22.h,
+          decoration: BoxDecoration(
+            color: circleColor,
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withAlpha(20),
+                blurRadius: 2,
+                offset: const Offset(0, 1),
               ),
-            ),
+            ],
           ),
         ),
       ),

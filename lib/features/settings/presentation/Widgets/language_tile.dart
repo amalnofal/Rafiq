@@ -10,42 +10,45 @@ class LanguageTile extends StatelessWidget {
     required this.title,
     required this.isSelected,
   });
+
   final String title;
   final VoidCallback? onTap;
   final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).colorScheme.primary;
+
     return Container(
       decoration: BoxDecoration(
         color: isSelected
-            ? Theme.of(context).colorScheme.secondaryContainer
+            ? Theme.of(context).colorScheme.primaryContainer
             : null,
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingS),
         child: ListTile(
+          onTap: onTap,
           leading: Container(
-            height: 22.w,
-            width: 22.w,
+            height: 20.w,
+            width: 20.w,
+            padding: EdgeInsets.all(3.w),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.transparent,
-              border: Border.all(
-                color: isSelected
-                    ? Colors.white
-                    : Theme.of(context).colorScheme.primary,
-              ),
+              border: Border.all(color: primaryColor, width: 2.w),
             ),
             child: isSelected
-                ? Icon(Icons.check, size: 14.w, color: Colors.white)
+                ? Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: primaryColor,
+                    ),
+                  )
                 : null,
           ),
-          title: Text(title),
+
+          title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
           trailing: CircleIconButton("assets/icons/language.svg"),
-          onTap: onTap,
         ),
       ),
     );

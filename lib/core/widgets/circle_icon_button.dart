@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rafiq/core/constants/app_colors.dart';
-
-// ============================================================================
-// CIRCLE ICON BUTTON - زر دائري للأيقونات
-// ============================================================================
 
 class CircleIconButton extends StatelessWidget {
   final String assetName;
   final Color? backgroundColor;
-  final Color? color; // اختياري، لو حبيتي تغيّري لون أي أيقونة معينة
+  final Color? color;
   final VoidCallback? onTap;
   final double? size;
+    final double? iconSize;
 
   const CircleIconButton(
     this.assetName, {
@@ -20,32 +16,29 @@ class CircleIconButton extends StatelessWidget {
     this.backgroundColor,
     this.color,
     this.onTap,
-    this.size, // حجم الـ Container الدائري
+    this.size, this.iconSize,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final double size = this.size ?? 40.0.w;
+    final double size = this.size ?? 40.h;
     return InkWell(
-      borderRadius: BorderRadius.circular(size / 2),
+      borderRadius: BorderRadius.circular(size),
       onTap: onTap ?? () {},
       child: Container(
         width: size,
         height: size,
         decoration: BoxDecoration(
-          // استخدم backgroundColor لو موجودة، وإلا استخدم لون الدائرة البيج من الثيم
           color:
-              backgroundColor ??
-              Theme.of(context).colorScheme.secondaryContainer,
+              backgroundColor ?? Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.circle,
         ),
         child: Center(
           child: SvgPicture.asset(
+            height: iconSize ?? 20.h,
             assetName,
             colorFilter: ColorFilter.mode(
-              // استخدم color لو موجودة، وإلا استخدم اللون المناسب للأيقونات
-              color ?? (isDark ? AppColors.kSurfaceAlt : AppColors.kBrandPrimary),
+              color ?? Theme.of(context).colorScheme.primary,
               BlendMode.srcIn,
             ),
           ),

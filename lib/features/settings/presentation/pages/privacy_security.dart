@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rafiq/core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/settings/presentation/sections/security_sections/password_section.dart';
@@ -13,27 +13,31 @@ class PrivacySecurity extends StatelessWidget {
   Widget build(BuildContext context) {
     return RafiqScaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.privacy_security),
+        title: Text(
+          AppLocalizations.of(context)!.privacy_security,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
       ),
-      body: Column(
-        children: [
-          PasswordSection(),
-          PrivacySection(),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 8),
-            child: Card(
+      body: SingleChildScrollView(
+        clipBehavior: Clip.none,
+        child: Column(
+          children: [
+            PasswordSection(),
+            PrivacySection(),
+            SizedBox(height: 8.h),
+            Card(
+              color: Theme.of(context).colorScheme.secondary,
+              elevation: 1,
               child: Padding(
                 padding: EdgeInsets.all(AppDimensions.padding),
                 child: Text(
                   AppLocalizations.of(context)!.privacy_note,
-                  // style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  //   color: AppColors.textSecondary,
-                  // ),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/setting_switch_tile.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 import 'package:rafiq/core/controller/app_controller.dart';
@@ -14,16 +14,16 @@ class NotificationsSection extends StatelessWidget {
     final appController = context.watch<AppController>();
 
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
+      padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingS),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             AppLocalizations.of(context)!.notifications,
-            // style: TextStyle(color: AppColors.textSecondary),
+            style: Theme.of(context).textTheme.labelMedium,
           ),
-          SizedBox(height: AppDimensions.paddingM),
-          Card(
+          CustomContainer(
+            padding: EdgeInsets.all(0),
             child: SettingSwitchTile(
               icon: "assets/icons/notifications.svg",
               title: AppLocalizations.of(context)!.enable_Notifications,

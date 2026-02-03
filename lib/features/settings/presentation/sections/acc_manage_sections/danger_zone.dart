@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/delete_acc_button.dart';
 import 'package:rafiq/l10n/app_localizations.dart' show AppLocalizations;
 
@@ -8,22 +7,16 @@ class DangerZone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.danger_zone,
-            // style: TextStyle(color: AppColors.textSecondary),
-          ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppLocalizations.of(context)!.danger_zone,
+          style: Theme.of(context).textTheme.labelMedium,
+        ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: DeleteAccButton(),
-          ),
-        ],
-      ),
+        DeleteAccButton(),
+      ],
     );
   }
 }

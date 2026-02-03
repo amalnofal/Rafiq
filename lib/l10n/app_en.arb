@@ -19,10 +19,228 @@
     "type": "text"
   },
 
-  "create_new_account": "Create a new account",
+  "create_new_account": "Create New Account",
   "@create_new_account": {
-    "description": "Button label to create a new account",
+    "description": "App bar title for sign up screen",
     "type": "text"
+  },
+
+  "joinRafiq": "Join Rafiq Community",
+  "@joinRafiq": {
+    "description": "Title text in sign up screen"
+  },
+
+  "signUpSubtitle": "Create your account to enjoy all features",
+  "@signUpSubtitle": {
+    "description": "Subtitle text in sign up screen"
+  },
+
+  "firstName": "First Name",
+  "@firstName": {
+    "description": "first name label"
+  },
+
+  "lastName": "Last Name",
+  "@lastName": {
+    "description": "last name label"
+  },
+
+  "email": "Email Address",
+  "@email": {
+    "description": "Label for email text field"
+  },
+
+  "phone_number": "Phone number",
+  "@phone_number": {
+    "description": "Full phone number label",
+    "type": "text"
+  },
+
+  "optional": "(optional)",
+  "@optional": {},
+
+  "genderLabel": "Gender",
+  "@genderLabel": {},
+  "male": "Male",
+  "@male": {},
+  "female": "Female",
+  "@female": {},
+  
+  "dateOfBirthLabel": "Date of Birth",
+  "@dateOfBirthLabel": {},
+  "dobHint": "mm/dd/yyyy",
+  "@dobHint": {},
+
+  "chooseAccountType": "Choose Account Type",
+  "@chooseAccountType": {},
+  "chooseAccountTypeSubtitle": "Select how you want to use the app",
+  "@chooseAccountTypeSubtitle": {},
+  "petOwnerTitle": "Pet Owner",
+  "@petOwnerTitle": {},
+  "petOwnerSubtitle": "Manage your pets' health and connect with the community",
+  "@petOwnerSubtitle": {},
+
+  "petInfoTitle": "Pet Information",
+  "@petInfoTitle": {},
+  "petInfoSubtitle": "Tell us a little about your little friend",
+  "@petInfoSubtitle": {},
+  "petNameHint": "Pet Name",
+  "@petNameHint": {},
+  "petTypeHint": "Type (e.g. Dog, Cat)",
+  "@petTypeHint": {},
+
+  "vetTitle": "Veterinarian",
+  "@vetTitle": {},
+  "vetSubtitle": "Offer your services as a licensed veterinarian",
+  "@vetSubtitle": {},
+
+  "professionalInfoTitle": "Professional Info",
+  "@professionalInfoTitle": {},
+  "professionalInfoSubtitle": "Verify your professional identity",
+  "@professionalInfoSubtitle": {},
+    
+  "specializationLabel": "Specialization",
+  "@specializationLabel": {},
+  "subSpecializationLabel": "Sub-specialization",
+  "@subSpecializationLabel": {},
+
+  "idFrontLabel": "National ID (Front Side)",
+  "@idFrontLabel": {},
+  "idBackLabel": "National ID (Back Side)",
+  "@idBackLabel": {},
+  "uploadIdText": "Tap to upload image",
+  "@uploadIdText": {},
+  "camera": "Camera",
+  "@camera": {},
+  "gallery": "Gallery",
+  "@gallery": {},
+  
+  "vetCardLabel": "Veterinary ID Card",
+  "@vetCardLabel": {},
+  "supportedFormats": "JPG, PNG or HEIC",
+  "@supportedFormats": {},
+
+  "reviewNote": "Your professional info will be reviewed by our team within 24-48 hours for verification",
+  "@reviewNote": {},
+
+  "shareInterests": "Share your interests",
+  "@shareInterests": {},
+  "communityWaiting": "Rafiq community is waiting for you",
+  "@communityWaiting": {},
+
+  "interestsSubtitle": "Tell us what you care about so we can curate the perfect feed for you",
+  "@interestsSubtitle": {},
+  "selectMultiple":"(You can select multiple)",
+  "@selectMultiple": {},
+  "selectInterestError": "Please select at least one interest to continue",
+  "@selectInterestError": {},
+
+
+  "password": "Password",
+  "@password": {
+    "description": "Password label",
+    "type": "text"
+  },
+  
+  "currentPassword": "Current Password",
+  "@currentPassword": {
+    "description": "Label/Hint for current password field"
+  },
+
+  "newPassword": "New Password",
+  "@newPassword": {
+    "description": "Label/Hint for new password field"
+  },
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {
+    "description": "Label for confirm password text field"
+  },
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {},
+
+  "passwordRequirements": "Password Requirements:",
+  "@passwordRequirements": {},
+  "passwordRuleLength": "At least 8 characters",
+  "@passwordRuleLength": {},
+  "passwordRuleCase": "Uppercase and lowercase letters",
+  "@passwordRuleCase": {},
+  "passwordRuleNumber": "At least one number",
+  "@passwordRuleNumber": {},
+
+  "passwordRuleUpperCase": "At least one uppercase letter",
+  "@passwordRuleUpperCase": {
+    "description": "Validation rule requiring at least one uppercase letter"
+  },
+
+  "passwordRuleLowerCase": "At least one lowercase letter",
+  "@passwordRuleLowerCase": {
+    "description": "Validation rule requiring at least one lowercase letter"
+  },
+
+  "phoneRuleLength": "Phone number must be at least 11 digits",
+  "@phoneRuleLength": {
+    "description": "Validation rule for phone number length"
+  },
+
+  "invalidEmailAddress": "Invalid email address",
+  "@invalidEmailAddress": {
+    "description": "Error message shown when the email format is incorrect"
+  },
+
+  "nameRequired": "Name is required",
+  "@nameRequired": {
+    "description": "Error message when the name field is empty"
+  },
+
+  "nameTooShort": "Name is too short",
+  "@nameTooShort": {
+    "description": "Error message when the name is less than the required length"
+  },
+  
+  "fieldRequired": "This field is required",
+  "@fieldRequired": {
+    "description": "Error message when a field is empty"
+  },
+
+  "termsAgreementStart": "By creating an account, you agree to ",
+  "@termsAgreementStart": {
+    "description": "First part of terms agreement text"
+  },
+  "termsAndConditions": "Terms and Conditions",
+  "@termsAndConditions": {
+    "description": "Link text for terms"
+  },
+
+  "and": " & ",
+  "@and": {
+    "description": "Conjunction text"
+  },
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Link text for privacy policy"
+  },
+
+  "dontHaveAccount": "Don't have an account? ",
+  "@dontHaveAccount": {
+    "description": "Question shown at the bottom of sign in screen"
+  },
+
+  "or": "OR",
+  "@or": {
+    "description": "Divider text"
+  },
+
+  "signUpWithGoogle": "Sign up with Google",
+  "@signUpWithGoogle": {
+    "description": "Google sign up button text"
+  },
+
+  "signUpWithApple": "Sign up with Apple",
+  "@signUpWithApple": {
+    "description": "Apple sign up button text"
   },
 
   "login_with_email": "Log in with Email",
@@ -49,10 +267,88 @@
     "type": "text"
   },
 
-  "login": "Login",
+  "alreadyHaveAccount": "Already have an account? ",
+  "@alreadyHaveAccount": {
+    "description": "Question shown at the bottom of sign up screen"
+  },
+
+  "back": "Back",
+  "@back": {
+    "description": "Label for the back button in the app bar/header"
+  },
+
+  "next": "Next",
+  "@next": {
+    "description": "Label for the next button in the app bar/header"
+  },
+
+  "submitForReviewBtn": "Submit for Review",
+  "@submitForReviewBtn": {},
+
+  "login": "Log In",
   "@login": {
-    "description": "Button or menu item for logging in",
-    "type": "text"
+    "description": "App bar title for sign in screen"
+  },
+
+  "startJourney": "Start Your Journey",
+  "@startJourney": {},
+
+  "welcomeBack": "Welcome back to Rafiq",
+  "@welcomeBack": {
+    "description": "Welcome message displayed in the auth header"
+  },
+
+  "signInSubtitle": "Log in to continue",
+  "@signInSubtitle": {
+    "description": "Subtitle text in sign in screen"
+  },
+
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {
+    "description": "Forgot password text button"
+  },
+
+  "recoverPassword": "Reset Password",
+  "@recoverPassword": {},
+  "enterEmailSubtitle": "Enter your email address",
+  "@enterEmailSubtitle": {},
+  "sendCode": "Send Verification Code",
+  "@sendCode": {},
+
+  "verificationCodeTitle": "Verification Code",
+  "@verificationCodeTitle": {},
+  "verificationCodeSubtitle": "We sent a code to {email}",
+  "@verificationCodeSubtitle": {
+    "description": "Subtitle containing the user email",
+    "placeholders": {
+      "email": {
+        "type": "String",
+        "example": "user@example.com"
+      }
+    }
+    },
+  "resendCodeText": "Resend Code",
+  "@resendCodeText": {},
+
+  "second": " {count, plural, =1{1 second} other{{count} seconds}}",
+  "@second": {"description": "Just the seconds count with unit",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "57"
+      }
+    }},
+
+  "verifyCodeButton": "Verify Code",
+  "@verifyCodeButton": {},
+
+  "chooseStrongPassword": "Choose a strong password",
+  "@chooseStrongPassword": {
+    "description": "Subtitle advising the user to pick a secure password"
+  },
+  "changePassword": "Change Password",
+  "@changePassword": {
+    "description": "Button text or title for the change password action"
   },
 
   "logout": "Logout",
@@ -65,6 +361,217 @@
   "@profile": {
     "description": "Profile page title",
     "type": "text"
+  },
+
+  "home": "Home",
+  "@home": {
+    "description": "Bottom navigation bar item: Home"
+  },
+
+  "clinics": "Clinics",
+  "@clinics": {
+    "description": "Bottom navigation bar item: Clinics"
+  },
+
+  "vetClinicsTitle": "Vet Clinics",
+  "@vetClinicsTitle": {},
+
+  "smartCollar": "Smart Collar",
+  "@smartCollar": {
+    "description": "Bottom navigation bar item: Smart Collar"
+  },
+
+  "community": "Community",
+  "@community": {
+    "description": "Bottom navigation bar item: Community"
+  },
+
+  "postContentHint": "What would you like to share?",
+  "@postContentHint": {
+    "description": "Hint text shown in the post creation text field"
+  },
+
+  "emptyCommunityText": "No posts yet",
+  "@emptyCommunityText": { "description": "Text shown when community feed is empty" },
+
+  "newPostTitle": "New Post",
+  "@newPostTitle": {},
+
+  "shareMomentHint": "Share a moment with your pet...",
+  "@shareMomentHint": {},
+
+  "postBtn": "Post",
+  "@postBtn": {},
+
+  "addPhotoLabel": "Add Photo",
+  "@addPhotoLabel": {
+    "description": "Label text for the add photo button"
+  },
+
+  "postCreatedSuccess": "Posted!",
+  "@postCreatedSuccess": {
+    "description": "Success message shown after creating a new post"
+  },
+
+  "likeAction": "Like",
+  "@likeAction": {
+    "description": "Label for the like button on a post"
+  },
+
+  "deleteAction": "Delete",
+  "@deleteAction": {
+    "description": "Label for the delete button"
+  },
+
+  "editAction": "Edit",
+  "@editAction": {
+    "description": "Label for the edit button"
+  },
+
+  "edited": "Edited",
+  "@edited": {
+    "description": "Status text indicating a post or comment has been edited"
+  },
+
+  "editPost": "Edit Post",
+  "@editPost": {
+    "description": "Title or button label for editing a post"
+  },
+
+  "editingCommentHint": "Editing comment...",
+  "@editingCommentHint": {
+    "description": "Hint text shown when editing a comment"
+  },
+
+  "replyingToHint": "Replying to",
+  "@replyingToHint": {
+    "description": "Hint text shown when replying to a user"
+  },
+
+  "deletePostTitle": "Delete Post?",
+  "@deletePostTitle": {
+    "description": "Title of the delete confirmation dialog"
+  },
+
+  "deleteDialogMessage": "Are you sure? This action cannot be undone.",
+  "@deleteDialogMessage": {
+    "description": "Content message of the delete confirmation dialog"
+  },
+
+  "deleteCommentTitle": "Delete Comment?",
+  "@deleteCommentTitle": {
+    "description": "Title of the delete comment confirmation dialog"
+  },
+
+  "deleteCommentMessage": "This comment will be permanently removed.",
+  "@deleteCommentMessage": {
+    "description": "Content message of the delete comment confirmation dialog"
+  },
+
+  "commentAction": "Comment",
+  "@commentAction": {
+    "description": "Label for the comment button on a post"
+  },
+
+  "writeCommentHint": "Write a comment...",
+  "@writeCommentHint": {
+    "description": "Hint text shown in the comment input field"
+  },
+
+  "firstCommentPlaceholder": "Be the first to comment!",
+  "@firstCommentPlaceholder": {
+    "description": "Placeholder text shown when a post has no comments"
+  },
+
+  "replyAction": "Reply",
+  "@replyAction": {
+    "description": "Text for the reply button on a comment"
+  },
+
+  "replyingTo": "Replying to",
+  "@replyingTo": {
+    "description": "Text shown when replying to a specific user (e.g., Replying to John)"
+  },
+
+  "selectPostCategoriesTitle": "Select relevant categories",
+  "@selectPostCategoriesTitle": {},
+  "selectCategoryError": "You must select at least one category",
+  "@selectCategoryError": {},
+
+  "categoryHealth": "Health & Care",
+  "@categoryHealth": {},
+  "categoryTraining": "Training & Behavior",
+  "@categoryTraining": {},
+  "categoryFood": "Nutrition & Food",
+  "@categoryFood": {},
+  "categoryGrooming": "Grooming",
+  "@categoryGrooming": {},
+  "categoryActivities": "Activities & Fun",
+  "@categoryActivities": {},
+  "categoryAdoption": "Adoption & Rescue",
+  "@categoryAdoption": {},
+  "categoryTravel": "Travel",
+  "@categoryTravel": {},
+  "categoryStories": "Stories & Experiences",
+  "@categoryStories": {},
+
+  "healthSubtitle": "Health tips, vaccinations, and daily care",
+  "@healthSubtitle": {
+    "description": "Subtitle for Health & Care category"
+  },
+
+  "trainingSubtitle": "Training methods and behavioral solutions",
+  "@trainingSubtitle": {
+    "description": "Subtitle for Training & Behavior category"
+  },
+
+  "foodSubtitle": "Healthy recipes, diet plans, and product reviews",
+  "@foodSubtitle": {
+    "description": "Subtitle for Nutrition & Food category"
+  },
+
+  "groomingSubtitle": "Haircuts, bathing, and hygiene",
+  "@groomingSubtitle": {
+    "description": "Subtitle for Grooming category"
+  },
+
+  "activitiesSubtitle": "Games, outings, and fun activities",
+  "@activitiesSubtitle": {
+    "description": "Subtitle for Activities & Fun category"
+  },
+
+  "adoptionSubtitle": "Adoption stories, rescue, and finding homes",
+  "@adoptionSubtitle": {
+    "description": "Subtitle for Adoption & Rescue category"
+  },
+
+  "travelSubtitle": "Pet travel tips and pet-friendly places",
+  "@travelSubtitle": {
+    "description": "Subtitle for Travel category"
+  },
+
+  "storiesSubtitle": "Inspiring stories, personal experiences, and moments",
+  "@storiesSubtitle": {
+    "description": "Subtitle for Stories & Experiences category"
+  },
+
+  "tagPetTitle": "Tag your pet (Optional)",
+  "@tagPetTitle": {},
+
+  "postingTipsTitle": "Posting Tips:",
+  "@postingTipsTitle": {},
+  "tipCategories": "Select relevant categories to reach the right audience",
+  "@tipCategories": {},
+  "tipMoments": "Share special moments with your pet",
+  "@tipMoments": {},
+  "tipPhotos": "Use clear and high-quality photos",
+  "@tipPhotos": {},
+  "tipRespect": "Be respectful and kind to the community",
+  "@tipRespect": {},
+
+  "store": "Store",
+  "@store": {
+    "description": "Bottom navigation bar item: Store"
   },
 
   "settings": "Settings",
@@ -151,21 +658,9 @@
     "type": "text"
   },
 
-  "email": "Email",
-  "@email": {
-    "description": "User's email label",
-    "type": "text"
-  },
-
   "phone": "Phone",
   "@phone": {
     "description": "User's phone number label",
-    "type": "text"
-  },
-
-  "phone_number": "Phone number",
-  "@phone_number": {
-    "description": "Full phone number label",
     "type": "text"
   },
 
@@ -175,15 +670,15 @@
     "type": "text"
   },
 
-  "password": "Password",
-  "@password": {
-    "description": "Password label",
-    "type": "text"
-  },
-
   "privacy": "Privacy",
   "@privacy": {
     "description": "Privacy label",
+    "type": "text"
+  },
+
+  "privacy_settings": "Privacy Settings",
+  "@privacy_settings": {
+    "description": "Privacy settings section title",
     "type": "text"
   },
 
@@ -221,6 +716,21 @@
   "@changes_saved": {
     "description": "Message shown when the user successfully saves changes",
     "type": "text"
+  },
+
+  "confirmAccountDeletion": "Confirm Account Deletion",
+  "@confirmAccountDeletion": {
+    "description": "Title of the delete account confirmation dialog"
+  },
+
+  "deleteAccountContent": "Your account will be permanently deleted.",
+  "@deleteAccountContent": {
+    "description": "Warning message to confirm deletion"
+  },
+
+  "enterPasswordToConfirm": "Please enter your password to confirm.",
+  "@enterPasswordToConfirm": {
+    "description": "Instruction asking the user to enter their password for confirmation"
   },
 
   "delete_account": "Delete Account",
@@ -295,6 +805,18 @@
     "type": "text"
   },
 
+    "save": "Save",
+  "@save": {
+    "description": "Button label to save",
+    "type": "text"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Button label to cancel",
+    "type": "text"
+  },
+
   "password_last_update": "Last updated: {time}",
   "@password_last_update": {
     "description": "Shows last password update time dynamically",
@@ -306,9 +828,68 @@
     }
   },
 
-  "log_out": "Log Out",
-  "@log_out": {
-    "description": "Action to log out",
-    "type": "text"
+  "dailyTip": "Daily Tip",
+  "@dailyTip": {
+    "description": "Header for the daily advice section"
+  },
+
+  "temperature": "Temp",
+  "@temperature": {
+    "description": "Label for body temperature metric"
+  },
+
+  "activity": "Activity",
+  "@activity": {
+    "description": "Label for physical activity metric"
+  },
+
+  "pulse": "Pulse",
+  "@pulse": {
+    "description": "Label for heart rate/pulse metric"
+  },
+
+    "viewDetailedStatistics": "View Detailed Statistics",
+  "@viewDetailedStatistics": {
+    "description": "Button label to navigate to detailed statistics screen"
+  },
+
+  "details": "Details",
+  "@details": {
+    "description": "Button label to view more details"
+  },
+
+  "latestHealthRecord": "Latest Health Record",
+  "@latestHealthRecord": {
+    "description": "Header showing the most recent health data entry"
+  },
+
+  "recordCompleted": "Completed",
+  "@recordCompleted": {},
+  "recordIncomplete": "Incomplete",
+  "@recordIncomplete": {},
+
+  "healthExcellent": "Excellent",
+  "@healthExcellent": {},
+  "healthGood": "Good",
+  "@healthGood": {},
+
+  "upcomingAppointments": "Upcoming Appointments",
+  "@upcomingAppointments": {
+    "description": "Section header for scheduled future appointments"
+  },
+
+  "noSmartCollarTitle": "This pet has no smart collar",
+  "@noSmartCollarTitle": {
+    "description": "Title shown when no smart collar is paired"
+  },
+
+  "orderSmartCollarDescription": "Order a smart collar to track your pet's health.",
+  "@orderSmartCollarDescription": {
+    "description": "Promotional text to order a smart collar"
+  },
+
+  "orderNow": "Order Now",
+  "@orderNow": {
+    "description": "Button label to order a product"
   }
 }
