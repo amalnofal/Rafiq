@@ -9,7 +9,6 @@ import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
-import 'package:rafiq/features/community/presentation/widgets/choose_pet_card.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_categories_selector.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_input_area.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_tips_card.dart';
@@ -31,14 +30,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   File? _selectedImage;
   String? _existingImageUrl;
 
-  String? _selectedPetName;
   final List<int> _selectedCategoryIds = [];
-
-  final List<Map<String, dynamic>> myPets = [
-    {"name": "ماكس", "emoji": "🐕"},
-    {"name": "لونا", "emoji": "🐱"},
-    {"name": "بندق", "emoji": "🐰"},
-  ];
 
   @override
   void initState() {
@@ -172,22 +164,6 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     _selectedCategoryIds.remove(id);
                   } else {
                     _selectedCategoryIds.add(id);
-                  }
-                });
-              },
-            ),
-
-            SizedBox(height: 16.h),
-
-            ChoosePetCard(
-              pets: myPets,
-              selectedPetName: _selectedPetName,
-              onPetSelected: (name) {
-                setState(() {
-                  if (_selectedPetName == name) {
-                    _selectedPetName = null;
-                  } else {
-                    _selectedPetName = name;
                   }
                 });
               },

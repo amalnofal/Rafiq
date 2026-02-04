@@ -427,9 +427,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get storiesSubtitle => 'قصص ملهمة، تجارب شخصية، ولحظات مميزة';
 
   @override
-  String get tagPetTitle => 'اختر حيوانك الأليف (اختياري)';
-
-  @override
   String get postingTipsTitle => 'نصائح للمنشورات:';
 
   @override
@@ -470,9 +467,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get notifications => 'الإشعارات';
-
-  @override
-  String get enable_Notifications => 'تفعيل الإشعارات';
 
   @override
   String get account => 'الحساب';
@@ -535,31 +529,34 @@ class AppLocalizationsAr extends AppLocalizations {
   String get warning_delete_account => 'هذا الإجراء لا يمكن التراجع عنه';
 
   @override
-  String get privacy_note => '🔒 نحن نحترم خصوصيتك. يمكنك التحكم في المعلومات التي تشاركها مع المجتمع في أي وقت.';
+  String get privacyNote => '🔒 نحن نحترم خصوصيتك ونحمي بياناتك. يمكنك التحكم في من يرى معلوماتك وحيواناتك الأليفة.';
 
   @override
-  String get profile_public => 'ملف تعريف عام';
+  String get privacySettingsTitle => 'إعدادات الخصوصية';
 
   @override
-  String get profile_public_sub => 'السماح للآخرين برؤية ملفك';
+  String get publicProfileTitle => 'الملف الشخصي العام';
 
   @override
-  String get show_email => 'إظهار البريد الإلكتروني';
+  String get publicProfileSubtitle => 'السماح للآخرين برؤيته';
 
   @override
-  String get show_email_sub => 'عرض بريدك في الملف الشخصي';
+  String get displayPetsTitle => 'عرض الحيوانات';
 
   @override
-  String get show_phone => 'إظهار رقم الهاتف';
+  String get displayPetsSubtitle => 'إظهارها في الملف الشخصي';
 
   @override
-  String get show_phone_sub => 'عرض رقمك في الملف الشخصي';
+  String get displayPhoneTitle => 'عرض رقم الهاتف';
 
   @override
-  String get allow_messages => 'السماح بالرسائل';
+  String get displayPhoneSubtitle => 'إظهاره في الملف الشخصي';
 
   @override
-  String get allow_messages_sub => 'استقبال رسائل من المستخدمين';
+  String get allowMessagesTitle => 'استقبال الرسائل';
+
+  @override
+  String get allowMessagesSubtitle => 'السماح للآخرين بمراسلتك';
 
   @override
   String get change_password => 'تغيير كلمة المرور';

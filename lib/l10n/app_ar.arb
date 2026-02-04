@@ -551,9 +551,6 @@
     "description": "Subtitle for Stories & Experiences category"
   },
 
-  "tagPetTitle": "اختر حيوانك الأليف (اختياري)",
-  "@tagPetTitle": {},
-
   "postingTipsTitle": "نصائح للمنشورات:",
   "@postingTipsTitle": {},
   "tipCategories": "اختر الفئات المناسبة لمنشورك ليصل للمهتمين",
@@ -615,12 +612,6 @@
   "notifications": "الإشعارات",
   "@notifications": {
     "description": "Notifications section title",
-    "type": "text"
-  },
-
-  "enable_Notifications": "تفعيل الإشعارات",
-  "@enable_Notifications": {
-    "description": "Label for enabling notifications",
     "type": "text"
   },
 
@@ -742,59 +733,33 @@
     "type": "text"
   },
 
-  "privacy_note": "🔒 نحن نحترم خصوصيتك. يمكنك التحكم في المعلومات التي تشاركها مع المجتمع في أي وقت.",
-  "@privacy_note": {
-    "description": "Privacy info note shown to the user",
-    "type": "text"
+  "privacyNote": "🔒 نحن نحترم خصوصيتك ونحمي بياناتك. يمكنك التحكم في من يرى معلوماتك وحيواناتك الأليفة.",
+  "@privacyNote": {
+    "description": "Privacy disclaimer text showing user control over data"
   },
 
-  "profile_public": "ملف تعريف عام",
-  "@profile_public": {
-    "description": "Option to allow others to view user's profile",
-    "type": "text"
-  },
+  "privacySettingsTitle": "إعدادات الخصوصية",
+  "@privacySettingsTitle": {},
 
-  "profile_public_sub": "السماح للآخرين برؤية ملفك",
-  "@profile_public_sub": {
-    "description": "Subtitle for public profile option",
-    "type": "text"
-  },
+  "publicProfileTitle": "الملف الشخصي العام",
+  "@publicProfileTitle": {},
+  "publicProfileSubtitle": "السماح للآخرين برؤيته",
+  "@publicProfileSubtitle": {},
 
-  "show_email": "إظهار البريد الإلكتروني",
-  "@show_email": {
-    "description": "Option to show email in profile",
-    "type": "text"
-  },
+  "displayPetsTitle": "عرض الحيوانات",
+  "@displayPetsTitle": {},
+  "displayPetsSubtitle": "إظهارها في الملف الشخصي",
+  "@displayPetsSubtitle": {},
 
-  "show_email_sub": "عرض بريدك في الملف الشخصي",
-  "@show_email_sub": {
-    "description": "Subtitle for email visibility option",
-    "type": "text"
-  },
+  "displayPhoneTitle": "عرض رقم الهاتف",
+  "@displayPhoneTitle": {},
+  "displayPhoneSubtitle": "إظهاره في الملف الشخصي",
+  "@displayPhoneSubtitle": {},
 
-  "show_phone": "إظهار رقم الهاتف",
-  "@show_phone": {
-    "description": "Option to show phone number in profile",
-    "type": "text"
-  },
-
-  "show_phone_sub": "عرض رقمك في الملف الشخصي",
-  "@show_phone_sub": {
-    "description": "Subtitle for phone number visibility option",
-    "type": "text"
-  },
-
-  "allow_messages": "السماح بالرسائل",
-  "@allow_messages": {
-    "description": "Option to receive messages from users",
-    "type": "text"
-  },
-
-  "allow_messages_sub": "استقبال رسائل من المستخدمين",
-  "@allow_messages_sub": {
-    "description": "Subtitle explaining the message receiving option",
-    "type": "text"
-  },
+  "allowMessagesTitle": "استقبال الرسائل",
+  "@allowMessagesTitle": {},
+  "allowMessagesSubtitle": "السماح للآخرين بمراسلتك",
+  "@allowMessagesSubtitle": {},
 
   "change_password": "تغيير كلمة المرور",
   "@change_password": {

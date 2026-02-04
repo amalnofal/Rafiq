@@ -555,9 +555,6 @@
     "description": "Subtitle for Stories & Experiences category"
   },
 
-  "tagPetTitle": "Tag your pet (Optional)",
-  "@tagPetTitle": {},
-
   "postingTipsTitle": "Posting Tips:",
   "@postingTipsTitle": {},
   "tipCategories": "Select relevant categories to reach the right audience",
@@ -619,12 +616,6 @@
   "notifications": "Notifications",
   "@notifications": {
     "description": "Notifications section title",
-    "type": "text"
-  },
-
-  "enable_Notifications": "Enable notifications",
-  "@enable_Notifications": {
-    "description": "Label for enabling notifications",
     "type": "text"
   },
 
@@ -745,59 +736,33 @@
     "type": "text"
   },
 
-  "privacy_note": "🔒 We respect your privacy. You can control the information you share with the community at any time.",
-  "@privacy_note": {
-    "description": "Privacy info note shown to the user",
-    "type": "text"
+  "privacyNote": "🔒 We respect your privacy and protect your data. You control who sees your information and pets.",
+  "@privacyNote": {
+    "description": "Privacy disclaimer text showing user control over data"
   },
 
-  "profile_public": "Public Profile",
-  "@profile_public": {
-    "description": "Option to allow others to view user's profile",
-    "type": "text"
-  },
+  "privacySettingsTitle": "Privacy Settings",
+  "@privacySettingsTitle": {},
 
-  "profile_public_sub": "Allow others to view your profile",
-  "@profile_public_sub": {
-    "description": "Subtitle for public profile option",
-    "type": "text"
-  },
+  "publicProfileTitle": "Public Profile",
+  "@publicProfileTitle": {},
+  "publicProfileSubtitle": "Allow others to view profile",
+  "@publicProfileSubtitle": {},
 
-  "show_email": "Show Email",
-  "@show_email": {
-    "description": "Option to show email in profile",
-    "type": "text"
-  },
+  "displayPetsTitle": "Display Pets",
+  "@displayPetsTitle": {}, 
+  "displayPetsSubtitle": "Show on your public profile",
+  "@displayPetsSubtitle": {},
 
-  "show_email_sub": "Display your email on your profile",
-  "@show_email_sub": {
-    "description": "Subtitle for email visibility option",
-    "type": "text"
-  },
+  "displayPhoneTitle": "Display Phone Number",
+  "@displayPhoneTitle": {},
+  "displayPhoneSubtitle": "Show on your public profile",
+  "@displayPhoneSubtitle": {},
 
-  "show_phone": "Show Phone Number",
-  "@show_phone": {
-    "description": "Option to show phone number in profile",
-    "type": "text"
-  },
-
-  "show_phone_sub": "Display your phone number on your profile",
-  "@show_phone_sub": {
-    "description": "Subtitle for phone number visibility option",
-    "type": "text"
-  },
-
-  "allow_messages": "Allow Messages",
-  "@allow_messages": {
-    "description": "Option to receive messages from users",
-    "type": "text"
-  },
-
-  "allow_messages_sub": "Receive messages from other users",
-  "@allow_messages_sub": {
-    "description": "Subtitle explaining the message receiving option",
-    "type": "text"
-  },
+  "allowMessagesTitle": "Allow Messages",
+  "@allowMessagesTitle": {},
+  "allowMessagesSubtitle": "Receive messages from others",
+  "@allowMessagesSubtitle": {},
 
   "change_password": "Change Password",
   "@change_password": {

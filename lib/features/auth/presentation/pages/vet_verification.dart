@@ -39,7 +39,9 @@ class _VetVerificationState extends State<VetVerification> {
         _idFrontImage != null && _idBackImage != null && _licenseImage != null;
 
     if (isTextValid && areImagesValid) {
+      // ✅ التعديل هنا: مررنا context
       widget.controller.uploadVetDocuments(
+        context, 
         idFront: _idFrontImage!,
         idBack: _idBackImage!,
         license: _licenseImage!,

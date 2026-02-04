@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/features/auth/controller/register_controller.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_header.dart';
+import 'package:rafiq/features/auth/presentation/widgets/register_step_indicator.dart';
 import 'package:rafiq/features/auth/presentation/widgets/register_steps/step1_name.dart';
 import 'package:rafiq/features/auth/presentation/widgets/register_steps/step2_contact.dart';
 import 'package:rafiq/features/auth/presentation/widgets/register_steps/step3_personal_info.dart';
@@ -37,7 +37,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 title: AppLocalizations.of(context)!.create_new_account,
                 subtitle: AppLocalizations.of(context)!.joinRafiq,
                 onBackTap: () => _controller.prevPage(context),
-                bottomWidget: _buildProgressIndicator(),
+                bottomWidget: _controller.currentPage == 4
+                    ? const SizedBox()
+                    : RegisterStepIndicator(
+                        currentStep: _controller.currentPage,
+                        totalSteps: 5,
+                      ),
               ),
               Expanded(
                 child: PageView(
@@ -49,17 +54,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fNameController: _controller.firstNameController,
                       lNameController: _controller.lastNameController,
                       onNext: _controller.nextPage,
-                      onSocialLogin: (firstName, lastName, email) {
+                      onSocialLogin: () {
                         _controller.isSocialLogin = true;
 
-                        // ملء البيانات في الكنترولرز
-                        _controller.firstNameController.text = firstName;
-                        _controller.lastNameController.text = lastName;
-                        _controller.emailController.text = email;
-
-                        _controller.pageController.jumpToPage(2);
-
-                        _controller.updatePage(2);
+                        _controller.pageController.jumpToPage(4);
+                        _controller.updatePage(4);
                       },
                     ),
                     Step2Contact(
@@ -84,7 +83,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Step5AccountType(
                       onTypeSelected: (val) {
                         _controller.setAccountType(val);
-
                         _controller.registerUser(context);
                       },
                     ),
@@ -95,28 +93,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(5, (index) {
-        bool isActive = index <= _controller.currentPage;
-        return Expanded(
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            margin: EdgeInsets.symmetric(horizontal: 2.w),
-            height: 4.h,
-            decoration: BoxDecoration(
-              color: isActive
-                  ? Colors.white
-                  : Colors.white.withValues(alpha: 0.3),
-              borderRadius: BorderRadius.circular(2.r),
-            ),
-          ),
-        );
-      }),
     );
   }
 }

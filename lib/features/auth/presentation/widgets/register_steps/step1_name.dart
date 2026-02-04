@@ -13,7 +13,7 @@ class Step1Name extends StatefulWidget {
   final TextEditingController fNameController;
   final TextEditingController lNameController;
   final VoidCallback onNext;
-  final Function(String firstName, String lastName, String email) onSocialLogin;
+  final VoidCallback onSocialLogin;
 
   const Step1Name({
     super.key,
@@ -65,18 +65,14 @@ class _Step1NameState extends State<Step1Name> {
 
             GoogleButton(
               title: AppLocalizations.of(context)!.signUpWithGoogle,
-              onPressed: () {
-                widget.onSocialLogin("Rafiq", "User", "user@example.com");
-              },
+              onPressed: widget.onSocialLogin,
             ),
 
             SizedBox(height: AppDimensions.paddingM),
 
             AppleButton(
               title: AppLocalizations.of(context)!.signUpWithApple,
-              onPressed: () {
-                widget.onSocialLogin("Rafiq", "User", "user@example.com");
-              },
+              onPressed: widget.onSocialLogin,
             ),
           ],
         ),

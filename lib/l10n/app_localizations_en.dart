@@ -433,9 +433,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get storiesSubtitle => 'Inspiring stories, personal experiences, and moments';
 
   @override
-  String get tagPetTitle => 'Tag your pet (Optional)';
-
-  @override
   String get postingTipsTitle => 'Posting Tips:';
 
   @override
@@ -476,9 +473,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notifications => 'Notifications';
-
-  @override
-  String get enable_Notifications => 'Enable notifications';
 
   @override
   String get account => 'Account';
@@ -541,31 +535,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get warning_delete_account => 'This action cannot be undone';
 
   @override
-  String get privacy_note => '🔒 We respect your privacy. You can control the information you share with the community at any time.';
+  String get privacyNote => '🔒 We respect your privacy and protect your data. You control who sees your information and pets.';
 
   @override
-  String get profile_public => 'Public Profile';
+  String get privacySettingsTitle => 'Privacy Settings';
 
   @override
-  String get profile_public_sub => 'Allow others to view your profile';
+  String get publicProfileTitle => 'Public Profile';
 
   @override
-  String get show_email => 'Show Email';
+  String get publicProfileSubtitle => 'Allow others to view profile';
 
   @override
-  String get show_email_sub => 'Display your email on your profile';
+  String get displayPetsTitle => 'Display Pets';
 
   @override
-  String get show_phone => 'Show Phone Number';
+  String get displayPetsSubtitle => 'Show on your public profile';
 
   @override
-  String get show_phone_sub => 'Display your phone number on your profile';
+  String get displayPhoneTitle => 'Display Phone Number';
 
   @override
-  String get allow_messages => 'Allow Messages';
+  String get displayPhoneSubtitle => 'Show on your public profile';
 
   @override
-  String get allow_messages_sub => 'Receive messages from other users';
+  String get allowMessagesTitle => 'Allow Messages';
+
+  @override
+  String get allowMessagesSubtitle => 'Receive messages from others';
 
   @override
   String get change_password => 'Change Password';

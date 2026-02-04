@@ -39,9 +39,9 @@ class RegisterController extends ChangeNotifier {
   }
 
   void nextPage() {
-    if (currentPage == 2 && isSocialLogin) {
-      pageController.jumpToPage(4);
-    } else if (currentPage < 5) {
+    // الانتقال الطبيعي للخطوة التالية (للتسجيل اليدوي)
+    if (currentPage < 4) {
+      // 4 هي آخر اندكس (صفحة 5)
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -50,21 +50,25 @@ class RegisterController extends ChangeNotifier {
   }
 
   void prevPage(BuildContext context) {
-    if (currentPage == 4 && isSocialLogin) {
-      pageController.jumpToPage(2);
-    } else if (currentPage == 2 && isSocialLogin) {
-      isSocialLogin = false;
-      notifyListeners();
-
-      pageController.jumpToPage(1);
-    } else if (currentPage > 0) {
-      pageController.previousPage(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    } else {
+    // 1. الخروج لو في البداية
+    if (currentPage == 0) {
       Navigator.pop(context);
+      return;
     }
+
+    // 2. معالجة الرجوع في حالة السوشيال ميديا
+    if (currentPage == 4 && isSocialLogin) {
+      pageController.jumpToPage(0); // العودة لنقطة الصفر
+      updatePage(0);
+      isSocialLogin = false; // تصفير الفلاج
+      return;
+    }
+
+    // 3. الرجوع الطبيعي خطوة واحدة
+    pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void updatePage(int index) {
@@ -120,7 +124,8 @@ class RegisterController extends ChangeNotifier {
   }
 
   // دالة استكمال بيانات الدكتور
-  Future<void> uploadVetDocuments({
+  Future<void> uploadVetDocuments(
+    BuildContext context, { // ✅ 1. استقبلنا الـ context هنا
     required File idFront,
     required File idBack,
     required File license,
@@ -134,8 +139,19 @@ class RegisterController extends ChangeNotifier {
     };
 
     log("🚀 2. Uploading Vet Docs: $vetData");
-    // Call API (Upload Docs)
-    // وبعد النجاح: Navigator.pushReplacementNamed(context, '/home');
+
+    try {
+      // Call API (Upload Docs) here...
+      // await authRepo.uploadDocs(vetData);
+
+      // ✅ 2. بعد نجاح الرفع، ننتقل لصفحة الاهتمامات
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => InterestsScreen(controller: this)),
+      );
+    } catch (e) {
+      log("Error uploading docs: $e");
+      // Show snackbar error
+    }
   }
 
   // 4. دالة حفظ الاهتمامات

@@ -31,7 +31,7 @@ class PrivacySecurity extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(AppDimensions.padding),
                 child: Text(
-                  AppLocalizations.of(context)!.privacy_note,
+                  AppLocalizations.of(context)!.privacyNote,
                   style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),

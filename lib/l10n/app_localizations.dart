@@ -923,12 +923,6 @@ abstract class AppLocalizations {
   /// **'Inspiring stories, personal experiences, and moments'**
   String get storiesSubtitle;
 
-  /// No description provided for @tagPetTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Tag your pet (Optional)'**
-  String get tagPetTitle;
-
   /// No description provided for @postingTipsTitle.
   ///
   /// In en, this message translates to:
@@ -1012,12 +1006,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications'**
   String get notifications;
-
-  /// Label for enabling notifications
-  ///
-  /// In en, this message translates to:
-  /// **'Enable notifications'**
-  String get enable_Notifications;
 
   /// Account section title
   ///
@@ -1139,59 +1127,65 @@ abstract class AppLocalizations {
   /// **'This action cannot be undone'**
   String get warning_delete_account;
 
-  /// Privacy info note shown to the user
+  /// Privacy disclaimer text showing user control over data
   ///
   /// In en, this message translates to:
-  /// **'🔒 We respect your privacy. You can control the information you share with the community at any time.'**
-  String get privacy_note;
+  /// **'🔒 We respect your privacy and protect your data. You control who sees your information and pets.'**
+  String get privacyNote;
 
-  /// Option to allow others to view user's profile
+  /// No description provided for @privacySettingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Settings'**
+  String get privacySettingsTitle;
+
+  /// No description provided for @publicProfileTitle.
   ///
   /// In en, this message translates to:
   /// **'Public Profile'**
-  String get profile_public;
+  String get publicProfileTitle;
 
-  /// Subtitle for public profile option
+  /// No description provided for @publicProfileSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Allow others to view your profile'**
-  String get profile_public_sub;
+  /// **'Allow others to view profile'**
+  String get publicProfileSubtitle;
 
-  /// Option to show email in profile
+  /// No description provided for @displayPetsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Show Email'**
-  String get show_email;
+  /// **'Display Pets'**
+  String get displayPetsTitle;
 
-  /// Subtitle for email visibility option
+  /// No description provided for @displayPetsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Display your email on your profile'**
-  String get show_email_sub;
+  /// **'Show on your public profile'**
+  String get displayPetsSubtitle;
 
-  /// Option to show phone number in profile
+  /// No description provided for @displayPhoneTitle.
   ///
   /// In en, this message translates to:
-  /// **'Show Phone Number'**
-  String get show_phone;
+  /// **'Display Phone Number'**
+  String get displayPhoneTitle;
 
-  /// Subtitle for phone number visibility option
+  /// No description provided for @displayPhoneSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Display your phone number on your profile'**
-  String get show_phone_sub;
+  /// **'Show on your public profile'**
+  String get displayPhoneSubtitle;
 
-  /// Option to receive messages from users
+  /// No description provided for @allowMessagesTitle.
   ///
   /// In en, this message translates to:
   /// **'Allow Messages'**
-  String get allow_messages;
+  String get allowMessagesTitle;
 
-  /// Subtitle explaining the message receiving option
+  /// No description provided for @allowMessagesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Receive messages from other users'**
-  String get allow_messages_sub;
+  /// **'Receive messages from others'**
+  String get allowMessagesSubtitle;
 
   /// Title for change password screen
   ///
