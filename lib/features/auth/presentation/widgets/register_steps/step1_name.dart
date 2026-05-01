@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
-import 'package:rafiq/features/auth/presentation/widgets/auth_buttons/apple_button.dart';
-import 'package:rafiq/features/auth/presentation/widgets/auth_buttons/google_button.dart';
 import 'package:rafiq/features/auth/presentation/widgets/next_button.dart';
-import 'package:rafiq/features/auth/presentation/widgets/or_divider.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class Step1Name extends StatefulWidget {
@@ -60,20 +56,6 @@ class _Step1NameState extends State<Step1Name> {
             ),
 
             NextButton(onNext: _validateAndNext),
-
-            OrDivider(),
-
-            GoogleButton(
-              title: AppLocalizations.of(context)!.signUpWithGoogle,
-              onPressed: widget.onSocialLogin,
-            ),
-
-            SizedBox(height: AppDimensions.paddingM),
-
-            AppleButton(
-              title: AppLocalizations.of(context)!.signUpWithApple,
-              onPressed: widget.onSocialLogin,
-            ),
           ],
         ),
       ),

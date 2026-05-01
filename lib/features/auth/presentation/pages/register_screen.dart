@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafiq/features/auth/controller/register_controller.dart';
+import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/presentation/pages/interests_screen.dart';
+import 'package:rafiq/features/auth/presentation/pages/vet_verification.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_header.dart';
 import 'package:rafiq/features/auth/presentation/widgets/register_step_indicator.dart';
 import 'package:rafiq/features/auth/presentation/widgets/register_steps/step1_name.dart';
@@ -27,11 +31,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ListenableBuilder(
-      listenable: _controller,
-      builder: (context, child) {
-        return Scaffold(
-          body: Column(
+    return Scaffold(
+      body: ListenableBuilder(
+        listenable: _controller,
+        builder: (context, child) {
+          return Column(
             children: [
               AuthHeader(
                 title: AppLocalizations.of(context)!.create_new_account,
@@ -56,11 +60,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       onNext: _controller.nextPage,
                       onSocialLogin: () {
                         _controller.isSocialLogin = true;
-
                         _controller.pageController.jumpToPage(4);
                         _controller.updatePage(4);
                       },
                     ),
+
                     Step2Contact(
                       emailController: _controller.emailController,
                       phoneController: _controller.phoneController,
@@ -83,16 +87,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Step5AccountType(
                       onTypeSelected: (val) {
                         _controller.setAccountType(val);
-                        _controller.registerUser(context);
+                        final currentCubit = context.read<RegisterCubit>();
+
+                        if (val == "PetOwner") {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider.value(
+                                value: currentCubit,
+                                child: InterestsScreen(controller: _controller),
+                              ),
+                            ),
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => BlocProvider.value(
+                                value: currentCubit,
+                                child: VetVerification(controller: _controller),
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

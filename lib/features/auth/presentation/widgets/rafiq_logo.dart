@@ -10,20 +10,22 @@ class RafiqLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingL),
-          child: Card(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppDimensions.radiusXL),
-            ),
-            color: Theme.of(context).colorScheme.primary,
-            child: Image.asset("assets/icons/rafiq logo.png", height: 90.h),
+        Card(
+          margin: EdgeInsets.all(AppDimensions.padding),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppDimensions.radiusXL),
           ),
+          color: Theme.of(context).colorScheme.primary,
+          child: Image.asset("assets/icons/rafiq_logo.png", height: 90.h),
         ),
-        Text(title, style: Theme.of(context).textTheme.bodyLarge),
+        Text(title, style: Theme.of(context).textTheme.headlineLarge),
         SizedBox(height: 20.h),
-        Text(subtitle, style: Theme.of(context).textTheme.labelMedium),
+        Text(
+          subtitle,
+          style: Theme.of(context).textTheme.labelMedium,
+          textAlign: TextAlign.center,
+        ),
         SizedBox(height: 4.h),
       ],
     );

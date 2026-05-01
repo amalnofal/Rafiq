@@ -1,5 +1,5 @@
 import 'package:rafiq/core/enums/post_category.dart';
-import 'package:rafiq/features/auth/data/models/user_model.dart';
+import 'package:rafiq/core/models/user_model.dart';
 
 class PostModel {
   final String id;
@@ -40,7 +40,7 @@ class PostModel {
               firstName: 'مستخدم',
               lastName: 'رفيق',
               email: '',
-              userType: 'pet_owner',
+              role: UserType.petOwner,
             ),
 
       text: map['text'] ?? '',
@@ -81,5 +81,36 @@ class PostModel {
       'isLiked': isLiked,
       'isEdited': isEdited,
     };
+  }
+
+  // ==========================================================
+  // copyWith: مهمة لتحديث اللايكات والكومنتات محلياً
+  // ==========================================================
+  PostModel copyWith({
+    String? id,
+    String? userId,
+    UserModel? user,
+    String? text,
+    DateTime? createdAt,
+    List<PostCategory>? categories, 
+    String? imageUrl,
+    int? likesCount,
+    int? commentsCount,
+    bool? isLiked,
+    bool? isEdited,
+  }) {
+    return PostModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      user: user ?? this.user,
+      text: text ?? this.text,
+      createdAt: createdAt ?? this.createdAt,
+      categories: categories ?? this.categories,
+      imageUrl: imageUrl ?? this.imageUrl,
+      likesCount: likesCount ?? this.likesCount,
+      commentsCount: commentsCount ?? this.commentsCount,
+      isLiked: isLiked ?? this.isLiked,
+      isEdited: isEdited ?? this.isEdited,
+    );
   }
 }

@@ -13,6 +13,54 @@
     "type": "text"
   },
 
+  "welcomeToRafiq": "Welcome to Rafiq !",
+  "@welcomeToRafiq": {},
+  "welcomeSubtitle": "Start your pet care journey\nAdd your pet to start tracking its health",
+  "@welcomeSubtitle": {
+    "description": "Subtitle in the pet owner's home empty state"
+  },
+  "addPetBtn": "Add Your Pet",
+  "@addPetBtn": {
+    "description": "Button to add the first pet"
+  },
+  "editPetTitle": "Edit Pet Details",
+  "@editPetTitle": {},
+  "removePetTitle": "Remove Pet",
+  "@removePetTitle": {},
+  "removePetDesc": "Are you sure you want to remove",
+  "@removePetDesc": {},
+  "actionCannotBeUndone": "This action cannot be undone.",
+  "@actionCannotBeUndone": {},
+  "removeBtn": "Remove",
+  "@removeBtn": {},
+
+  "tipTitle": "Quick Tip",
+  "@tipTitle": {},
+  "ownerTipContent": "After adding your pet, you can order a smart collar for comprehensive monitoring of its health and activity in real-time!",
+  "@ownerTipContent": {},
+  "vetTipContent": "Complete your clinic profile by adding working hours and available services to make it easier for pet owners to contact you and book appointments!",
+  "@vetTipContent": {},
+
+  "healthTrackingTitle": "Health Tracker",
+  "@healthTrackingTitle": {},
+  "healthTrackingSubtitle": "Track pulse, activity, and temperature",
+  "@healthTrackingSubtitle": {},
+
+  "communityTitle": "Community",
+  "@communityTitle": {},
+  "communitySubtitle": "Connect with other pet lovers",
+  "@communitySubtitle": {},
+
+  "vetClinicsTitle": "Vet Clinics",
+  "@vetClinicsTitle": {},
+  "vetClinicsSubtitle": "Certified clinics and appointment management",
+  "@vetClinicsSubtitle": {},
+
+  "storeTitle": "Pet Shop",
+  "@storeTitle": {},
+  "storeSubtitle": "Everything your pet needs",
+  "@storeSubtitle": {},
+
   "no_account_question": "Don't have an account? ",
   "@no_account_question": {
     "description": "Text asking the user if they don't have an account",
@@ -68,8 +116,12 @@
   
   "dateOfBirthLabel": "Date of Birth",
   "@dateOfBirthLabel": {},
-  "dobHint": "mm/dd/yyyy",
+  "dobHint": "dd/mm/yyyy",
   "@dobHint": {},
+  "set_date": "Set date",
+  "@set_date": {},
+  "set": "Set",
+  "@set": {},
 
   "chooseAccountType": "Choose Account Type",
   "@chooseAccountType": {},
@@ -89,7 +141,7 @@
   "petTypeHint": "Type (e.g. Dog, Cat)",
   "@petTypeHint": {},
 
-  "vetTitle": "Veterinarian",
+  "vetTitle": "Veteterinarian",
   "@vetTitle": {},
   "vetSubtitle": "Offer your services as a licensed veterinarian",
   "@vetSubtitle": {},
@@ -135,7 +187,6 @@
   "selectInterestError": "Please select at least one interest to continue",
   "@selectInterestError": {},
 
-
   "password": "Password",
   "@password": {
     "description": "Password label",
@@ -157,37 +208,33 @@
     "description": "Label for confirm password text field"
   },
 
-  "passwordsDoNotMatch": "Passwords do not match",
-  "@passwordsDoNotMatch": {},
+  "invalidEmailAddress": "Please enter a valid email address",
+  "@invalidEmailAddress": {},
+  "invalidPhoneNumber": "Please enter a valid phone number",
+  "@invalidPhoneNumber": {},
+  "passwordRuleLength": "Password must be at least 8 characters",
+  "@passwordRuleLength": {},
+  "passwordTooLong": "Password is too long",
+  "@passwordTooLong": {},
+  "passwordRuleUpperCase": "Must contain an uppercase letter (A-Z)",
+  "@passwordRuleUpperCase": {},
+  "passwordRuleLowerCase": "Must contain a lowercase letter (a-z)",
+  "@passwordRuleLowerCase": {},
+  "passwordRuleNumber": "Must contain a number (0-9)",
+  "@passwordRuleNumber": {},
+  "passwordRuleSymbol": "Must contain a special character (!@#$)",
+  "@passwordRuleSymbol": {},
 
   "passwordRequirements": "Password Requirements:",
   "@passwordRequirements": {},
-  "passwordRuleLength": "At least 8 characters",
-  "@passwordRuleLength": {},
   "passwordRuleCase": "Uppercase and lowercase letters",
   "@passwordRuleCase": {},
-  "passwordRuleNumber": "At least one number",
-  "@passwordRuleNumber": {},
+  
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {},  
 
-  "passwordRuleUpperCase": "At least one uppercase letter",
-  "@passwordRuleUpperCase": {
-    "description": "Validation rule requiring at least one uppercase letter"
-  },
-
-  "passwordRuleLowerCase": "At least one lowercase letter",
-  "@passwordRuleLowerCase": {
-    "description": "Validation rule requiring at least one lowercase letter"
-  },
-
-  "phoneRuleLength": "Phone number must be at least 11 digits",
-  "@phoneRuleLength": {
-    "description": "Validation rule for phone number length"
-  },
-
-  "invalidEmailAddress": "Invalid email address",
-  "@invalidEmailAddress": {
-    "description": "Error message shown when the email format is incorrect"
-  },
+  "ageTooYoung": "You must be at least 18 years old",
+  "@ageTooYoung": {},
 
   "nameRequired": "Name is required",
   "@nameRequired": {
@@ -198,11 +245,62 @@
   "@nameTooShort": {
     "description": "Error message when the name is less than the required length"
   },
+
+  "textTooShort3": "Must be at least 3 characters",
+  "@textTooShort3": {},
+
+  "nameTooLong": "Name must not exceed 50 characters",
+  "@nameTooLong": {},
   
   "fieldRequired": "This field is required",
   "@fieldRequired": {
     "description": "Error message when a field is empty"
   },
+
+  "invalidDate": "Please select a valid past date.",
+  "@invalidDate": {},
+
+  "genderRequiredError": "Please select gender",
+  "@genderRequiredError":{},
+
+  "petTypeRequiredError": "Please select type",
+  "@petTypeRequiredError":{},
+
+  "invalidData": "Invalid data provided",
+  "@invalidData": {},
+  "registrationFailed": "Registration failed, please try again",
+  "@registrationFailed": {},
+  "registrationSuccess": "Account created successfully!",
+  "@registrationSuccess": {},
+  "emailAlreadyExists": "This email is already registered, please log in.",
+  "@emailAlreadyExists": {},
+
+  "userNotFound": "User not found",
+  "@userNotFound": {},
+  "loginSuccess": "Login successful, welcome back!",
+  "@loginSuccess": {},
+
+  "connectionError": "Please check your internet connection and try again.",
+  "@connectionError": {},
+
+  "imageUpdateFailed": "Sorry, photo update failed. Ensure the format is supported (jpg, png).",
+  "@imageUpdateFailed": {},
+
+  "sessionExpired": "Session expired, please log in again.",
+  "@sessionExpired": {},
+
+  "serverError": "Server error occurred, please try again later.",
+  "@serverError": {},
+
+  "unexpectedError": "An unexpected error occurred, please try again later.",
+  "@unexpectedError": {},
+
+  "imageUpdated": "Image updated successfully!",
+  "@imageUpdated": {},
+
+  "wrongCredentials": "Wrong email or password",
+  "@wrongCredentials": {},
+  
 
   "termsAgreementStart": "By creating an account, you agree to ",
   "@termsAgreementStart": {
@@ -308,6 +406,15 @@
     "description": "Forgot password text button"
   },
 
+  "invalidCode": "Invalid or expired code",
+  "@invalidCode": {},
+
+  "codeSent": "Verification code sent to your email",
+  "@codeSent": {},
+
+  "passwordResetSuccess": "Password reset successfully, please login",
+  "@passwordResetSuccess": {},
+
   "recoverPassword": "Reset Password",
   "@recoverPassword": {},
   "enterEmailSubtitle": "Enter your email address",
@@ -330,7 +437,7 @@
   "resendCodeText": "Resend Code",
   "@resendCodeText": {},
 
-  "second": " {count, plural, =1{1 second} other{{count} seconds}}",
+  "second": " {count}s",
   "@second": {"description": "Just the seconds count with unit",
     "placeholders": {
       "count": {
@@ -357,15 +464,328 @@
     "type": "text"
   },
 
+  "home": "Home",
+  "@home": {
+    "description": "Bottom navigation bar item: Home"
+  },
+
   "profile": "Profile",
   "@profile": {
     "description": "Profile page title",
     "type": "text"
   },
 
-  "home": "Home",
-  "@home": {
-    "description": "Bottom navigation bar item: Home"
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {},
+  "noNotificationsYet": "No notifications yet",
+  "@noNotificationsYet": {},
+  "notificationsSubtitle": "Stay updated on your pet's health,\n appointments, and more.",
+  "@notificationsSubtitle": {},
+
+  "followBtn": "Follow",
+  "@followBtn": {},
+  "unfollowBtn": "Unfollow",
+  "@unfollowBtn": {},
+
+  "manageAppointmentsBtn": "Manage Appointments",
+  "@manageAppointmentsBtn": {},
+
+  "addAppointment": "Add Appointment",
+  "@addAppointment": {
+    "description": "Button or title to add a new appointment"
+  },
+
+  "editAppointment": "Edit Appointment",
+  "@editAppointment": {},
+
+  "myAppointmentsTitle": "My Appointments",
+  "@myAppointmentsTitle": {},
+
+  "allAppointments": "All",
+  "@allAppointments": {},
+
+  "pendingApproval": "Pending Approval",
+  "@pendingApproval": {
+    "description": "Status for appointments waiting to be accepted"
+  },
+
+  "confirmedAppointments": "Confirmed",
+  "@confirmedAppointments": {},
+
+  "completedAppointments": "Completed",
+  "@completedAppointments": {},
+
+  "pending": "Pending",
+  "@pending": {},
+
+  "confirmed": "Confirmed",
+  "@confirmed": {},
+
+  "completed": "Completed",
+  "@completed": {},
+
+ "markAsCompleted": "Mark as Completed",
+  "@markAsCompleted": {},
+  
+  "todayAppointments": "Today's Appointments",
+  "@todayAppointments": {},
+
+  "appointmentsOnDate": "Appointments on {date}",
+  "@appointmentsOnDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+
+  "deleteAppointmentTitle": "Delete Appointment",
+  "@deleteAppointmentTitle": {
+    "description": "Title for the delete confirmation dialog"
+  },
+
+  "deleteConfirmationMessage": "Are you sure you want to delete this appointment?",
+  "@deleteConfirmationMessage": {
+    "description": "Message body for delete confirmation"
+  },
+
+  "appointmentFor": "Appointment for",
+  "@appointmentFor": {
+    "description": "Used as a prefix, e.g., Appointment for Max"
+  },
+
+  "petLabel": "Pet",
+  "@petLabel": {},
+
+  "clinicLabel": "Clinic",
+  "@clinicLabel": {},
+
+  "noPetsFoundTitle": "No Pets Found",
+  "@noPetsFoundTitle": {},
+  "noPetsFoundDescription": "You must add a pet first to be able to book an appointment for it.",
+  "@noPetsFoundDescription": {},
+  "noClinicsFoundTitle": "No Clinics Found",
+  "@noClinicsFoundTitle": {},
+  "noClinicsFoundDescription": "You must add a clinic first to be able to book a work appointment in it.",
+  "@noClinicsFoundDescription": {},
+  "okButton": "OK",
+  "@okButton": {},
+
+  "noAppointmentsToday": "No appointments for this day",
+  "@noAppointmentsToday": {},
+
+  "appointmentAddedSuccess": "Appointment added successfully!",
+  "@appointmentAddedSuccess": {},
+  "appointmentUpdatedSuccess": "Appointment updated successfully!",
+  "@appointmentUpdatedSuccess": {},
+
+  "phoneNumberNotAvailable": "Phone number is not available.",
+  "@phoneNumberNotAvailable": {},
+  "appointmentBookingSuccess": "Booking request sent successfully and is awaiting doctor's confirmation.",
+  "@appointmentBookingSuccess": {},
+
+  "selectPetLabel": "Select Pet",
+  "@selectPetLabel": {},
+
+  "selectClinicLabel": "Select Clinic",
+  "@selectClinicLabel": {
+    "description": "Label for the clinic selection section in appointment form"
+  },
+
+  "visitReasonLabel": "Visit Reason",
+  "@visitReasonLabel": {},
+
+  "dateLabel": "Date",
+  "@dateLabel": {},
+
+  "timeLabel": "Time",
+  "@timeLabel": {},
+
+  "additionalNotesLabel": "Additional Notes",
+  "@additionalNotesLabel": {},
+
+  "notesHint": "Add any notes here...",
+  "@notesHint": {},
+
+  "visitReasonHint": "e.g., Annual checkup, vaccination...",
+  "@visitReasonHint": {
+    "description": "Hint text for the visit reason field"
+  },
+
+  "dateHintText": "DD/MM/YYYY",
+  "@dateHintText": {
+    "description": "Hint showing the date format"
+  },
+
+  "timeHintText": "00:00",
+  "@timeHintText": {
+    "description": "Hint showing the time format"
+  },
+
+  "privateAppointment": "Private Appointment",
+  "@privateAppointment": {},
+
+  "followingLabel": "Following",
+  "@followingLabel": {},
+  
+  "followersLabel": "Followers",
+  "@followersLabel": {},
+  
+  "postsCountLabel": "Posts",
+  "@postsCountLabel": {},
+
+  "userPetsTitle": "Pets",
+  "@userPetsTitle": {},
+  "myPetsTitle": "My Pets",
+  "@myPetsTitle": {},
+
+  "addNewPetTitle": "Add New Pet",
+  "@addNewPetTitle": {
+    "description": "Title for the screen or section to add a new pet"
+  },
+
+  "addPetSuccess": "Pet added successfully",
+  "@addPetSuccess": {},
+  "addNewClinicTitle": "Add New Clinic",
+  "@addNewClinicTitle": {},
+  "editClinicTitle": "Edit Clinic Details",
+  "@editClinicTitle": {},
+  "addClinicSuccess": "Clinic added successfully",
+  "@addClinicSuccess": {},
+
+  "addPetPhoto": "Add Pet Photo",
+  "@addPetPhoto": {
+    "description": "Label for the image picker to add a photo of the pet"
+  },
+
+  "basicInfoSection": "Basic Info",
+  "@basicInfoSection": {
+    "description": "Header for the basic information section"
+  },
+
+  "petTypeLabel": "Pet Type",
+  "@petTypeLabel": {},
+
+  "weightLabel": "Weight",
+  "@weightLabel": {},
+  "kgLabel": "kg",
+  "@kgLabel": {},
+
+  "colorLabel": "Color",
+  "@colorLabel": {},
+
+  "colorHint": "Brown, white..",
+  "@colorHint": {},
+
+  "cat": "Cat",
+  "@cat": {},
+  "dog": "Dog",
+  "@dog": {},
+  "rabbit": "Rabbit",
+  "@rabbit": {},
+  "bird": "Bird",
+  "@bird": {},
+  "turtle": "Turtle",
+  "@turtle": {},
+  "other": "Other",
+  "@other": {},
+
+  "petAgeYears": "{count, plural, =0{Less than a year} =1{1 year} other{{count} years}}",
+  "@petAgeYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "petAgeMonths": "{count, plural, =0{Less than a month} =1{1 month} other{{count} months}}",
+  "@petAgeMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "breedLabel": "Breed",
+  "@breedLabel": {},
+
+  "submitAddPetBtn": "Add Pet",
+  "@submitAddPetBtn": {},
+
+  "removePetSuccess": "Pet removed successfully",
+  "@removePetSuccess": {
+    "description": "Success message when a pet is removed"
+  },
+
+  "showMoreBtn": "Show More",
+  "@showMoreBtn": {
+    "description": "Button to expand a list"
+  },
+
+  "showLessBtn": "Show Less",
+  "@showLessBtn": {},
+
+  "myClinicsTitle": "My Clinics",
+  "@myClinicsTitle": {
+    "description": "Title for the vet's clinics section in profile"
+  },
+
+  "noPetsAdded": "No pets added.",
+  "@noPetsAdded": {},
+  "noClinicsAdded": "No clinics added.",
+  "@noClinicsAdded": {},
+
+  "clinicNameLabel": "Clinic Name",
+  "@clinicNameLabel": {},
+  "clinicAddressLabel": "Address",
+  "@clinicAddressLabel": {},
+  "clinicWorkingHoursLabel": "Working Hours",
+  "@clinicWorkingHoursLabel": {},
+  "clinicDescriptionHint": "Write a brief description of the clinic and its services...",
+  "@clinicDescriptionHint": {},
+  "uploadClinicPhotoHint": "Upload your clinic's photo",
+  "@uploadClinicPhotoHint": {},
+  "addClinicBtn": "Add Your Clinic",
+  "@addClinicBtn": {},
+
+  "deletePetTitle": "Delete '{name}'",
+  "@deletePetTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePetWarning": "This action cannot be undone. All associated appointments will be canceled",
+  "@deletePetWarning": {},
+
+  "clinicAddedSuccess": "Clinic added successfully!",
+  "@clinicAddedSuccess": {},
+
+  "deleteClinicSuccess": "Clinic deleted successfully!",
+  "@deleteClinicSuccess": {},
+
+  "addressTooShort": "Address is too short, please provide more details",
+  "@addressTooShort": {},
+  "descTooShort": "Description is too short, must be at least 10 characters",
+  "@descTooShort": {},
+  "hoursTooShort": "Please enter valid working hours",
+  "@hoursTooShort": {},
+  "specializationTooShort": "Please enter a valid specialization",
+  "@specializationTooShort": {},
+
+  "noPostsYet": "No posts yet.",
+  "@noPostsYet": {},
+
+  "userPostsTitle": "Posts",
+  "@userPostsTitle": {},
+  "myPostsTitle": "My Posts",
+  "@myPostsTitle": {},
+
+  "seeAllBtn": "See All",
+  "@seeAllBtn": {
+    "description": "Button to view all items in a category"
   },
 
   "clinics": "Clinics",
@@ -373,8 +793,71 @@
     "description": "Bottom navigation bar item: Clinics"
   },
 
-  "vetClinicsTitle": "Vet Clinics",
-  "@vetClinicsTitle": {},
+  "searchClinicHint": "Search by clinic name or area...",
+  "@searchClinicHint": {
+    "description": "Hint text for the clinic search field"
+  },
+
+  "noClinicsAvailable":"No clinics available at the moment",
+  "@noClinicsAvailable": {
+    "description": "Message shown when there are no clinics available in the vet clinics section"
+  },
+
+  "bookAppointment": "Book Appointment",
+  "@bookAppointment": {},
+  "addReview": "Add Review",
+  "@addReview": {},
+
+  "reviewsCount": "{count, plural, =1{1 Review} other{{count} Reviews}}",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "clinicConfirmationNotice": "The appointment will be confirmed by the clinic",
+  "@clinicConfirmationNotice": {},
+  "confirmBooking": "Confirm Booking",
+  "@confirmBooking": {},
+
+  "checkBackLater": "Check back later for updates",
+  "@checkBackLater": {
+    "description": "Message shown when there are no posts in the community feed"
+  },
+
+  "noMatchingResults": "No matching results for \"{query}\"",
+  "@noMatchingResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+
+  "search": "Search",
+  "@search": {},
+
+  "editYourReview": "Edit Your Review",
+  "@editYourReview": {},
+  "yourClinicReview": "Your Clinic Review",
+  "@yourClinicReview": {},
+  "selectRating": "Select Rating *",
+  "@selectRating": {},
+  "writeCommentOptional": "Write your comment here (optional)",
+  "@writeCommentOptional": {},
+  "submitReview": "Submit Review",
+  "@submitReview": {},
+  "pleaseSelectRatingFirst": "Please select a rating first ⭐",
+  "@pleaseSelectRatingFirst": {},
+  "shareYourExperience": "Share your experience with the clinic...",
+  "@shareYourExperience": {},
+
+  "accept": "Accept",
+  "@accept": {},
+  "decline": "Decline",
+  "@decline": {},
 
   "smartCollar": "Smart Collar",
   "@smartCollar": {
@@ -390,9 +873,6 @@
   "@postContentHint": {
     "description": "Hint text shown in the post creation text field"
   },
-
-  "emptyCommunityText": "No posts yet",
-  "@emptyCommunityText": { "description": "Text shown when community feed is empty" },
 
   "newPostTitle": "New Post",
   "@newPostTitle": {},
@@ -436,6 +916,10 @@
   "editPost": "Edit Post",
   "@editPost": {
     "description": "Title or button label for editing a post"
+  },
+  "postEditedSuccessfully": "Post updated successfully",
+  "@postEditedSuccessfully": {
+    "description": "Message shown when a post is edited successfully"
   },
 
   "editingCommentHint": "Editing comment...",
@@ -613,12 +1097,6 @@
     "type": "text"
   },
 
-  "notifications": "Notifications",
-  "@notifications": {
-    "description": "Notifications section title",
-    "type": "text"
-  },
-
   "account": "Account",
   "@account": {
     "description": "Account section title",
@@ -677,6 +1155,11 @@
   "@join_date": {
     "description": "User join date label",
     "type": "text"
+  },
+
+  "joined": "Joined",
+  "@joined": {
+    "description": "Label for the user's account creation date"
   },
 
   "version": "Version",
@@ -842,6 +1325,13 @@
   "@upcomingAppointments": {
     "description": "Section header for scheduled future appointments"
   },
+
+  "noHealthRecord": "No medical record",
+  "@noHealthRecord": {},
+  "noUpcomingAppointments": "No upcoming appointments",
+  "@noUpcomingAppointments": {},
+  "noReminders": "No reminders",
+  "@noReminders": {},
 
   "noSmartCollarTitle": "This pet has no smart collar",
   "@noSmartCollarTitle": {

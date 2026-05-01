@@ -19,7 +19,6 @@ class ChangeLanguage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           AppLocalizations.of(context)!.language,
-          style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
       body: Column(

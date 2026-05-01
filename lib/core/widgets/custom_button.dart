@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 
 class CustomButton extends StatelessWidget {
@@ -8,9 +9,11 @@ class CustomButton extends StatelessWidget {
     super.key,
     required this.title,
     this.fontWeight,
+    this.fontSize,
+    this.iconSize,
     this.color,
     this.txtColor,
-    this.onpressed,
+    this.onPressed,
     this.icon,
     this.iconColor,
     this.height,
@@ -23,10 +26,12 @@ class CustomButton extends StatelessWidget {
 
   final String title;
   final FontWeight? fontWeight;
+  final double? fontSize;
+  final double? iconSize;
   final Color? color;
   final Color? txtColor;
   final Color? iconColor;
-  final VoidCallback? onpressed;
+  final VoidCallback? onPressed;
   final String? icon;
   final double? height;
   final double? width;
@@ -44,7 +49,7 @@ class CustomButton extends StatelessWidget {
       height: buttonHeight,
       width: buttonWidth,
       child: ElevatedButton(
-        onPressed: onpressed,
+        onPressed: onPressed,
         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
           padding: WidgetStateProperty.all(EdgeInsets.zero),
 
@@ -79,9 +84,7 @@ class CustomButton extends StatelessWidget {
             return elevation;
           }),
 
-          shadowColor: WidgetStateProperty.all(
-            Colors.black.withValues(alpha: 0.25),
-          ),
+          shadowColor: WidgetStateProperty.all(AppColors.kShadowOverlay),
 
           side: hasBorder
               ? WidgetStateProperty.all(
@@ -101,7 +104,7 @@ class CustomButton extends StatelessWidget {
             if (icon != null) ...[
               SvgPicture.asset(
                 icon!,
-                height: 24.h,
+                height: iconSize ?? 24.h,
                 width: 24.w,
                 colorFilter: preserveIconColors
                     ? null
@@ -114,13 +117,13 @@ class CustomButton extends StatelessWidget {
             ],
             Flexible(
               child: Padding(
-                padding: EdgeInsets.only(top: 8.h),
+                padding: EdgeInsets.only(top: 6.h),
                 child: Text(
                   title,
                   maxLines: 1,
                   style: TextStyle(
                     fontWeight: fontWeight,
-                    fontSize: 16.sp,
+                    fontSize: fontSize ?? 16.sp,
                     height: 1.0,
                   ),
                 ),

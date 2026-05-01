@@ -15,6 +15,63 @@ class AppLocalizationsAr extends AppLocalizations {
   String get pet_care_assistant => 'مساعد الذكي للعناية بحيوانك الأليف';
 
   @override
+  String get welcomeToRafiq => 'مرحباً في رفيق !';
+
+  @override
+  String get welcomeSubtitle => 'ابدأ رحلتك في رعاية حيوانك الأليف\nأضف حيوانك الأليف للبدء في تتبع صحته';
+
+  @override
+  String get addPetBtn => 'إضافة حيوان أليف';
+
+  @override
+  String get editPetTitle => 'تعديل بيانات الحيوان';
+
+  @override
+  String get removePetTitle => 'إزالة الحيوان الأليف';
+
+  @override
+  String get removePetDesc => 'هل أنت متأكد من أنك تريد إزالة';
+
+  @override
+  String get actionCannotBeUndone => 'لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get removeBtn => 'إزالة';
+
+  @override
+  String get tipTitle => 'نصيحة سريعة';
+
+  @override
+  String get ownerTipContent => 'بعد إضافة حيوانك الأليف، يمكنك طلب طوق ذكي للحصول على مراقبة شاملة لصحته ونشاطه في الوقت الفعلي!';
+
+  @override
+  String get vetTipContent => 'أكمل ملف عيادتك بإضافة ساعات العمل والخدمات المتاحة لتسهل على أصحاب الحيوانات التواصل معك وحجز المواعيد!';
+
+  @override
+  String get healthTrackingTitle => 'المتابعة الصحية';
+
+  @override
+  String get healthTrackingSubtitle => 'تتبع النبض والنشاط والحرارة';
+
+  @override
+  String get communityTitle => 'مجتمع رفيق';
+
+  @override
+  String get communitySubtitle => 'تواصل مع محبي الحيوانات الأليفة';
+
+  @override
+  String get vetClinicsTitle => 'العيادات البيطرية';
+
+  @override
+  String get vetClinicsSubtitle => 'عيادات معتمدة وتنظيم المواعيد';
+
+  @override
+  String get storeTitle => 'متجر رفيق';
+
+  @override
+  String get storeSubtitle => 'كل ما يحتاجه أليفك في مكان واحد';
+
+  @override
   String get no_account_question => 'ليس لديك حساب؟ ';
 
   @override
@@ -54,7 +111,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dateOfBirthLabel => 'تاريخ الميلاد';
 
   @override
-  String get dobHint => 'mm/dd/yyyy';
+  String get dobHint => 'يوم/شهر/سنة';
+
+  @override
+  String get set_date => 'تحديد التاريخ';
+
+  @override
+  String get set => 'تعيين';
 
   @override
   String get chooseAccountType => 'اختر نوع الحساب';
@@ -150,31 +213,40 @@ class AppLocalizationsAr extends AppLocalizations {
   String get confirmPassword => 'تأكيد كلمة المرور';
 
   @override
-  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+  String get invalidEmailAddress => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get invalidPhoneNumber => 'يرجى إدخال رقم هاتف صحيح';
+
+  @override
+  String get passwordRuleLength => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+
+  @override
+  String get passwordTooLong => 'كلمة المرور طويلة جداً';
+
+  @override
+  String get passwordRuleUpperCase => 'يجب أن تحتوي على حرف كبير (A-Z)';
+
+  @override
+  String get passwordRuleLowerCase => 'يجب أن تحتوي على حرف صغير (a-z)';
+
+  @override
+  String get passwordRuleNumber => 'يجب أن تحتوي على رقم (0-9)';
+
+  @override
+  String get passwordRuleSymbol => 'يجب أن تحتوي على رمز خاص (!@#\$)';
 
   @override
   String get passwordRequirements => 'متطلبات كلمة المرور:';
 
   @override
-  String get passwordRuleLength => 'على الأقل 8 أحرف';
-
-  @override
   String get passwordRuleCase => 'حروف كبيرة وحروف صغيرة';
 
   @override
-  String get passwordRuleNumber => 'رقم واحد على الأقل';
+  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
 
   @override
-  String get passwordRuleUpperCase => 'حرف كبير واحد على الأقل';
-
-  @override
-  String get passwordRuleLowerCase => 'حرف صغير واحد على الأقل';
-
-  @override
-  String get phoneRuleLength => 'رقم هاتف غير صالح';
-
-  @override
-  String get invalidEmailAddress => 'البريد الإلكتروني غير صحيح';
+  String get ageTooYoung => 'يجب أن يكون عمرك 18 عاماً على الأقل';
 
   @override
   String get nameRequired => 'الاسم مطلوب';
@@ -183,7 +255,61 @@ class AppLocalizationsAr extends AppLocalizations {
   String get nameTooShort => 'الاسم قصير جداً';
 
   @override
+  String get textTooShort3 => 'يجب ألا يقل عن 3 أحرف';
+
+  @override
+  String get nameTooLong => 'يجب ألا يزيد الاسم عن 50 حرفًا';
+
+  @override
   String get fieldRequired => 'هذا الحقل مطلوب';
+
+  @override
+  String get invalidDate => 'برجاء اختيار تاريخ ميلاد يسبق تاريخ اليوم.';
+
+  @override
+  String get genderRequiredError => 'يرجى اختيار الجنس';
+
+  @override
+  String get petTypeRequiredError => 'يرجى اختيار نوع الحيوان';
+
+  @override
+  String get invalidData => 'البيانات المدخلة غير صحيحة';
+
+  @override
+  String get registrationFailed => 'فشل عملية التسجيل، حاول مرة أخرى';
+
+  @override
+  String get registrationSuccess => 'تم إنشاء الحساب بنجاح!';
+
+  @override
+  String get emailAlreadyExists => 'هذا البريد الإلكتروني مسجل مسبقاً، يرجى تسجيل الدخول.';
+
+  @override
+  String get userNotFound => 'هذا الحساب غير موجود';
+
+  @override
+  String get loginSuccess => 'تم تسجيل الدخول بنجاح، مرحباً بعودتك!';
+
+  @override
+  String get connectionError => 'حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.';
+
+  @override
+  String get imageUpdateFailed => 'عذراً، فشل تحديث الصورة. تأكد من أن الصيغة مدعومة (jpg, png).';
+
+  @override
+  String get sessionExpired => 'انتهت الجلسة، يرجى تسجيل الدخول مجدداً.';
+
+  @override
+  String get serverError => 'حدث خطأ في الخادم، يرجى المحاولة لاحقاً.';
+
+  @override
+  String get unexpectedError => 'حدث خطأ غير متوقع، يرجى المحاولة لاحقاً.';
+
+  @override
+  String get imageUpdated => 'تم تحديث الصورة بنجاح!';
+
+  @override
+  String get wrongCredentials => 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
 
   @override
   String get termsAgreementStart => 'إنشاء حساب، فإنك توافق على';
@@ -249,6 +375,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get forgotPassword => 'نسيت كلمة المرور؟';
 
   @override
+  String get invalidCode => 'الكود غير صحيح أو انتهت صلاحيته';
+
+  @override
+  String get codeSent => 'تم إرسال رمز التحقق إلى بريدك الإلكتروني';
+
+  @override
+  String get passwordResetSuccess => 'تم تغيير كلمة المرور بنجاح، قم بتسجيل الدخول الآن';
+
+  @override
   String get recoverPassword => 'استعادة كلمة المرور';
 
   @override
@@ -270,7 +405,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String second(int count) {
-    return 'ثانية ';
+    return ' $count ث';
   }
 
   @override
@@ -286,16 +421,397 @@ class AppLocalizationsAr extends AppLocalizations {
   String get logout => 'تسجيل الخروج';
 
   @override
+  String get home => 'الرئيسية';
+
+  @override
   String get profile => 'الملف الشخصي';
 
   @override
-  String get home => 'الرئيسية';
+  String get notificationsTitle => 'الإشعارات';
+
+  @override
+  String get noNotificationsYet => 'لا توجد إشعارات حتى الآن';
+
+  @override
+  String get notificationsSubtitle => 'تابع صحة حيوانك الأليف، مواعيدك،\n وآخر التحديثات المهمة.';
+
+  @override
+  String get followBtn => 'متابعة';
+
+  @override
+  String get unfollowBtn => 'إلغاء المتابعة';
+
+  @override
+  String get manageAppointmentsBtn => 'إدارة مواعيدي';
+
+  @override
+  String get addAppointment => 'إضافة موعد';
+
+  @override
+  String get editAppointment => 'تعديل الموعد';
+
+  @override
+  String get myAppointmentsTitle => 'مواعيدي';
+
+  @override
+  String get allAppointments => 'الكل';
+
+  @override
+  String get pendingApproval => 'بانتظار الموافقة';
+
+  @override
+  String get confirmedAppointments => 'المؤكدة';
+
+  @override
+  String get completedAppointments => 'المكتملة';
+
+  @override
+  String get pending => 'قيد الانتظار';
+
+  @override
+  String get confirmed => 'مؤكد';
+
+  @override
+  String get completed => 'مكتمل';
+
+  @override
+  String get markAsCompleted => 'تحديد كمكتمل';
+
+  @override
+  String get todayAppointments => 'مواعيد اليوم';
+
+  @override
+  String appointmentsOnDate(String date) {
+    return 'مواعيد يوم $date';
+  }
+
+  @override
+  String get deleteAppointmentTitle => 'حذف الموعد';
+
+  @override
+  String get deleteConfirmationMessage => 'هل أنت متأكد من رغبتك في حذف هذا الموعد؟.';
+
+  @override
+  String get appointmentFor => 'موعد لـ';
+
+  @override
+  String get petLabel => 'حيوان أليف';
+
+  @override
+  String get clinicLabel => 'عيادة';
+
+  @override
+  String get noPetsFoundTitle => 'لا يوجد حيوانات';
+
+  @override
+  String get noPetsFoundDescription => 'يجب إضافة حيوان أليف أولاً لتتمكن من حجز موعد له.';
+
+  @override
+  String get noClinicsFoundTitle => 'لا يوجد عيادات';
+
+  @override
+  String get noClinicsFoundDescription => 'يجب إضافة عيادة أولاً لتتمكن من حجز موعد عمل بها.';
+
+  @override
+  String get okButton => 'حسناً';
+
+  @override
+  String get noAppointmentsToday => 'لا توجد مواعيد في هذا اليوم';
+
+  @override
+  String get appointmentAddedSuccess => 'تم إضافة الموعد بنجاح!';
+
+  @override
+  String get appointmentUpdatedSuccess => 'تم تعديل الموعد بنجاح!';
+
+  @override
+  String get phoneNumberNotAvailable => 'رقم الهاتف غير متوفر.';
+
+  @override
+  String get appointmentBookingSuccess => 'تم إرسال طلب الحجز للعيادة بنجاح وفي انتظار تأكيد الطبيب.';
+
+  @override
+  String get selectPetLabel => 'اختر الحيوان الأليف';
+
+  @override
+  String get selectClinicLabel => 'اختر عيادة';
+
+  @override
+  String get visitReasonLabel => 'سبب الزيارة';
+
+  @override
+  String get dateLabel => 'التاريخ';
+
+  @override
+  String get timeLabel => 'الوقت';
+
+  @override
+  String get additionalNotesLabel => 'ملاحظات إضافية';
+
+  @override
+  String get notesHint => 'أضف أي ملاحظات هنا...';
+
+  @override
+  String get visitReasonHint => 'مثلاً: كشف سنوي، تطعيم...';
+
+  @override
+  String get dateHintText => 'السنة/الشهر/اليوم';
+
+  @override
+  String get timeHintText => '00:00';
+
+  @override
+  String get privateAppointment => 'موعد خاص';
+
+  @override
+  String get followingLabel => 'يتابع';
+
+  @override
+  String get followersLabel => 'متابع';
+
+  @override
+  String get postsCountLabel => 'منشور';
+
+  @override
+  String get userPetsTitle => 'الحيوانات الأليفة';
+
+  @override
+  String get myPetsTitle => 'حيواناتي الأليفة';
+
+  @override
+  String get addNewPetTitle => 'إضافة حيوان جديد';
+
+  @override
+  String get addPetSuccess => 'تم إضافة حيوانك الأليف بنجاح';
+
+  @override
+  String get addNewClinicTitle => 'إضافة عيادة جديدة';
+
+  @override
+  String get editClinicTitle => 'تعديل بيانات العيادة';
+
+  @override
+  String get addClinicSuccess => 'تم إضافة العيادة بنجاح';
+
+  @override
+  String get addPetPhoto => 'إضافة صورة الحيوان الأليف';
+
+  @override
+  String get basicInfoSection => 'المعلومات الأساسية';
+
+  @override
+  String get petTypeLabel => 'نوع الحيوان';
+
+  @override
+  String get weightLabel => 'الوزن';
+
+  @override
+  String get kgLabel => 'كجم';
+
+  @override
+  String get colorLabel => 'اللون';
+
+  @override
+  String get colorHint => 'بني، أبيض..';
+
+  @override
+  String get cat => 'قط';
+
+  @override
+  String get dog => 'كلب';
+
+  @override
+  String get rabbit => 'أرنب';
+
+  @override
+  String get bird => 'طائر';
+
+  @override
+  String get turtle => 'سلحفاة';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String petAgeYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count سنة',
+      many: '$count سنة',
+      few: '$count سنوات',
+      two: 'سنتان',
+      one: 'سنة واحدة',
+      zero: 'أقل من سنة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String petAgeMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count شهر',
+      many: '$count شهراً',
+      few: '$count شهور',
+      two: 'شهران',
+      one: 'شهر واحد',
+      zero: 'أقل من شهر',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get breedLabel => 'السلالة';
+
+  @override
+  String get submitAddPetBtn => 'إضافة الحيوان الأليف';
+
+  @override
+  String get removePetSuccess => 'تمت إزالة الحيوان بنجاح';
+
+  @override
+  String get showMoreBtn => 'عرض المزيد';
+
+  @override
+  String get showLessBtn => 'عرض أقل';
+
+  @override
+  String get myClinicsTitle => 'عياداتي';
+
+  @override
+  String get noPetsAdded => 'لا توجد حيوانات أليفة.';
+
+  @override
+  String get noClinicsAdded => 'لا توجد عيادات مضافة.';
+
+  @override
+  String get clinicNameLabel => 'اسم العيادة';
+
+  @override
+  String get clinicAddressLabel => 'العنوان';
+
+  @override
+  String get clinicWorkingHoursLabel => 'ساعات العمل';
+
+  @override
+  String get clinicDescriptionHint => 'اكتب وصفاً مختصراً للعيادة وخدماتها...';
+
+  @override
+  String get uploadClinicPhotoHint => 'قم برفع صورة عيادتك';
+
+  @override
+  String get addClinicBtn => 'إضافة العيادة';
+
+  @override
+  String deletePetTitle(String name) {
+    return 'حذف \'$name\'';
+  }
+
+  @override
+  String get deletePetWarning => 'هذا الإجراء لا يمكن التراجع عنه. سيتم إلغاء جميع المواعيد المرتبطة بها';
+
+  @override
+  String get clinicAddedSuccess => 'تم إضافة العيادة بنجاح!';
+
+  @override
+  String get deleteClinicSuccess => 'تم حذف العيادة بنجاح!';
+
+  @override
+  String get addressTooShort => 'العنوان قصير جداً، يرجى كتابة تفاصيل أكثر';
+
+  @override
+  String get descTooShort => 'الوصف قصير جداً، اكتب 10 أحرف على الأقل';
+
+  @override
+  String get hoursTooShort => 'يرجى كتابة ساعات العمل بشكل واضح';
+
+  @override
+  String get specializationTooShort => 'يرجى إدخال تخصص صحيح';
+
+  @override
+  String get noPostsYet => 'لا توجد منشورات بعد.';
+
+  @override
+  String get userPostsTitle => 'المنشورات';
+
+  @override
+  String get myPostsTitle => 'منشوراتي';
+
+  @override
+  String get seeAllBtn => 'عرض الكل';
 
   @override
   String get clinics => 'العيادات';
 
   @override
-  String get vetClinicsTitle => 'العيادات البيطرية';
+  String get searchClinicHint => 'ابحث باسم العيادة أو المنطقة...';
+
+  @override
+  String get noClinicsAvailable => 'لا توجد عيادات متاحة حالياً';
+
+  @override
+  String get bookAppointment => 'احجز موعد';
+
+  @override
+  String get addReview => 'إضافة تقييم';
+
+  @override
+  String reviewsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count تقييم',
+      two: 'تقييمان',
+      one: 'تقييم واحد',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get clinicConfirmationNotice => 'سيتم تأكيد الموعد من قبل العيادة';
+
+  @override
+  String get confirmBooking => 'تأكيد الحجز';
+
+  @override
+  String get checkBackLater => 'عد لاحقاً لرؤية التحديثات';
+
+  @override
+  String noMatchingResults(String query) {
+    return 'لا توجد نتائج مطابقة لـ \"$query\"';
+  }
+
+  @override
+  String get search => 'بحث';
+
+  @override
+  String get editYourReview => 'تعديل تقييمك';
+
+  @override
+  String get yourClinicReview => 'تقييمك للعيادة';
+
+  @override
+  String get selectRating => 'اختر التقييم *';
+
+  @override
+  String get writeCommentOptional => 'اكتب تعليقك هنا (اختياري)';
+
+  @override
+  String get submitReview => 'إرسال التقييم';
+
+  @override
+  String get pleaseSelectRatingFirst => 'برجاء اختيار التقييم أولاً ⭐';
+
+  @override
+  String get shareYourExperience => 'شاركنا تجربتك مع العيادة...';
+
+  @override
+  String get accept => 'قبول';
+
+  @override
+  String get decline => 'رفض';
 
   @override
   String get smartCollar => 'الطوق الذكي';
@@ -305,9 +821,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get postContentHint => 'ماذا تريد أن تشارك؟';
-
-  @override
-  String get emptyCommunityText => 'لا توجد منشورات بعد';
 
   @override
   String get newPostTitle => 'منشور جديد';
@@ -338,6 +851,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get editPost => 'تعديل المنشور';
+
+  @override
+  String get postEditedSuccessfully => 'تم تعديل المنشور بنجاح';
 
   @override
   String get editingCommentHint => 'تعديل التعليق...';
@@ -466,9 +982,6 @@ class AppLocalizationsAr extends AppLocalizations {
   String get general => 'عام';
 
   @override
-  String get notifications => 'الإشعارات';
-
-  @override
   String get account => 'الحساب';
 
   @override
@@ -497,6 +1010,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get join_date => 'تاريخ الانضمام';
+
+  @override
+  String get joined => 'انضم في';
 
   @override
   String get version => 'الإصدار';
@@ -607,6 +1123,15 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get upcomingAppointments => 'المواعيد القادمة';
+
+  @override
+  String get noHealthRecord => 'لا يوجد سجل صحي';
+
+  @override
+  String get noUpcomingAppointments => 'لا توجد مواعيد قادمة';
+
+  @override
+  String get noReminders => 'لا توجد تذكيرات';
 
   @override
   String get noSmartCollarTitle => 'هذا الحيوان ليس لديه طوق ذكي';

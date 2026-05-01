@@ -17,13 +17,10 @@ class DarkTheme {
       fontFamily: AppTextStyles.appfont,
 
       hintColor: AppColors.kDarkContentSecondary,
-      // Color Scheme - محدّث بالألوان الجديدة
       colorScheme: ColorScheme.dark(
-        // اللون الأساسي الزيتوني الغامق الجديد
         primary: AppColors.kDarkBrandPrimary,
         primaryContainer: AppColors.kDarkSurfaceCard,
 
-        // الألوان الثانوية
         secondary: AppColors.kDarkContainer,
 
         tertiary: AppColors.kDarkSurfaceCard,
@@ -31,22 +28,18 @@ class DarkTheme {
         tertiaryContainer: AppColors.kStatusSuccessDark,
         onTertiaryContainer: AppColors.kContentGreenDark,
 
-        // السطح والخلفيات
         surface: AppColors.kDarkSurfaceCard,
         surfaceContainerHighest: AppColors.kDarkContainer,
         surfaceContainer: AppColors.kPrimaryDark,
 
-        // حالات الخطأ
         error: AppColors.kStatusError,
 
-        // ألوان النصوص
         onPrimary: AppColors.kDarkContentPrimary,
         onPrimaryContainer: AppColors.kDarkBrandPrimary,
         onSecondary: AppColors.kDarkContentSecondary,
         onSurface: AppColors.kDarkContentPrimary,
         onError: AppColors.kContentInverse,
         onTertiary: AppColors.kDarkContentSecondary,
-        // الحدود والظلال
         outline: AppColors.kDarkBorder,
         outlineVariant: AppColors.kDarkDivider,
         shadow: AppColors.kShadowOverlay,

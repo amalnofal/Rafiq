@@ -40,6 +40,10 @@ class PasswordRules extends StatelessWidget {
               context,
               AppLocalizations.of(context)!.passwordRuleNumber,
             ),
+            _buildRequirementItem(
+              context,
+              AppLocalizations.of(context)!.passwordRuleSymbol,
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/log_out_button.dart';
 import 'package:rafiq/features/settings/presentation/sections/settings_sections/account_info_section.dart';
@@ -16,12 +17,13 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.settings)),
       body: ListView(
         clipBehavior: Clip.none,
-        children: const [
-          GeneralSection(),
-          AccountSection(),
-          AccountInfoSection(),
-          VersionSection(),
-          LogOutButton(),
+        children: [
+          const GeneralSection(),
+          const AccountSection(),
+          const AccountInfoSection(),
+          SizedBox(height: 8.h),
+          const VersionSection(),
+          const LogOutButton(),
         ],
       ),
     );

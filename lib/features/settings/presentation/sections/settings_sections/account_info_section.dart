@@ -18,7 +18,7 @@ class AccountInfoSection extends StatelessWidget {
 
         // 1. حماية: لو اليوزر مش موجود (لسه بيحمل أو حصل خطأ)، نعرض لودينج أو لا شيء
         if (user == null) {
-          return const SizedBox(); 
+          return const SizedBox();
         }
 
         return CustomContainer(
@@ -30,30 +30,29 @@ class AccountInfoSection extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               SizedBox(height: AppDimensions.paddingM),
-              
+
               // 2. الاسم
               AccountInfoRow(
                 label: AppLocalizations.of(context)!.name,
-                value: "${user.firstName} ${user.lastName}", 
+                value: "${user.firstName} ${user.lastName}",
               ),
               const Divider(),
-              
+
               // 3. الإيميل
               AccountInfoRow(
                 label: AppLocalizations.of(context)!.email,
                 value: user.email,
               ),
               const Divider(),
-              
-              // 4. رقم الهاتف (مهم جداً)
+
+              // 4. رقم الهاتف
               AccountInfoRow(
                 label: AppLocalizations.of(context)!.phone_number,
-                // ✅ تصحيح: بما إنه Nullable لازم نحط قيمة بديلة لو فاضي
-                value: user.phone ?? "غير متوفر", 
+                value: user.phone ?? "",
                 direction: TextDirection.ltr,
               ),
               const Divider(),
-              
+
               // 5. تاريخ الانضمام
               AccountInfoRow(
                 label: AppLocalizations.of(context)!.join_date,

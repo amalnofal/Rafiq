@@ -10,6 +10,7 @@ class CustomContainer extends StatelessWidget {
   final Color? borderColor;
   final double borderWidth;
   final Color? color;
+  final double? width;
 
   const CustomContainer({
     super.key,
@@ -20,6 +21,7 @@ class CustomContainer extends StatelessWidget {
     this.borderColor,
     this.borderWidth = 2,
     this.color,
+    this.width,
   });
 
   @override
@@ -29,6 +31,7 @@ class CustomContainer extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        width: width ?? double.infinity,
         margin:
             margin ?? EdgeInsets.symmetric(vertical: AppDimensions.paddingS),
         padding: padding ?? EdgeInsets.all(AppDimensions.paddingL),

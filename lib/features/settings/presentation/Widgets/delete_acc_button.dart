@@ -23,7 +23,7 @@ class DeleteAccButton extends StatelessWidget {
           leading: CircleIconButton(
             "assets/icons/trash.svg",
             color: alertcolor,
-            backgroundColor: alertcolor.withValues(alpha: 0.1),
+            bgColor: alertcolor.withValues(alpha: 0.1),
           ),
           title: Text(
             AppLocalizations.of(context)!.delete_account,

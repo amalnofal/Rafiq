@@ -22,8 +22,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
   @override
   void initState() {
     super.initState();
-    // ✅ 1. بنطلب من البروفايدر يجيب الداتا أول ما الصفحة تفتح
-    // بنستخدم addPostFrameCallback عشان نتأكد إن الـ build خلص
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CommunityProvider>(context, listen: false).fetchPosts();
     });
@@ -31,7 +29,7 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double headerHeight = 115.h;
+    final double headerHeight = 110.h;
     final double overlap = 15.h;
 
     return RafiqScaffold(
@@ -39,7 +37,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
       hasMainBottomNav: true,
       body: Stack(
         children: [
-          // ✅ 2. هنا بنسمع للتغييرات في البروفايدر
           Consumer<CommunityProvider>(
             builder: (context, provider, child) {
               return ListView(
@@ -48,7 +45,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
                   bottom: 100.h,
                 ),
                 children: [
-                  // ✅ زرار إنشاء البوست مكانه ثابت فوق
                   CreatePostTrigger(
                     onTap: () async {
                       final newPost = await Navigator.push(
@@ -58,7 +54,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         ),
                       );
 
-                      // لو راجع ببوست جديد، البروفايدر هو اللي يضيفه
                       if (newPost != null && newPost is PostModel) {
                         provider.addPost(newPost);
                       }
@@ -67,7 +62,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
 
                   SizedBox(height: 4.h),
 
-                  // ✅ 3. التعامل مع الحالات المختلفة (تحميل - خطأ - بيانات)
                   if (provider.isLoading)
                     Padding(
                       padding: EdgeInsets.only(top: 50.h),
@@ -84,33 +78,33 @@ class _CommunityScreenState extends State<CommunityScreen> {
                         SizedBox(height: 12.h),
                         Center(
                           child: Text(
-                            "${AppLocalizations.of(context)!.emptyCommunityText} 🐾",
+                            "${AppLocalizations.of(context)!.noPostsYet} 🐾",
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ),
                       ],
                     )
                   else
-                    // ✅ 4. عرض البوستات من البروفايدر
                     ...provider.posts.map((post) {
                       return Padding(
-                        padding: EdgeInsets.only(bottom: 2.h),
+                        padding: EdgeInsets.only(bottom: 3.h),
                         child: PostItem(
                           post: post,
                           author: post.user,
-                          timeAgo: DateHelper.timeAgo(post.createdAt, context),
+                          timeAgo: DateHelper.timeAgoShort(
+                            post.createdAt,
+                            context,
+                          ),
                           postText: post.text,
                           categories: post.categories,
                           likesCount: post.likesCount,
                           commentsCount: post.commentsCount,
                           postImageUrl: post.imageUrl,
 
-                          // ✅ الحذف عن طريق البروفايدر
                           onDelete: () {
                             provider.deletePost(post);
                           },
 
-                          // ✅ التعديل (لسه زي ما هو UI Logic + Provider update)
                           onEdit: () async {
                             final updatedPost = await Navigator.push(
                               context,
@@ -132,7 +126,6 @@ class _CommunityScreenState extends State<CommunityScreen> {
             },
           ),
 
-          // الهيدر الثابت مكانه فوق
           Positioned(
             top: 0,
             left: 0,

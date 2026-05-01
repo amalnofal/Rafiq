@@ -9,6 +9,7 @@ class MenuUtils {
     Offset globalPosition, {
     required VoidCallback onEdit,
     required VoidCallback onDelete,
+    String? actiontxt,
   }) {
     showMenu(
       context: context,
@@ -55,7 +56,7 @@ class MenuUtils {
               Padding(
                 padding: EdgeInsets.only(top: 4.h),
                 child: Text(
-                  AppLocalizations.of(context)!.deleteAction,
+                  actiontxt ?? AppLocalizations.of(context)!.deleteAction,
                   style: Theme.of(
                     context,
                   ).textTheme.bodyMedium?.copyWith(color: Colors.red),

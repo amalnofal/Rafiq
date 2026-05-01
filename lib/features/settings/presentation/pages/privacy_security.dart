@@ -13,10 +13,7 @@ class PrivacySecurity extends StatelessWidget {
   Widget build(BuildContext context) {
     return RafiqScaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.privacy_security,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        title: Text(AppLocalizations.of(context)!.privacy_security),
       ),
       body: SingleChildScrollView(
         clipBehavior: Clip.none,

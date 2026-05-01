@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/helper/image_picker_helper.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
@@ -7,6 +8,8 @@ import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
 import 'package:rafiq/core/widgets/image_upload_card.dart';
 import 'package:rafiq/features/auth/controller/register_controller.dart';
+import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/presentation/pages/interests_screen.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_header.dart';
 import 'package:rafiq/features/auth/presentation/widgets/review_note.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
@@ -22,7 +25,6 @@ class VetVerification extends StatefulWidget {
 
 class _VetVerificationState extends State<VetVerification> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   bool _attemptedSubmit = false;
 
   File? _idFrontImage;
@@ -39,12 +41,22 @@ class _VetVerificationState extends State<VetVerification> {
         _idFrontImage != null && _idBackImage != null && _licenseImage != null;
 
     if (isTextValid && areImagesValid) {
-      // ✅ التعديل هنا: مررنا context
-      widget.controller.uploadVetDocuments(
-        context, 
-        idFront: _idFrontImage!,
-        idBack: _idBackImage!,
-        license: _licenseImage!,
+      widget.controller.setVetImages(
+        front: _idFrontImage!,
+        back: _idBackImage!,
+        union: _licenseImage!,
+      );
+
+      final currentCubit = context.read<RegisterCubit>();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: currentCubit,
+            child: InterestsScreen(controller: widget.controller),
+          ),
+        ),
       );
     }
   }
@@ -57,6 +69,7 @@ class _VetVerificationState extends State<VetVerification> {
           AuthHeader(
             title: AppLocalizations.of(context)!.professionalInfoTitle,
             subtitle: AppLocalizations.of(context)!.professionalInfoSubtitle,
+            onBackTap: () => Navigator.pop(context),
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -77,7 +90,10 @@ class _VetVerificationState extends State<VetVerification> {
                             )!.specializationLabel,
                             prefixIcon: "assets/icons/vet.svg",
                             validator: (val) =>
-                                ValidationHelper.validateRequired(val, context),
+                                ValidationHelper.validateSpecialization(
+                                  val,
+                                  context,
+                                ),
                           ),
 
                           CustomTextField(
@@ -87,12 +103,14 @@ class _VetVerificationState extends State<VetVerification> {
                             )!.subSpecializationLabel,
                             prefixIcon: "assets/icons/work.svg",
                             validator: (val) =>
-                                ValidationHelper.validateRequired(val, context),
+                                ValidationHelper.validateSpecialization(
+                                  val,
+                                  context,
+                                ),
                           ),
 
                           SizedBox(height: 24.h),
 
-                          // البطاقة الأمامية
                           ImageUploadCard(
                             label:
                                 "${AppLocalizations.of(context)!.idFrontLabel}*",
@@ -103,16 +121,18 @@ class _VetVerificationState extends State<VetVerification> {
                               ImagePickerHelper.showOptionSheet(context, (
                                 file,
                               ) {
-                                setState(() {
-                                  _idFrontImage = file;
-                                });
+                                setState(() => _idFrontImage = file);
+                              });
+                            },
+                            onRemove: () {
+                              setState(() {
+                                _idFrontImage = null;
                               });
                             },
                           ),
 
                           SizedBox(height: 16.h),
 
-                          // البطاقة الخلفية
                           ImageUploadCard(
                             label:
                                 "${AppLocalizations.of(context)!.idBackLabel}*",
@@ -122,16 +142,18 @@ class _VetVerificationState extends State<VetVerification> {
                               ImagePickerHelper.showOptionSheet(context, (
                                 file,
                               ) {
-                                setState(() {
-                                  _idBackImage = file;
-                                });
+                                setState(() => _idBackImage = file);
+                              });
+                            },
+                            onRemove: () {
+                              setState(() {
+                                _idBackImage = null;
                               });
                             },
                           ),
 
                           SizedBox(height: 16.h),
 
-                          // الكارنيه
                           ImageUploadCard(
                             label:
                                 "${AppLocalizations.of(context)!.vetCardLabel}*",
@@ -142,9 +164,12 @@ class _VetVerificationState extends State<VetVerification> {
                               ImagePickerHelper.showOptionSheet(context, (
                                 file,
                               ) {
-                                setState(() {
-                                  _licenseImage = file;
-                                });
+                                setState(() => _licenseImage = file);
+                              });
+                            },
+                            onRemove: () {
+                              setState(() {
+                                _licenseImage = null;
                               });
                             },
                           ),
@@ -155,7 +180,7 @@ class _VetVerificationState extends State<VetVerification> {
                             title: AppLocalizations.of(
                               context,
                             )!.submitForReviewBtn,
-                            onpressed: _validateAndSubmit,
+                            onPressed: _validateAndSubmit,
                           ),
                           SizedBox(height: 20.h),
                         ],

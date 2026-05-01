@@ -16,7 +16,7 @@ class SmartCollarScreen extends StatelessWidget {
         children: [
           MainHeader(
             title: AppLocalizations.of(context)!.smartCollar,
-            icon: 'assets/icons/add.svg',
+            icon: 'assets/icons/circle_add.svg',
           ),
 
           Spacer(),

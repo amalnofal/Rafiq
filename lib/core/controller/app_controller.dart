@@ -6,8 +6,16 @@ class AppController extends ChangeNotifier {
   Locale _locale = const Locale('en');
   bool _isDarkMode = false;
 
+  int _homeCurrentIndex = 0;
+
   Locale get locale => _locale;
   bool get isDarkMode => _isDarkMode;
+  int get homeCurrentIndex => _homeCurrentIndex;
+
+  void changeHomeIndex(int index) {
+    _homeCurrentIndex = index;
+    notifyListeners();
+  }
 
   Future<void> loadSettings() async {
     final prefs = await SharedPreferences.getInstance();

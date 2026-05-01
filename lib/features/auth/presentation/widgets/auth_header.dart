@@ -8,6 +8,7 @@ class AuthHeader extends StatelessWidget {
   final String? subtitle;
   final VoidCallback? onBackTap;
   final Widget? bottomWidget;
+  final bool showBackButton;
 
   const AuthHeader({
     super.key,
@@ -15,6 +16,7 @@ class AuthHeader extends StatelessWidget {
     this.subtitle,
     this.onBackTap,
     this.bottomWidget,
+    this.showBackButton = true,
   });
 
   @override
@@ -55,26 +57,27 @@ class AuthHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GestureDetector(
-                onTap: onBackTap ?? () => Navigator.pop(context),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                      size: AppDimensions.iconS,
-                    ),
-                    SizedBox(width: AppDimensions.paddingXS),
-                    Text(
-                      AppLocalizations.of(context)!.back,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.labelLarge!.copyWith(color: Colors.white),
-                    ),
-                  ],
+              if (showBackButton)
+                GestureDetector(
+                  onTap: onBackTap ?? () => Navigator.pop(context),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                        size: AppDimensions.iconS,
+                      ),
+                      SizedBox(width: AppDimensions.paddingXS),
+                      Text(
+                        AppLocalizations.of(context)!.back,
+                        style: Theme.of(
+                          context,
+                        ).textTheme.labelLarge!.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
               SizedBox(height: AppDimensions.paddingL),
 
@@ -88,7 +91,7 @@ class AuthHeader extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppDimensions.radius),
                     ),
                     child: Image.asset(
-                      "assets/icons/rafiq logo.png",
+                      "assets/icons/rafiq_logo.png",
                       fit: BoxFit.contain,
                     ),
                   ),

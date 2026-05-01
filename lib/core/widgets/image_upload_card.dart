@@ -4,12 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class ImageUploadCard extends StatelessWidget {
-  final String? label; // النص اللي فوق (اختياري)
-  final File? imageFile; // ملف الصورة
-  final VoidCallback onTap; // عند الضغط
-  final VoidCallback? onRemove; // زر حذف للصورة (مفيد للبوستات)
-  final bool showError; // لو فيه خطأ
-  final String? hintText; // النص اللي جوه المربع
+  final String? label;
+  final File? imageFile;
+  final VoidCallback onTap;
+  final VoidCallback? onRemove;
+  final bool showError;
+  final String? hintText;
 
   const ImageUploadCard({
     super.key,

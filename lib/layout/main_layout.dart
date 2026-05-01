@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rafiq/core/controller/app_controller.dart';
 import 'package:rafiq/core/widgets/custom_nav_bar.dart';
 import 'package:rafiq/features/clinics/presentation/pages/clinics_screen.dart';
 import 'package:rafiq/features/home/presentation/pages/home_screen.dart';
@@ -14,8 +16,6 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  int _currentIndex = 0;
-
   final List<Widget> _screens = [
     const HomeScreen(), // Index 0
     const CommunityScreen(), // Index 1
@@ -26,21 +26,20 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // 3. استخدام IndexedStack هو السر في النعومة والحفاظ على حالة الصفحات
-      body: IndexedStack(index: _currentIndex, children: _screens),
+    final appController = Provider.of<AppController>(context);
 
-      // 4. البار موجود هنا وثابت
+    return Scaffold(
+      body: IndexedStack(
+        index: appController.homeCurrentIndex,
+        children: _screens,
+      ),
+
       bottomNavigationBar: CustomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index; // تغيير الصفحة عند الضغط
-          });
-        },
+        currentIndex: appController.homeCurrentIndex,
+        onTap: (index) => appController.changeHomeIndex(index),
         onFabTap: () {
           setState(() {
-            _currentIndex = 2;
+            appController.changeHomeIndex(2);
           });
         },
       ),

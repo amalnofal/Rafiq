@@ -1,25 +1,39 @@
-import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:rafiq/features/auth/presentation/pages/interests_screen.dart';
-import 'package:rafiq/features/auth/presentation/pages/vet_verification.dart';
 
 class RegisterController extends ChangeNotifier {
   final PageController pageController = PageController();
 
   int currentPage = 0;
   bool isSocialLogin = false;
-  String? gender;
-  String? accountType;
-  List<String> selectedInterests = [];
+
+  int? gender;
+  String? accountType; // "Doctor" or "PetOwner"
+
+  File? frontIdImage;
+  File? backIdImage;
+  File? unionCardImage;
+  File? profileImage;
+
+  void setVetImages({File? front, File? back, File? union, File? profile}) {
+    if (front != null) frontIdImage = front;
+    if (back != null) backIdImage = back;
+    if (union != null) unionCardImage = union;
+    if (profile != null) profileImage = profile;
+    notifyListeners();
+  }
 
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
+  final TextEditingController dobController =
+      TextEditingController(); // YYYY-MM-DD
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
+
+  // داتا الدكتور
   final TextEditingController specController = TextEditingController();
   final TextEditingController subSpecController = TextEditingController();
 
@@ -38,10 +52,11 @@ class RegisterController extends ChangeNotifier {
     super.dispose();
   }
 
+  // ==========================
+  // دوال الـ UI (التنقل) فقط
+  // ==========================
   void nextPage() {
-    // الانتقال الطبيعي للخطوة التالية (للتسجيل اليدوي)
     if (currentPage < 4) {
-      // 4 هي آخر اندكس (صفحة 5)
       pageController.nextPage(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -50,21 +65,16 @@ class RegisterController extends ChangeNotifier {
   }
 
   void prevPage(BuildContext context) {
-    // 1. الخروج لو في البداية
     if (currentPage == 0) {
       Navigator.pop(context);
       return;
     }
-
-    // 2. معالجة الرجوع في حالة السوشيال ميديا
     if (currentPage == 4 && isSocialLogin) {
-      pageController.jumpToPage(0); // العودة لنقطة الصفر
+      pageController.jumpToPage(0);
       updatePage(0);
-      isSocialLogin = false; // تصفير الفلاج
+      isSocialLogin = false;
       return;
     }
-
-    // 3. الرجوع الطبيعي خطوة واحدة
     pageController.previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -81,84 +91,8 @@ class RegisterController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setGender(String val) {
+  void setGender(int val) {
     gender = val;
     notifyListeners();
-  }
-
-  Future<void> registerUser(BuildContext context) async {
-    Map<String, dynamic> requestData = {
-      "firstName": firstNameController.text,
-      "lastName": lastNameController.text,
-      "email": emailController.text,
-      "phone": phoneController.text,
-      "password": passController.text,
-      "gender": gender,
-      "userType": accountType,
-      "dateOfBirth": dobController.text,
-      "isSocial": isSocialLogin,
-    };
-
-    log("🚀 1. Registering Basic User: $requestData");
-
-    try {
-      // Call API (Register Endpoint) here
-      // await authRepo.register(requestData);
-
-      // بفرض إن التسجيل نجح، هنوجه المستخدم دلوقتي
-      if (accountType == "vet") {
-        // لو دكتور -> روح لصفحة رفع المستندات
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => VetVerification(controller: this)),
-        );
-      } else {
-        // لو مربي -> روح لصفحة الاهتمامات
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => InterestsScreen(controller: this)),
-        );
-      }
-    } catch (e) {
-      // Show Error
-      log("Error registering: $e");
-    }
-  }
-
-  // دالة استكمال بيانات الدكتور
-  Future<void> uploadVetDocuments(
-    BuildContext context, { // ✅ 1. استقبلنا الـ context هنا
-    required File idFront,
-    required File idBack,
-    required File license,
-  }) async {
-    Map<String, dynamic> vetData = {
-      "specialization": specController.text,
-      "subSpecialization": subSpecController.text,
-      "idFront": idFront.path,
-      "idBack": idBack.path,
-      "license": license.path,
-    };
-
-    log("🚀 2. Uploading Vet Docs: $vetData");
-
-    try {
-      // Call API (Upload Docs) here...
-      // await authRepo.uploadDocs(vetData);
-
-      // ✅ 2. بعد نجاح الرفع، ننتقل لصفحة الاهتمامات
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => InterestsScreen(controller: this)),
-      );
-    } catch (e) {
-      log("Error uploading docs: $e");
-      // Show snackbar error
-    }
-  }
-
-  // 4. دالة حفظ الاهتمامات
-  Future<void> saveInterests(List<String> interests) async {
-    selectedInterests = interests;
-    log("🚀 3. Saving Interests: $interests");
-    // Call API (Save Interests)
-    // وبعد النجاح: Navigator.pushReplacementNamed(context, '/home');
   }
 }

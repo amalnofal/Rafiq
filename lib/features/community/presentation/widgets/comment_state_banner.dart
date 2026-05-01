@@ -15,13 +15,10 @@ class CommentStatusBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Theme.of(context).cardColor,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+      padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h),
       child: Row(
         children: [
-          Text(
-            text,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text(text, style: Theme.of(context).textTheme.labelMedium),
           const Spacer(),
           GestureDetector(
             onTap: onCancel,

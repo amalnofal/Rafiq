@@ -125,7 +125,7 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
                         fontWeight: FontWeight.w500,
                         height: AppDimensions.buttonHeightS,
                         elevation: 0,
-                        onpressed: _submit,
+                        onPressed: _submit,
                       ),
                     ),
                     SizedBox(width: AppDimensions.paddingM),

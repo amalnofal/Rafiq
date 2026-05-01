@@ -53,7 +53,7 @@ class _Step5AccountTypeState extends State<Step5AccountType> {
             title: AppLocalizations.of(context)!.petOwnerTitle,
             subtitle: AppLocalizations.of(context)!.petOwnerSubtitle,
             svgPath: "assets/icons/pet_owner.svg",
-            value: "owner",
+            value: "PetOwner",
           ),
 
           SizedBox(height: 16.h),
@@ -63,7 +63,7 @@ class _Step5AccountTypeState extends State<Step5AccountType> {
             title: AppLocalizations.of(context)!.vetTitle,
             subtitle: AppLocalizations.of(context)!.vetSubtitle,
             svgPath: "assets/icons/vet.svg",
-            value: "vet",
+            value: "Doctor",
           ),
 
           NextButton(onNext: _onNextPressed),

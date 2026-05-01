@@ -37,11 +37,12 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       // بنستخدم الـ Dialog العام ونبعتله التفاصيل
       child: CustomInfoDialog(
         title: AppLocalizations.of(context)!.confirmAccountDeletion,
-        description: "${AppLocalizations.of(context)!.deleteAccountContent}\n${AppLocalizations.of(context)!.enterPasswordToConfirm}",
+        description:
+            "${AppLocalizations.of(context)!.deleteAccountContent}\n${AppLocalizations.of(context)!.enterPasswordToConfirm}",
         confirmBtnText: AppLocalizations.of(context)!.delete_account,
         mainColor: AppColors.kStatusError,
         icon: Icons.error_outline_rounded,
-        
+
         // هنا بنمرر الباسورد فيلد كـ "محتوى إضافي"
         content: PasswordField(
           controller: _passwordController,
@@ -49,7 +50,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
           textInputAction: TextInputAction.done,
           onFieldSubmitted: (_) => _handleConfirm(),
         ),
-        
+
         onConfirm: _handleConfirm,
       ),
     );

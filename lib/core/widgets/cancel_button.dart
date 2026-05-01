@@ -11,7 +11,7 @@ class CancelButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return CustomButton(
-      onpressed: () => Navigator.of(context).pop(),
+      onPressed: () => Navigator.of(context).pop(),
       height: AppDimensions.buttonHeightS,
       title: AppLocalizations.of(context)!.cancel,
       fontWeight: FontWeight.w500,

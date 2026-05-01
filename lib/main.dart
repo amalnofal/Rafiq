@@ -1,25 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/app_controller.dart';
+import 'package:rafiq/core/controller/appointment_provider.dart';
+import 'package:rafiq/core/controller/clinic_provider.dart';
+import 'package:rafiq/core/controller/pet_provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
+import 'package:rafiq/core/di/service_locator.dart';
+import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/theme/app_theme.dart';
+import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
+import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
+import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/forget_pass.dart';
 import 'package:rafiq/features/auth/presentation/pages/register_screen.dart';
-import 'package:rafiq/features/auth/presentation/pages/welcome_screen.dart';
 import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
 import 'package:rafiq/features/clinics/presentation/pages/clinics_screen.dart';
 import 'package:rafiq/features/collar/presentation/pages/smart_collar_screen.dart';
 import 'package:rafiq/features/community/manager/community_provider.dart';
 import 'package:rafiq/features/community/presentation/pages/community_screen.dart';
+import 'package:rafiq/features/home/presentation/pages/notifications_screen.dart';
+import 'package:rafiq/features/profile/presentation/pages/add_clinic_screen.dart';
+import 'package:rafiq/features/profile/presentation/pages/add_pet_screen.dart';
 import 'package:rafiq/features/store/presentation/pages/store_screen.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 import 'package:rafiq/layout/main_layout.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await CacheHelper.init();
+
+  await setupServiceLocator();
 
   final appController = AppController();
   await appController.loadSettings();
@@ -29,20 +45,26 @@ void main() async {
 
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => appController),
-        ChangeNotifierProvider(create: (_) => userProvider),
+        ChangeNotifierProvider.value(value: userProvider),
+        ChangeNotifierProvider(create: (_) => getIt<PetProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<ClinicProvider>()),
         ChangeNotifierProvider(create: (_) => CommunityProvider()),
+        ChangeNotifierProvider(create: (_) => getIt<AppointmentProvider>()),
       ],
-      child: const RafiqApp(),
+      child: RafiqApp(initialRoute: userProvider.isAuth ? '/home' : '/login'),
     ),
   );
 }
 
 class RafiqApp extends StatelessWidget {
-  const RafiqApp({super.key});
+  final String initialRoute;
+
+  const RafiqApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +76,9 @@ class RafiqApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          navigatorKey: navigatorKey,
           scrollBehavior: const MaterialScrollBehavior().copyWith(
-            overscroll: false, // بيلغي الوهج الأخضر بتاع الأندرويد
+            overscroll: false,
           ),
 
           builder: (context, child) {
@@ -84,18 +107,30 @@ class RafiqApp extends StatelessWidget {
               ? ThemeMode.dark
               : ThemeMode.light,
 
-          initialRoute: '/welcome',
+          initialRoute: initialRoute,
 
           routes: {
-            '/welcome': (context) => const WelcomeScreen(),
-            '/register': (context) => const RegisterScreen(),
-            '/login': (context) => const LoginScreen(),
+            '/register': (context) => BlocProvider(
+              create: (context) => getIt<RegisterCubit>(),
+              child: const RegisterScreen(),
+            ),
+
+            '/login': (context) => BlocProvider(
+              create: (context) => getIt<LoginCubit>(),
+              child: const LoginScreen(),
+            ),
+            '/forget_pass': (context) => BlocProvider(
+              create: (context) => getIt<ForgetPasswordCubit>(),
+              child: const ForgetPass(),
+            ),
+            '/add_pet_screen': (context) => const AddPetScreen(),
+            '/add_clinic_screen': (context) => const AddClinicScreen(),
             '/home': (context) => const MainLayout(),
-            '/store': (context) => const StoreScreen(),
+            '/notifications': (context) => const NotificationsScreen(),
+            '/community': (context) => const CommunityScreen(),
             '/clinics': (context) => const ClinicsScreen(),
             '/collar': (context) => const SmartCollarScreen(),
-            '/community': (context) => const CommunityScreen(),
-            '/forget_pass': (context) => const ForgetPass(),
+            '/store': (context) => const StoreScreen(),
           },
         );
       },

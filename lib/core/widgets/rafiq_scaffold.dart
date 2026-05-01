@@ -35,13 +35,7 @@ class RafiqScaffold extends StatelessWidget {
     Widget content = Padding(padding: effectivePadding, child: body);
 
     if (hasMainBottomNav) {
-      content = Padding(
-        padding: EdgeInsets.only(
-          bottom:
-              MediaQuery.of(context).padding.bottom + AppDimensions.paddingS,
-        ),
-        child: content,
-      );
+      content = Padding(padding: EdgeInsets.only(bottom: 0), child: content);
     } else {
       content = SafeArea(
         top: false,

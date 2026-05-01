@@ -7,6 +7,7 @@ class AuthLayout extends StatelessWidget {
   final String subtitle;
   final Widget child;
   final VoidCallback? onBackTap;
+  final bool showBackButton;
 
   const AuthLayout({
     super.key,
@@ -14,6 +15,7 @@ class AuthLayout extends StatelessWidget {
     required this.subtitle,
     required this.child,
     this.onBackTap,
+    this.showBackButton = true,
   });
 
   @override
@@ -21,12 +23,20 @@ class AuthLayout extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          AuthHeader(title: title, subtitle: subtitle, onBackTap: onBackTap),
+          AuthHeader(
+            title: title,
+            subtitle: subtitle,
+            onBackTap: onBackTap,
+            showBackButton: showBackButton,
+          ),
           SizedBox(height: AppDimensions.padding),
           Expanded(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.all(AppDimensions.paddingL),
+              padding: EdgeInsets.symmetric(
+                vertical: AppDimensions.paddingL,
+                horizontal: AppDimensions.paddingXL,
+              ),
               child: child,
             ),
           ),

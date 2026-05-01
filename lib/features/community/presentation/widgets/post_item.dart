@@ -6,7 +6,7 @@ import 'package:rafiq/core/enums/post_category.dart';
 import 'package:rafiq/core/helper/dialog_helper.dart';
 import 'package:rafiq/core/helper/menu_utils.dart';
 import 'package:rafiq/core/widgets/smart_image_display.dart';
-import 'package:rafiq/features/auth/data/models/user_model.dart';
+import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_interaction_bar.dart';
 import 'package:rafiq/features/community/presentation/widgets/selection_chip.dart';

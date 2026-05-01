@@ -44,7 +44,7 @@ class CustomInfoDialog extends StatelessWidget {
               iconSize: 24.h,
               size: 60.h,
               color: mainColor,
-              backgroundColor: mainColor.withValues(alpha: 0.1),
+              bgColor: mainColor.withValues(alpha: 0.1),
             ),
             SizedBox(height: AppDimensions.padding),
 
@@ -67,6 +67,8 @@ class CustomInfoDialog extends StatelessWidget {
             // 4. الأزرار
             Row(
               children: [
+                Expanded(child: CancelButton()),
+                SizedBox(width: AppDimensions.paddingM),
                 Expanded(
                   child: CustomButton(
                     title: confirmBtnText,
@@ -76,11 +78,9 @@ class CustomInfoDialog extends StatelessWidget {
                     color: isDark
                         ? mainColor.withValues(alpha: 0.8)
                         : mainColor,
-                    onpressed: onConfirm,
+                    onPressed: onConfirm,
                   ),
                 ),
-                SizedBox(width: AppDimensions.paddingM),
-                Expanded(child: CancelButton()),
               ],
             ),
           ],

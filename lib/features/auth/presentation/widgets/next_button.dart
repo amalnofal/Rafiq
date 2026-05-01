@@ -14,7 +14,7 @@ class NextButton extends StatelessWidget {
       padding: EdgeInsets.only(top: 24.h),
       child: CustomButton(
         title: AppLocalizations.of(context)!.next,
-        onpressed: onNext,
+        onPressed: onNext,
       ),
     );
   }

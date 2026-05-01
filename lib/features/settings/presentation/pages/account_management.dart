@@ -16,7 +16,6 @@ class AccountManagement extends StatefulWidget {
 }
 
 class _AccountManagementState extends State<AccountManagement> {
-  // 1. تعريف الكنترولرز بشكل صحيح (late عشان هنعملهم init تحت)
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
   late TextEditingController emailController;
@@ -27,15 +26,12 @@ class _AccountManagementState extends State<AccountManagement> {
     super.initState();
     final user = Provider.of<UserProvider>(context, listen: false).user;
 
-    // 2. ملء البيانات من اليوزر (مع معالجة الـ null)
     if (user != null) {
       firstNameController = TextEditingController(text: user.firstName);
       lastNameController = TextEditingController(text: user.lastName);
       emailController = TextEditingController(text: user.email);
-      // الهاتف ممكن يكون null، فلو null نخليه نص فاضي
       phoneController = TextEditingController(text: user.phone ?? '');
     } else {
-      // احتياطي لو اليوزر مش موجود (نادر الحدوث هنا)
       firstNameController = TextEditingController();
       lastNameController = TextEditingController();
       emailController = TextEditingController();
@@ -45,7 +41,6 @@ class _AccountManagementState extends State<AccountManagement> {
 
   @override
   void dispose() {
-    // 3. تنظيف الذاكرة
     firstNameController.dispose();
     lastNameController.dispose();
     emailController.dispose();
@@ -57,28 +52,22 @@ class _AccountManagementState extends State<AccountManagement> {
   Widget build(BuildContext context) {
     return RafiqScaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.account_management,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        title: Text(AppLocalizations.of(context)!.account_management),
       ),
-      body: SingleChildScrollView( // يفضل إضافة سكرول عشان الكيبورد
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            // 4. تمرير الكنترولرز المنفصلة لـ PersonalInfo
-            // (تأكدي إنك عدلتي PersonalInfo عشان تستقبلهم)
             PersonalInfo(
               firstNameController: firstNameController,
               lastNameController: lastNameController,
               emailController: emailController,
               phoneController: phoneController,
             ),
-            
+
             const DangerZone(),
-            
+
             SizedBox(height: AppDimensions.paddingM),
-            
-            // 5. تمرير الكنترولرز لـ SaveButton (اللي لسه معدلينه)
+
             SaveButton(
               firstNameController: firstNameController,
               lastNameController: lastNameController,

@@ -13,6 +13,53 @@
     "type": "text"
   },
 
+  "welcomeToRafiq": "مرحباً في رفيق !",
+  "@welcomeToRafiq": {},
+  "welcomeSubtitle": "ابدأ رحلتك في رعاية حيوانك الأليف\nأضف حيوانك الأليف للبدء في تتبع صحته",
+  "@welcomeSubtitle": {
+    "description": "Subtitle in the pet owner's home empty state"
+  },
+
+  "addPetBtn": "إضافة حيوان أليف",
+  "@addPetBtn": {},
+  "editPetTitle": "تعديل بيانات الحيوان",
+  "@editPetTitle": {},
+  "removePetTitle": "إزالة الحيوان الأليف",
+  "@removePetTitle": {},
+  "removePetDesc": "هل أنت متأكد من أنك تريد إزالة",
+  "@removePetDesc": {},
+  "actionCannotBeUndone": "لا يمكن التراجع عن هذا الإجراء.",
+  "@actionCannotBeUndone": {},
+  "removeBtn": "إزالة",
+  "@removeBtn": {},
+
+  "tipTitle": "نصيحة سريعة",
+  "@tipTitle": {},
+  "ownerTipContent": "بعد إضافة حيوانك الأليف، يمكنك طلب طوق ذكي للحصول على مراقبة شاملة لصحته ونشاطه في الوقت الفعلي!",
+  "@ownerTipContent": {},
+  "vetTipContent": "أكمل ملف عيادتك بإضافة ساعات العمل والخدمات المتاحة لتسهل على أصحاب الحيوانات التواصل معك وحجز المواعيد!",
+  "@vetTipContent": {},
+
+  "healthTrackingTitle": "المتابعة الصحية",
+  "@healthTrackingTitle": {},
+  "healthTrackingSubtitle": "تتبع النبض والنشاط والحرارة",
+  "@healthTrackingSubtitle": {},
+
+  "communityTitle": "مجتمع رفيق",
+  "@communityTitle": {},
+  "communitySubtitle": "تواصل مع محبي الحيوانات الأليفة",
+  "@communitySubtitle": {},
+
+  "vetClinicsTitle": "العيادات البيطرية",
+  "@vetClinicsTitle": {},
+  "vetClinicsSubtitle": "عيادات معتمدة وتنظيم المواعيد",
+  "@vetClinicsSubtitle": {},
+
+  "storeTitle": "متجر رفيق",
+  "@storeTitle": {},
+  "storeSubtitle": "كل ما يحتاجه أليفك في مكان واحد",
+  "@storeSubtitle": {},
+
   "no_account_question": "ليس لديك حساب؟ ",
   "@no_account_question": {
     "description": "Text asking the user if they don't have an account",
@@ -68,8 +115,12 @@
 
   "dateOfBirthLabel": "تاريخ الميلاد",
   "@dateOfBirthLabel": {},
-  "dobHint": "mm/dd/yyyy",
+  "dobHint": "يوم/شهر/سنة",
   "@dobHint": {},
+  "set_date": "تحديد التاريخ",
+  "@set_date": {},
+  "set": "تعيين",
+  "@set": {},
 
   "chooseAccountType": "اختر نوع الحساب",
   "@chooseAccountType": {},
@@ -161,33 +212,32 @@
   "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
   "@passwordsDoNotMatch": {},
 
+  "invalidEmailAddress": "يرجى إدخال بريد إلكتروني صحيح",
+  "@invalidEmailAddress": {},
+  "invalidPhoneNumber": "يرجى إدخال رقم هاتف صحيح",
+  "@invalidPhoneNumber": {},
+
+  "ageTooYoung": "يجب أن يكون عمرك 18 عاماً على الأقل",
+  "@ageTooYoung": {},
+
   "passwordRequirements": "متطلبات كلمة المرور:",
   "@passwordRequirements": {},
-  "passwordRuleLength": "على الأقل 8 أحرف",
+
+  "passwordRuleLength": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
   "@passwordRuleLength": {},
+  "passwordTooLong": "كلمة المرور طويلة جداً",
+  "@passwordTooLong": {},
+  "passwordRuleUpperCase": "يجب أن تحتوي على حرف كبير (A-Z)",
+  "@passwordRuleUpperCase": {},
+  "passwordRuleLowerCase": "يجب أن تحتوي على حرف صغير (a-z)",
+  "@passwordRuleLowerCase": {},
+  "passwordRuleNumber": "يجب أن تحتوي على رقم (0-9)",
+  "@passwordRuleNumber": {},
+  "passwordRuleSymbol": "يجب أن تحتوي على رمز خاص (!@#$)",
+  "@passwordRuleSymbol": {},
+
   "passwordRuleCase": "حروف كبيرة وحروف صغيرة",
   "@passwordRuleCase": {},
-  "passwordRuleNumber": "رقم واحد على الأقل",
-  "@passwordRuleNumber": {},
-
-  "passwordRuleUpperCase": "حرف كبير واحد على الأقل",
-  "@passwordRuleUpperCase": {
-    "description": "Validation rule requiring at least one uppercase letter"
-  },
-  "passwordRuleLowerCase": "حرف صغير واحد على الأقل",
-  "@passwordRuleLowerCase": {
-    "description": "Validation rule requiring at least one lowercase letter"
-  },
-
-  "phoneRuleLength": "رقم هاتف غير صالح",
-  "@phoneRuleLength": {
-    "description": "Validation rule for phone number length"
-  },
-
-  "invalidEmailAddress": "البريد الإلكتروني غير صحيح",
-  "@invalidEmailAddress": {
-    "description": "Error message shown when the email format is incorrect"
-  },
 
   "nameRequired": "الاسم مطلوب",
   "@nameRequired": {
@@ -198,11 +248,61 @@
   "@nameTooShort": {
     "description": "Error message when the name is less than the required length"
   },
+
+  "textTooShort3": "يجب ألا يقل عن 3 أحرف",
+  "@textTooShort3": {},
+
+  "nameTooLong": "يجب ألا يزيد الاسم عن 50 حرفًا",
+  "@nameTooLong": {},
   
   "fieldRequired": "هذا الحقل مطلوب",
   "@fieldRequired": {
     "description": "Error message when a field is empty"
   },
+
+  "invalidDate": "برجاء اختيار تاريخ ميلاد يسبق تاريخ اليوم.",
+  "@invalidDate": {},
+
+  "genderRequiredError": "يرجى اختيار الجنس",
+  "@genderRequiredError":{},
+
+  "petTypeRequiredError": "يرجى اختيار نوع الحيوان",
+  "@petTypeRequiredError": {},
+  
+  "invalidData": "البيانات المدخلة غير صحيحة",
+  "@invalidData": {},
+  "registrationFailed": "فشل عملية التسجيل، حاول مرة أخرى",
+  "@registrationFailed": {},
+  "registrationSuccess": "تم إنشاء الحساب بنجاح!",
+  "@registrationSuccess": {},
+  "emailAlreadyExists": "هذا البريد الإلكتروني مسجل مسبقاً، يرجى تسجيل الدخول.",
+  "@emailAlreadyExists": {},
+  "connectionError": "حدث خطأ في الاتصال، يرجى المحاولة لاحقاً.",
+  "@connectionError": {},
+  
+  "imageUpdateFailed": "عذراً، فشل تحديث الصورة. تأكد من أن الصيغة مدعومة (jpg, png).",
+  "@imageUpdateFailed": {},
+
+  "sessionExpired": "انتهت الجلسة، يرجى تسجيل الدخول مجدداً.",
+  "@sessionExpired": {},
+
+  "serverError": "حدث خطأ في الخادم، يرجى المحاولة لاحقاً.",
+  "@serverError": {},
+
+  "unexpectedError": "حدث خطأ غير متوقع، يرجى المحاولة لاحقاً.",
+  "@unexpectedError": {},
+
+  "wrongCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+  "@wrongCredentials": {},
+
+  "userNotFound": "هذا الحساب غير موجود",
+  "@userNotFound": {},
+
+  "loginSuccess": "تم تسجيل الدخول بنجاح، مرحباً بعودتك!",
+  "@loginSuccess": {},
+
+  "imageUpdated": "تم تحديث الصورة بنجاح!",
+  "@imageUpdated": {},
 
   "termsAgreementStart": "إنشاء حساب، فإنك توافق على",
   "@termsAgreementStart": {
@@ -314,6 +414,15 @@
     "description": "Forgot password text button"
   },
 
+  "invalidCode": "الكود غير صحيح أو انتهت صلاحيته",
+  "@invalidCode": {},
+
+  "codeSent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+  "@codeSent": {},
+
+  "passwordResetSuccess": "تم تغيير كلمة المرور بنجاح، قم بتسجيل الدخول الآن",
+  "@passwordResetSuccess": {},
+
   "recoverPassword": "استعادة كلمة المرور",
   "@recoverPassword": {},
   "enterEmailSubtitle": "أدخل بريدك الإلكتروني",
@@ -336,8 +445,14 @@
   "resendCodeText": "إعادة إرسال الرمز",
   "@resendCodeText": {},
     
-  "second": "ثانية ",
-  "@second": {},
+  "second": " {count} ث",
+  "@second": {"description": "Just the seconds count with unit",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "57"
+      }
+  }},
 
   "verifyCodeButton": "تحقق من الرمز",
   "@verifyCodeButton": {},
@@ -353,24 +468,370 @@
     "type": "text"
   },
 
+  "home": "الرئيسية",
+  "@home": {
+    "description": "Bottom navigation bar item: Home"
+  },
+
+  "notificationsTitle": "الإشعارات",
+  "@notificationsTitle": {},
+  "noNotificationsYet": "لا توجد إشعارات حتى الآن",
+  "@noNotificationsYet": {},
+  "notificationsSubtitle": "تابع صحة حيوانك الأليف، مواعيدك،\n وآخر التحديثات المهمة.",
+  "@notificationsSubtitle": {},
+
   "profile": "الملف الشخصي",
   "@profile": {
     "description": "Profile page title",
     "type": "text"
   },
 
-  "home": "الرئيسية",
-  "@home": {
-    "description": "Bottom navigation bar item: Home"
+  "followBtn": "متابعة",
+  "@followBtn": {},
+  "unfollowBtn": "إلغاء المتابعة",
+  "@unfollowBtn": {},
+
+  "manageAppointmentsBtn": "إدارة مواعيدي",
+  "@manageAppointmentsBtn": {},
+
+  "addAppointment": "إضافة موعد",
+  "@addAppointment": {},
+
+  "editAppointment": "تعديل الموعد",
+  "@editAppointment": {},
+
+  "myAppointmentsTitle": "مواعيدي",
+  "@myAppointmentsTitle": {},
+
+  "allAppointments": "الكل",
+  "@allAppointments": {},
+
+  "pendingApproval": "بانتظار الموافقة",
+  "@pendingApproval": {},
+
+  "confirmedAppointments": "المؤكدة",
+  "@confirmedAppointments": {},
+
+  "completedAppointments": "المكتملة",
+  "@completedAppointments": {},
+
+  "pending": "قيد الانتظار",
+  "@pending": {},
+
+  "confirmed": "مؤكد",
+  "@confirmed": {},
+
+  "completed": "مكتمل",
+  "@completed": {},
+
+  "markAsCompleted": "تحديد كمكتمل",
+  "@markAsCompleted": {},
+
+  "todayAppointments": "مواعيد اليوم",
+  "@todayAppointments": {},
+
+  "appointmentsOnDate": "مواعيد يوم {date}",
+  "@appointmentsOnDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
+
+  "deleteAppointmentTitle": "حذف الموعد",
+  "@deleteAppointmentTitle": {},
+
+  "deleteConfirmationMessage": "هل أنت متأكد من رغبتك في حذف هذا الموعد؟.",
+  "@deleteConfirmationMessage": {},
+
+  "appointmentFor": "موعد لـ",
+  "@appointmentFor": {},
+
+  "petLabel": "حيوان أليف",
+  "@petLabel": {},
+
+  "clinicLabel": "عيادة",
+  "@clinicLabel": {},
+
+  "noPetsFoundTitle": "لا يوجد حيوانات",
+  "@noPetsFoundTitle": {},
+  "noPetsFoundDescription": "يجب إضافة حيوان أليف أولاً لتتمكن من حجز موعد له.",
+  "@noPetsFoundDescription": {},
+  "noClinicsFoundTitle": "لا يوجد عيادات",
+  "@noClinicsFoundTitle": {},
+  "noClinicsFoundDescription": "يجب إضافة عيادة أولاً لتتمكن من حجز موعد عمل بها.",
+  "@noClinicsFoundDescription": {},
+  "okButton": "حسناً",
+  "@okButton": {},
+
+  "noAppointmentsToday": "لا توجد مواعيد في هذا اليوم",
+  "@noAppointmentsToday": {},
+
+  "appointmentAddedSuccess": "تم إضافة الموعد بنجاح!",
+  "@appointmentAddedSuccess": {},
+  "appointmentUpdatedSuccess": "تم تعديل الموعد بنجاح!",
+  "@appointmentUpdatedSuccess": {},
+
+  "phoneNumberNotAvailable": "رقم الهاتف غير متوفر.",
+  "@phoneNumberNotAvailable": {},
+  "appointmentBookingSuccess": "تم إرسال طلب الحجز للعيادة بنجاح وفي انتظار تأكيد الطبيب.",
+  "@appointmentBookingSuccess": {},
+
+  "selectPetLabel": "اختر الحيوان الأليف",
+  "@selectPetLabel": {},
+
+  "selectClinicLabel": "اختر عيادة",
+  "@selectClinicLabel": {},
+
+  "visitReasonLabel": "سبب الزيارة",
+  "@visitReasonLabel": {},
+
+  "dateLabel": "التاريخ",
+  "@dateLabel": {},
+
+  "timeLabel": "الوقت",
+  "@timeLabel": {},
+
+  "additionalNotesLabel": "ملاحظات إضافية",
+  "@additionalNotesLabel": {},
+
+  "notesHint": "أضف أي ملاحظات هنا...",
+  "@notesHint": {},
+
+  "visitReasonHint": "مثلاً: كشف سنوي، تطعيم...",
+  "@visitReasonHint": {},
+
+  "dateHintText": "السنة/الشهر/اليوم",
+  "@dateHintText": {},
+
+  "timeHintText": "00:00",
+  "@timeHintText": {},
+
+  "privateAppointment": "موعد خاص",
+  "@privateAppointment": {},
+
+  "followingLabel": "يتابع",
+  "@followingLabel": {},
+  
+  "followersLabel": "متابع",
+  "@followersLabel": {},
+  
+  "postsCountLabel": "منشور",
+  "@postsCountLabel": {},
+
+  "userPetsTitle": "الحيوانات الأليفة",
+  "@userPetsTitle": {},
+  "myPetsTitle": "حيواناتي الأليفة",
+  "@myPetsTitle": {},
+
+  "addNewPetTitle": "إضافة حيوان جديد",
+  "@addNewPetTitle": {},
+
+  "addPetSuccess": "تم إضافة حيوانك الأليف بنجاح",
+  "@addPetSuccess": {},
+  "addNewClinicTitle": "إضافة عيادة جديدة",
+  "@addNewClinicTitle": {},
+  "editClinicTitle": "تعديل بيانات العيادة",
+  "@editClinicTitle": {},
+  "addClinicSuccess": "تم إضافة العيادة بنجاح",
+  "@addClinicSuccess": {},
+
+  "addPetPhoto": "إضافة صورة الحيوان الأليف",
+  "@addPetPhoto": {},
+
+  "basicInfoSection": "المعلومات الأساسية",
+  "@basicInfoSection": {},
+
+  "petTypeLabel": "نوع الحيوان",
+  "@petTypeLabel": {},
+
+  "weightLabel": "الوزن",
+  "@weightLabel": {},
+  "kgLabel": "كجم",
+  "@kgLabel": {},
+
+  "colorLabel": "اللون",
+  "@colorLabel": {},
+
+  "colorHint": "بني، أبيض..",
+  "@colorHint": {},
+
+  "cat": "قط",
+  "@cat": {},
+  "dog": "كلب",
+  "@dog": {},
+  "rabbit": "أرنب",
+  "@rabbit": {},
+  "bird": "طائر",
+  "@bird": {},
+  "turtle": "سلحفاة",
+  "@turtle": {},
+  "other": "أخرى",
+  "@other": {},
+
+  "breedLabel": "السلالة",
+  "@breedLabel": {},
+
+  "petAgeYears": "{count, plural, =0{أقل من سنة} =1{سنة واحدة} =2{سنتان} few{{count} سنوات} many{{count} سنة} other{{count} سنة}}",
+  "@petAgeYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "petAgeMonths": "{count, plural, =0{أقل من شهر} =1{شهر واحد} =2{شهران} few{{count} شهور} many{{count} شهراً} other{{count} شهر}}",
+  "@petAgeMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "submitAddPetBtn": "إضافة الحيوان الأليف",
+  "@submitAddPetBtn": {},
+
+  "removePetSuccess": "تمت إزالة الحيوان بنجاح",
+  "@removePetSuccess": {},
+
+  "showMoreBtn": "عرض المزيد",
+  "@showMoreBtn": {},
+
+  "showLessBtn": "عرض أقل",
+  "@showLessBtn": {},
+
+  "userPostsTitle": "المنشورات",
+  "@userPostsTitle": {},
+  "myPostsTitle": "منشوراتي",
+  "@myPostsTitle": {},
+
+  "myClinicsTitle": "عياداتي",
+  "@myClinicsTitle": {},
+
+  "noPetsAdded": "لا توجد حيوانات أليفة.",
+  "@noPetsAdded": {},
+  "noClinicsAdded": "لا توجد عيادات مضافة.",
+  "@noClinicsAdded": {},
+
+  "clinicNameLabel": "اسم العيادة",
+  "@clinicNameLabel": {},
+  "clinicAddressLabel": "العنوان",
+  "@clinicAddressLabel": {},
+  "clinicWorkingHoursLabel": "ساعات العمل",
+  "@clinicWorkingHoursLabel": {},
+  "clinicDescriptionHint": "اكتب وصفاً مختصراً للعيادة وخدماتها...",
+  "@clinicDescriptionHint": {},
+  "uploadClinicPhotoHint": "قم برفع صورة عيادتك",
+  "@uploadClinicPhotoHint": {},
+  "addClinicBtn": "إضافة العيادة",
+  "@addClinicBtn": {},
+
+  "deletePetTitle": "حذف '{name}'",
+  "@deletePetTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deletePetWarning": "هذا الإجراء لا يمكن التراجع عنه. سيتم إلغاء جميع المواعيد المرتبطة بها",
+  "@deletePetWarning": {},
+
+  "clinicAddedSuccess": "تم إضافة العيادة بنجاح!",
+  "@clinicAddedSuccess": {},
+
+  "deleteClinicSuccess": "تم حذف العيادة بنجاح!",
+  "@deleteClinicSuccess": {},
+
+  "addressTooShort": "العنوان قصير جداً، يرجى كتابة تفاصيل أكثر",
+  "@addressTooShort": {},
+  "descTooShort": "الوصف قصير جداً، اكتب 10 أحرف على الأقل",
+  "@descTooShort": {},
+  "hoursTooShort": "يرجى كتابة ساعات العمل بشكل واضح",
+  "@hoursTooShort": {},
+  "specializationTooShort": "يرجى إدخال تخصص صحيح",
+  "@specializationTooShort": {},
+
+  "noPostsYet": "لا توجد منشورات بعد.",
+  "@noPostsYet": {},
+
+  "seeAllBtn": "عرض الكل",
+  "@seeAllBtn": {},
 
   "clinics": "العيادات",
   "@clinics": {
     "description": "Bottom navigation bar item: Clinics"
   },
 
-  "vetClinicsTitle": "العيادات البيطرية",
-  "@vetClinicsTitle": {},
+  "searchClinicHint": "ابحث باسم العيادة أو المنطقة...",
+  "@searchClinicHint": {
+    "description": "Hint text for the clinic search field"
+  },
+
+  "noClinicsAvailable": "لا توجد عيادات متاحة حالياً",
+  "@noClinicsAvailable": {
+    "description": "Message shown when there are no clinics available in the vet clinics section"
+  },
+  
+  "bookAppointment": "احجز موعد",
+  "@bookAppointment": {},
+  "addReview": "إضافة تقييم",
+  "@addReview": {},
+
+  "reviewsCount": "{count, plural, =1{تقييم واحد} =2{تقييمان} other{{count} تقييم}}",
+  "@reviewsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "clinicConfirmationNotice": "سيتم تأكيد الموعد من قبل العيادة",
+  "@clinicConfirmationNotice": {},
+  "confirmBooking": "تأكيد الحجز",
+  "@confirmBooking": {},
+
+  "checkBackLater": "عد لاحقاً لرؤية التحديثات",
+  "@checkBackLater": {
+    "description": "Message shown when there are no posts in the community feed"
+  },
+
+  "noMatchingResults": "لا توجد نتائج مطابقة لـ \"{query}\"",
+  "@noMatchingResults": {
+    "description": "Message shown when a search query returns no results",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+
+  "search": "بحث",
+  "@search": {},
+
+  "editYourReview": "تعديل تقييمك",
+  "@editYourReview": {},
+  "yourClinicReview": "تقييمك للعيادة",
+  "@yourClinicReview": {},
+  "selectRating": "اختر التقييم *",
+  "@selectRating": {},
+  "writeCommentOptional": "اكتب تعليقك هنا (اختياري)",
+  "@writeCommentOptional": {},
+  "submitReview": "إرسال التقييم",
+  "@submitReview": {},
+  "pleaseSelectRatingFirst": "برجاء اختيار التقييم أولاً ⭐",
+  "@pleaseSelectRatingFirst": {},
+  "shareYourExperience": "شاركنا تجربتك مع العيادة...",
+  "@shareYourExperience": {},
+
+  "accept": "قبول",
+  "@accept": {},
+  "decline": "رفض",
+  "@decline": {},
 
   "smartCollar": "الطوق الذكي",
   "@smartCollar": {
@@ -386,9 +847,6 @@
   "@postContentHint": {
     "description": "Hint text shown in the post creation text field"
   },
-
-  "emptyCommunityText": "لا توجد منشورات بعد",
-  "@emptyCommunityText": { "description": "Text shown when community feed is empty" },
 
   "newPostTitle": "منشور جديد",
   "@newPostTitle": {},
@@ -421,6 +879,10 @@
   "editPost": "تعديل المنشور",
   "@editPost": {
     "description": "Title or button label for editing a post"
+  },
+  "postEditedSuccessfully": "تم تعديل المنشور بنجاح",
+  "@postEditedSuccessfully": {
+    "description": "Success message shown after editing a post"
   },
 
   "edited": "تم التعديل",
@@ -609,12 +1071,6 @@
     "type": "text"
   },
 
-  "notifications": "الإشعارات",
-  "@notifications": {
-    "description": "Notifications section title",
-    "type": "text"
-  },
-
   "account": "الحساب",
   "@account": {
     "description": "Account section title",
@@ -675,6 +1131,11 @@
     "type": "text"
   },
 
+  "joined": "انضم في",
+  "@joined": {
+    "description": "Label for the user's account creation date"
+  },
+
   "version": "الإصدار",
   "@version": {
     "description": "App version label",
@@ -719,7 +1180,6 @@
   "@deleteAccountContent": {
     "description": "Warning message requesting password entry to confirm deletion"
   },
-
 
   "delete_account": "حذف الحساب",
   "@delete_account": {
@@ -809,7 +1269,6 @@
   "@pulse": {
     "description": "Label for heart rate/pulse metric"
   },
-
   
   "viewDetailedStatistics": "عرض الإحصائيات المفصلة",
   "@viewDetailedStatistics": {
@@ -840,6 +1299,13 @@
   "@upcomingAppointments": {
     "description": "Section header for scheduled future appointments"
   },
+
+  "noHealthRecord": "لا يوجد سجل صحي",
+  "@noHealthRecord": {},
+  "noUpcomingAppointments": "لا توجد مواعيد قادمة",
+  "@noUpcomingAppointments": {},
+  "noReminders": "لا توجد تذكيرات",
+  "@noReminders": {},
 
   "noSmartCollarTitle": "هذا الحيوان ليس لديه طوق ذكي",
   "@noSmartCollarTitle": {},

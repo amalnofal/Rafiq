@@ -4,19 +4,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class CircleIconButton extends StatelessWidget {
   final String assetName;
-  final Color? backgroundColor;
+  final Color? bgColor;
   final Color? color;
   final VoidCallback? onTap;
   final double? size;
-    final double? iconSize;
+  final double? iconSize;
+  final BoxBorder? border;
 
   const CircleIconButton(
     this.assetName, {
     super.key,
-    this.backgroundColor,
+    this.bgColor,
     this.color,
     this.onTap,
-    this.size, this.iconSize,
+    this.size,
+    this.iconSize,
+    this.border,
   });
 
   @override
@@ -29,16 +32,16 @@ class CircleIconButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color:
-              backgroundColor ?? Theme.of(context).colorScheme.primaryContainer,
+          color: bgColor ?? Theme.of(context).colorScheme.primaryContainer,
           shape: BoxShape.circle,
+          border: border,
         ),
         child: Center(
           child: SvgPicture.asset(
             height: iconSize ?? 20.h,
             assetName,
             colorFilter: ColorFilter.mode(
-              color ?? Theme.of(context).colorScheme.primary,
+              color ?? Theme.of(context).colorScheme.onSecondary,
               BlendMode.srcIn,
             ),
           ),

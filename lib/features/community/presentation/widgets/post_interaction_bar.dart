@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:rafiq/features/community/presentation/widgets/comments_bottom_sheet.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
 class PostInteractionBar extends StatefulWidget {
   final int initialLikes;
@@ -45,118 +44,84 @@ class _PostInteractionBarState extends State<PostInteractionBar> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Stats Row
-        if (likes > 0 || comments > 0) ...[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            child: Row(
-              children: [
-                // أيقونة ورقم اللايكات
-                if (likes > 0) ...[
-                  Container(
-                    padding: EdgeInsets.all(4.w),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.favorite,
-                      color: Colors.white,
-                      size: 10.sp,
-                    ),
-                  ),
-                  SizedBox(width: 4.w),
-                  Text(
-                    '$likes',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelSmall?.copyWith(color: Colors.grey[600]),
-                  ),
-                ],
-
-                const Spacer(),
-
-                // رقم التعليقات
-                if (comments > 0)
-                  Text(
-                    '$comments ${AppLocalizations.of(context)!.commentAction}',
-                    style: Theme.of(
-                      context,
-                    ).textTheme.labelSmall?.copyWith(color: Colors.grey[600]),
-                  ),
-              ],
-            ),
-          ),
-        ],
-        Divider(height: 1.h),
-        SizedBox(height: 4.h),
-
-        // Action Buttons
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // زر اللايك
-            Expanded(
-              child: _buildActionButton(
-                context,
-                icon: isLiked
-                    ? "assets/icons/like.svg"
-                    : "assets/icons/unlike.svg",
-                label: AppLocalizations.of(context)!.likeAction,
-                color: isLiked ? Colors.red : null,
-                onTap: _toggleLike,
+            // زر اللايكات
+            _buildInteractionButton(
+              context,
+              count: likes,
+              iconWidget: SvgPicture.asset(
+                isLiked ? "assets/icons/like.svg" : "assets/icons/unlike.svg",
+                height: 20.h,
+                colorFilter: ColorFilter.mode(
+                  isLiked
+                      ? Colors.red
+                      : Theme.of(context).colorScheme.onTertiary,
+                  BlendMode.srcIn,
+                ),
               ),
+              onTap: _toggleLike,
             ),
-
-            // زر التعليق
-            Expanded(
-              child: _buildActionButton(
-                context,
-                icon: "assets/icons/comment.svg",
-                label: AppLocalizations.of(context)!.commentAction,
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => const CommentsBottomSheet(),
-                  );
-                },
+            SizedBox(width: 16.w),
+            // زر التعليقات
+            _buildInteractionButton(
+              context,
+              count: comments,
+              iconWidget: SvgPicture.asset(
+                "assets/icons/comment.svg",
+                height: 19.h,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.onTertiary,
+                  BlendMode.srcIn,
+                ),
               ),
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => const CommentsBottomSheet(),
+                );
+              },
             ),
-            Spacer(),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildActionButton(
+  Widget _buildInteractionButton(
     BuildContext context, {
-    required String icon,
-    required String label,
-    Color? color,
+    required int count,
+    required Widget iconWidget,
     required VoidCallback onTap,
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(8.r),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 8.h),
-        child: Row(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(icon, height: 18.h),
-            SizedBox(width: 8.w),
-            Padding(
-              padding: EdgeInsets.only(top: 4.h),
-              child: Text(
-                label,
-                style: Theme.of(
-                  context,
-                ).textTheme.labelMedium!.copyWith(color: color),
-              ),
-            ),
-          ],
+      borderRadius: BorderRadius.circular(20.r),
+      child: Container(
+        constraints: BoxConstraints(minWidth: 50.w, minHeight: 32.h),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // الأيقونة
+              iconWidget,
+              SizedBox(width: 6.w),
+              // الرقم (لو صفر مش هيظهر رقم عشان تبقى أنضف)
+              if (count > 0) ...[
+                Padding(
+                  padding: EdgeInsets.only(top: 3.h),
+                  child: Text(
+                    '$count',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ],
+          ),
         ),
       ),
     );

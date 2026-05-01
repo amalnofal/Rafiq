@@ -107,6 +107,120 @@ abstract class AppLocalizations {
   /// **'Smart assistant for taking care of your pet'**
   String get pet_care_assistant;
 
+  /// No description provided for @welcomeToRafiq.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Rafiq !'**
+  String get welcomeToRafiq;
+
+  /// Subtitle in the pet owner's home empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Start your pet care journey\nAdd your pet to start tracking its health'**
+  String get welcomeSubtitle;
+
+  /// Button to add the first pet
+  ///
+  /// In en, this message translates to:
+  /// **'Add Your Pet'**
+  String get addPetBtn;
+
+  /// No description provided for @editPetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Pet Details'**
+  String get editPetTitle;
+
+  /// No description provided for @removePetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove Pet'**
+  String get removePetTitle;
+
+  /// No description provided for @removePetDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove'**
+  String get removePetDesc;
+
+  /// No description provided for @actionCannotBeUndone.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get actionCannotBeUndone;
+
+  /// No description provided for @removeBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get removeBtn;
+
+  /// No description provided for @tipTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Tip'**
+  String get tipTitle;
+
+  /// No description provided for @ownerTipContent.
+  ///
+  /// In en, this message translates to:
+  /// **'After adding your pet, you can order a smart collar for comprehensive monitoring of its health and activity in real-time!'**
+  String get ownerTipContent;
+
+  /// No description provided for @vetTipContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete your clinic profile by adding working hours and available services to make it easier for pet owners to contact you and book appointments!'**
+  String get vetTipContent;
+
+  /// No description provided for @healthTrackingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Health Tracker'**
+  String get healthTrackingTitle;
+
+  /// No description provided for @healthTrackingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Track pulse, activity, and temperature'**
+  String get healthTrackingSubtitle;
+
+  /// No description provided for @communityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get communityTitle;
+
+  /// No description provided for @communitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Connect with other pet lovers'**
+  String get communitySubtitle;
+
+  /// No description provided for @vetClinicsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Vet Clinics'**
+  String get vetClinicsTitle;
+
+  /// No description provided for @vetClinicsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Certified clinics and appointment management'**
+  String get vetClinicsSubtitle;
+
+  /// No description provided for @storeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Shop'**
+  String get storeTitle;
+
+  /// No description provided for @storeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything your pet needs'**
+  String get storeSubtitle;
+
   /// Text asking the user if they don't have an account
   ///
   /// In en, this message translates to:
@@ -188,8 +302,20 @@ abstract class AppLocalizations {
   /// No description provided for @dobHint.
   ///
   /// In en, this message translates to:
-  /// **'mm/dd/yyyy'**
+  /// **'dd/mm/yyyy'**
   String get dobHint;
+
+  /// No description provided for @set_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Set date'**
+  String get set_date;
+
+  /// No description provided for @set.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get set;
 
   /// No description provided for @chooseAccountType.
   ///
@@ -242,7 +368,7 @@ abstract class AppLocalizations {
   /// No description provided for @vetTitle.
   ///
   /// In en, this message translates to:
-  /// **'Veterinarian'**
+  /// **'Veteterinarian'**
   String get vetTitle;
 
   /// No description provided for @vetSubtitle.
@@ -377,11 +503,53 @@ abstract class AppLocalizations {
   /// **'Confirm Password'**
   String get confirmPassword;
 
-  /// No description provided for @passwordsDoNotMatch.
+  /// No description provided for @invalidEmailAddress.
   ///
   /// In en, this message translates to:
-  /// **'Passwords do not match'**
-  String get passwordsDoNotMatch;
+  /// **'Please enter a valid email address'**
+  String get invalidEmailAddress;
+
+  /// No description provided for @invalidPhoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get invalidPhoneNumber;
+
+  /// No description provided for @passwordRuleLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters'**
+  String get passwordRuleLength;
+
+  /// No description provided for @passwordTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too long'**
+  String get passwordTooLong;
+
+  /// No description provided for @passwordRuleUpperCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Must contain an uppercase letter (A-Z)'**
+  String get passwordRuleUpperCase;
+
+  /// No description provided for @passwordRuleLowerCase.
+  ///
+  /// In en, this message translates to:
+  /// **'Must contain a lowercase letter (a-z)'**
+  String get passwordRuleLowerCase;
+
+  /// No description provided for @passwordRuleNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Must contain a number (0-9)'**
+  String get passwordRuleNumber;
+
+  /// No description provided for @passwordRuleSymbol.
+  ///
+  /// In en, this message translates to:
+  /// **'Must contain a special character (!@#\$)'**
+  String get passwordRuleSymbol;
 
   /// No description provided for @passwordRequirements.
   ///
@@ -389,47 +557,23 @@ abstract class AppLocalizations {
   /// **'Password Requirements:'**
   String get passwordRequirements;
 
-  /// No description provided for @passwordRuleLength.
-  ///
-  /// In en, this message translates to:
-  /// **'At least 8 characters'**
-  String get passwordRuleLength;
-
   /// No description provided for @passwordRuleCase.
   ///
   /// In en, this message translates to:
   /// **'Uppercase and lowercase letters'**
   String get passwordRuleCase;
 
-  /// No description provided for @passwordRuleNumber.
+  /// No description provided for @passwordsDoNotMatch.
   ///
   /// In en, this message translates to:
-  /// **'At least one number'**
-  String get passwordRuleNumber;
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
 
-  /// Validation rule requiring at least one uppercase letter
+  /// No description provided for @ageTooYoung.
   ///
   /// In en, this message translates to:
-  /// **'At least one uppercase letter'**
-  String get passwordRuleUpperCase;
-
-  /// Validation rule requiring at least one lowercase letter
-  ///
-  /// In en, this message translates to:
-  /// **'At least one lowercase letter'**
-  String get passwordRuleLowerCase;
-
-  /// Validation rule for phone number length
-  ///
-  /// In en, this message translates to:
-  /// **'Phone number must be at least 11 digits'**
-  String get phoneRuleLength;
-
-  /// Error message shown when the email format is incorrect
-  ///
-  /// In en, this message translates to:
-  /// **'Invalid email address'**
-  String get invalidEmailAddress;
+  /// **'You must be at least 18 years old'**
+  String get ageTooYoung;
 
   /// Error message when the name field is empty
   ///
@@ -443,11 +587,119 @@ abstract class AppLocalizations {
   /// **'Name is too short'**
   String get nameTooShort;
 
+  /// No description provided for @textTooShort3.
+  ///
+  /// In en, this message translates to:
+  /// **'Must be at least 3 characters'**
+  String get textTooShort3;
+
+  /// No description provided for @nameTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must not exceed 50 characters'**
+  String get nameTooLong;
+
   /// Error message when a field is empty
   ///
   /// In en, this message translates to:
   /// **'This field is required'**
   String get fieldRequired;
+
+  /// No description provided for @invalidDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a valid past date.'**
+  String get invalidDate;
+
+  /// No description provided for @genderRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select gender'**
+  String get genderRequiredError;
+
+  /// No description provided for @petTypeRequiredError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select type'**
+  String get petTypeRequiredError;
+
+  /// No description provided for @invalidData.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid data provided'**
+  String get invalidData;
+
+  /// No description provided for @registrationFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Registration failed, please try again'**
+  String get registrationFailed;
+
+  /// No description provided for @registrationSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created successfully!'**
+  String get registrationSuccess;
+
+  /// No description provided for @emailAlreadyExists.
+  ///
+  /// In en, this message translates to:
+  /// **'This email is already registered, please log in.'**
+  String get emailAlreadyExists;
+
+  /// No description provided for @userNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'User not found'**
+  String get userNotFound;
+
+  /// No description provided for @loginSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Login successful, welcome back!'**
+  String get loginSuccess;
+
+  /// No description provided for @connectionError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your internet connection and try again.'**
+  String get connectionError;
+
+  /// No description provided for @imageUpdateFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorry, photo update failed. Ensure the format is supported (jpg, png).'**
+  String get imageUpdateFailed;
+
+  /// No description provided for @sessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired, please log in again.'**
+  String get sessionExpired;
+
+  /// No description provided for @serverError.
+  ///
+  /// In en, this message translates to:
+  /// **'Server error occurred, please try again later.'**
+  String get serverError;
+
+  /// No description provided for @unexpectedError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred, please try again later.'**
+  String get unexpectedError;
+
+  /// No description provided for @imageUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Image updated successfully!'**
+  String get imageUpdated;
+
+  /// No description provided for @wrongCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email or password'**
+  String get wrongCredentials;
 
   /// First part of terms agreement text
   ///
@@ -575,6 +827,24 @@ abstract class AppLocalizations {
   /// **'Forgot Password?'**
   String get forgotPassword;
 
+  /// No description provided for @invalidCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid or expired code'**
+  String get invalidCode;
+
+  /// No description provided for @codeSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Verification code sent to your email'**
+  String get codeSent;
+
+  /// No description provided for @passwordResetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset successfully, please login'**
+  String get passwordResetSuccess;
+
   /// No description provided for @recoverPassword.
   ///
   /// In en, this message translates to:
@@ -614,7 +884,7 @@ abstract class AppLocalizations {
   /// Just the seconds count with unit
   ///
   /// In en, this message translates to:
-  /// **' {count, plural, =1{1 second} other{{count} seconds}}'**
+  /// **' {count}s'**
   String second(int count);
 
   /// No description provided for @verifyCodeButton.
@@ -641,17 +911,593 @@ abstract class AppLocalizations {
   /// **'Logout'**
   String get logout;
 
+  /// Bottom navigation bar item: Home
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
   /// Profile page title
   ///
   /// In en, this message translates to:
   /// **'Profile'**
   String get profile;
 
-  /// Bottom navigation bar item: Home
+  /// No description provided for @notificationsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Home'**
-  String get home;
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @noNotificationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotificationsYet;
+
+  /// No description provided for @notificationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay updated on your pet\'s health,\n appointments, and more.'**
+  String get notificationsSubtitle;
+
+  /// No description provided for @followBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow'**
+  String get followBtn;
+
+  /// No description provided for @unfollowBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfollow'**
+  String get unfollowBtn;
+
+  /// No description provided for @manageAppointmentsBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage Appointments'**
+  String get manageAppointmentsBtn;
+
+  /// Button or title to add a new appointment
+  ///
+  /// In en, this message translates to:
+  /// **'Add Appointment'**
+  String get addAppointment;
+
+  /// No description provided for @editAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Appointment'**
+  String get editAppointment;
+
+  /// No description provided for @myAppointmentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Appointments'**
+  String get myAppointmentsTitle;
+
+  /// No description provided for @allAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allAppointments;
+
+  /// Status for appointments waiting to be accepted
+  ///
+  /// In en, this message translates to:
+  /// **'Pending Approval'**
+  String get pendingApproval;
+
+  /// No description provided for @confirmedAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmedAppointments;
+
+  /// No description provided for @completedAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completedAppointments;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @confirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get confirmed;
+
+  /// No description provided for @completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get completed;
+
+  /// No description provided for @markAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as Completed'**
+  String get markAsCompleted;
+
+  /// No description provided for @todayAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Appointments'**
+  String get todayAppointments;
+
+  /// No description provided for @appointmentsOnDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointments on {date}'**
+  String appointmentsOnDate(String date);
+
+  /// Title for the delete confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Appointment'**
+  String get deleteAppointmentTitle;
+
+  /// Message body for delete confirmation
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this appointment?'**
+  String get deleteConfirmationMessage;
+
+  /// Used as a prefix, e.g., Appointment for Max
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment for'**
+  String get appointmentFor;
+
+  /// No description provided for @petLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet'**
+  String get petLabel;
+
+  /// No description provided for @clinicLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic'**
+  String get clinicLabel;
+
+  /// No description provided for @noPetsFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Pets Found'**
+  String get noPetsFoundTitle;
+
+  /// No description provided for @noPetsFoundDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You must add a pet first to be able to book an appointment for it.'**
+  String get noPetsFoundDescription;
+
+  /// No description provided for @noClinicsFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No Clinics Found'**
+  String get noClinicsFoundTitle;
+
+  /// No description provided for @noClinicsFoundDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You must add a clinic first to be able to book a work appointment in it.'**
+  String get noClinicsFoundDescription;
+
+  /// No description provided for @okButton.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get okButton;
+
+  /// No description provided for @noAppointmentsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No appointments for this day'**
+  String get noAppointmentsToday;
+
+  /// No description provided for @appointmentAddedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment added successfully!'**
+  String get appointmentAddedSuccess;
+
+  /// No description provided for @appointmentUpdatedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Appointment updated successfully!'**
+  String get appointmentUpdatedSuccess;
+
+  /// No description provided for @phoneNumberNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is not available.'**
+  String get phoneNumberNotAvailable;
+
+  /// No description provided for @appointmentBookingSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking request sent successfully and is awaiting doctor\'s confirmation.'**
+  String get appointmentBookingSuccess;
+
+  /// No description provided for @selectPetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Pet'**
+  String get selectPetLabel;
+
+  /// Label for the clinic selection section in appointment form
+  ///
+  /// In en, this message translates to:
+  /// **'Select Clinic'**
+  String get selectClinicLabel;
+
+  /// No description provided for @visitReasonLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Reason'**
+  String get visitReasonLabel;
+
+  /// No description provided for @dateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateLabel;
+
+  /// No description provided for @timeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get timeLabel;
+
+  /// No description provided for @additionalNotesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Notes'**
+  String get additionalNotesLabel;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add any notes here...'**
+  String get notesHint;
+
+  /// Hint text for the visit reason field
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Annual checkup, vaccination...'**
+  String get visitReasonHint;
+
+  /// Hint showing the date format
+  ///
+  /// In en, this message translates to:
+  /// **'DD/MM/YYYY'**
+  String get dateHintText;
+
+  /// Hint showing the time format
+  ///
+  /// In en, this message translates to:
+  /// **'00:00'**
+  String get timeHintText;
+
+  /// No description provided for @privateAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Private Appointment'**
+  String get privateAppointment;
+
+  /// No description provided for @followingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Following'**
+  String get followingLabel;
+
+  /// No description provided for @followersLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Followers'**
+  String get followersLabel;
+
+  /// No description provided for @postsCountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Posts'**
+  String get postsCountLabel;
+
+  /// No description provided for @userPetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pets'**
+  String get userPetsTitle;
+
+  /// No description provided for @myPetsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Pets'**
+  String get myPetsTitle;
+
+  /// Title for the screen or section to add a new pet
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Pet'**
+  String get addNewPetTitle;
+
+  /// No description provided for @addPetSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet added successfully'**
+  String get addPetSuccess;
+
+  /// No description provided for @addNewClinicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Clinic'**
+  String get addNewClinicTitle;
+
+  /// No description provided for @editClinicTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Clinic Details'**
+  String get editClinicTitle;
+
+  /// No description provided for @addClinicSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic added successfully'**
+  String get addClinicSuccess;
+
+  /// Label for the image picker to add a photo of the pet
+  ///
+  /// In en, this message translates to:
+  /// **'Add Pet Photo'**
+  String get addPetPhoto;
+
+  /// Header for the basic information section
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Info'**
+  String get basicInfoSection;
+
+  /// No description provided for @petTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Type'**
+  String get petTypeLabel;
+
+  /// No description provided for @weightLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weightLabel;
+
+  /// No description provided for @kgLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get kgLabel;
+
+  /// No description provided for @colorLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get colorLabel;
+
+  /// No description provided for @colorHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Brown, white..'**
+  String get colorHint;
+
+  /// No description provided for @cat.
+  ///
+  /// In en, this message translates to:
+  /// **'Cat'**
+  String get cat;
+
+  /// No description provided for @dog.
+  ///
+  /// In en, this message translates to:
+  /// **'Dog'**
+  String get dog;
+
+  /// No description provided for @rabbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabbit'**
+  String get rabbit;
+
+  /// No description provided for @bird.
+  ///
+  /// In en, this message translates to:
+  /// **'Bird'**
+  String get bird;
+
+  /// No description provided for @turtle.
+  ///
+  /// In en, this message translates to:
+  /// **'Turtle'**
+  String get turtle;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @petAgeYears.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Less than a year} =1{1 year} other{{count} years}}'**
+  String petAgeYears(int count);
+
+  /// No description provided for @petAgeMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Less than a month} =1{1 month} other{{count} months}}'**
+  String petAgeMonths(int count);
+
+  /// No description provided for @breedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Breed'**
+  String get breedLabel;
+
+  /// No description provided for @submitAddPetBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Pet'**
+  String get submitAddPetBtn;
+
+  /// Success message when a pet is removed
+  ///
+  /// In en, this message translates to:
+  /// **'Pet removed successfully'**
+  String get removePetSuccess;
+
+  /// Button to expand a list
+  ///
+  /// In en, this message translates to:
+  /// **'Show More'**
+  String get showMoreBtn;
+
+  /// No description provided for @showLessBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get showLessBtn;
+
+  /// Title for the vet's clinics section in profile
+  ///
+  /// In en, this message translates to:
+  /// **'My Clinics'**
+  String get myClinicsTitle;
+
+  /// No description provided for @noPetsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No pets added.'**
+  String get noPetsAdded;
+
+  /// No description provided for @noClinicsAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'No clinics added.'**
+  String get noClinicsAdded;
+
+  /// No description provided for @clinicNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic Name'**
+  String get clinicNameLabel;
+
+  /// No description provided for @clinicAddressLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Address'**
+  String get clinicAddressLabel;
+
+  /// No description provided for @clinicWorkingHoursLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Working Hours'**
+  String get clinicWorkingHoursLabel;
+
+  /// No description provided for @clinicDescriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a brief description of the clinic and its services...'**
+  String get clinicDescriptionHint;
+
+  /// No description provided for @uploadClinicPhotoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload your clinic\'s photo'**
+  String get uploadClinicPhotoHint;
+
+  /// No description provided for @addClinicBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Your Clinic'**
+  String get addClinicBtn;
+
+  /// No description provided for @deletePetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete \'{name}\''**
+  String deletePetTitle(String name);
+
+  /// No description provided for @deletePetWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone. All associated appointments will be canceled'**
+  String get deletePetWarning;
+
+  /// No description provided for @clinicAddedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic added successfully!'**
+  String get clinicAddedSuccess;
+
+  /// No description provided for @deleteClinicSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Clinic deleted successfully!'**
+  String get deleteClinicSuccess;
+
+  /// No description provided for @addressTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is too short, please provide more details'**
+  String get addressTooShort;
+
+  /// No description provided for @descTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Description is too short, must be at least 10 characters'**
+  String get descTooShort;
+
+  /// No description provided for @hoursTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter valid working hours'**
+  String get hoursTooShort;
+
+  /// No description provided for @specializationTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid specialization'**
+  String get specializationTooShort;
+
+  /// No description provided for @noPostsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No posts yet.'**
+  String get noPostsYet;
+
+  /// No description provided for @userPostsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Posts'**
+  String get userPostsTitle;
+
+  /// No description provided for @myPostsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'My Posts'**
+  String get myPostsTitle;
+
+  /// Button to view all items in a category
+  ///
+  /// In en, this message translates to:
+  /// **'See All'**
+  String get seeAllBtn;
 
   /// Bottom navigation bar item: Clinics
   ///
@@ -659,11 +1505,119 @@ abstract class AppLocalizations {
   /// **'Clinics'**
   String get clinics;
 
-  /// No description provided for @vetClinicsTitle.
+  /// Hint text for the clinic search field
   ///
   /// In en, this message translates to:
-  /// **'Vet Clinics'**
-  String get vetClinicsTitle;
+  /// **'Search by clinic name or area...'**
+  String get searchClinicHint;
+
+  /// Message shown when there are no clinics available in the vet clinics section
+  ///
+  /// In en, this message translates to:
+  /// **'No clinics available at the moment'**
+  String get noClinicsAvailable;
+
+  /// No description provided for @bookAppointment.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Appointment'**
+  String get bookAppointment;
+
+  /// No description provided for @addReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Review'**
+  String get addReview;
+
+  /// No description provided for @reviewsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 Review} other{{count} Reviews}}'**
+  String reviewsCount(int count);
+
+  /// No description provided for @clinicConfirmationNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'The appointment will be confirmed by the clinic'**
+  String get clinicConfirmationNotice;
+
+  /// No description provided for @confirmBooking.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Booking'**
+  String get confirmBooking;
+
+  /// Message shown when there are no posts in the community feed
+  ///
+  /// In en, this message translates to:
+  /// **'Check back later for updates'**
+  String get checkBackLater;
+
+  /// No description provided for @noMatchingResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching results for \"{query}\"'**
+  String noMatchingResults(String query);
+
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @editYourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Your Review'**
+  String get editYourReview;
+
+  /// No description provided for @yourClinicReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Clinic Review'**
+  String get yourClinicReview;
+
+  /// No description provided for @selectRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Rating *'**
+  String get selectRating;
+
+  /// No description provided for @writeCommentOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your comment here (optional)'**
+  String get writeCommentOptional;
+
+  /// No description provided for @submitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get submitReview;
+
+  /// No description provided for @pleaseSelectRatingFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a rating first ⭐'**
+  String get pleaseSelectRatingFirst;
+
+  /// No description provided for @shareYourExperience.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience with the clinic...'**
+  String get shareYourExperience;
+
+  /// No description provided for @accept.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get accept;
+
+  /// No description provided for @decline.
+  ///
+  /// In en, this message translates to:
+  /// **'Decline'**
+  String get decline;
 
   /// Bottom navigation bar item: Smart Collar
   ///
@@ -682,12 +1636,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'What would you like to share?'**
   String get postContentHint;
-
-  /// Text shown when community feed is empty
-  ///
-  /// In en, this message translates to:
-  /// **'No posts yet'**
-  String get emptyCommunityText;
 
   /// No description provided for @newPostTitle.
   ///
@@ -748,6 +1696,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit Post'**
   String get editPost;
+
+  /// Message shown when a post is edited successfully
+  ///
+  /// In en, this message translates to:
+  /// **'Post updated successfully'**
+  String get postEditedSuccessfully;
 
   /// Hint text shown when editing a comment
   ///
@@ -1001,12 +1955,6 @@ abstract class AppLocalizations {
   /// **'General'**
   String get general;
 
-  /// Notifications section title
-  ///
-  /// In en, this message translates to:
-  /// **'Notifications'**
-  String get notifications;
-
   /// Account section title
   ///
   /// In en, this message translates to:
@@ -1066,6 +2014,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Join Date'**
   String get join_date;
+
+  /// Label for the user's account creation date
+  ///
+  /// In en, this message translates to:
+  /// **'Joined'**
+  String get joined;
 
   /// App version label
   ///
@@ -1282,6 +2236,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Upcoming Appointments'**
   String get upcomingAppointments;
+
+  /// No description provided for @noHealthRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'No medical record'**
+  String get noHealthRecord;
+
+  /// No description provided for @noUpcomingAppointments.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming appointments'**
+  String get noUpcomingAppointments;
+
+  /// No description provided for @noReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminders'**
+  String get noReminders;
 
   /// Title shown when no smart collar is paired
   ///

@@ -6,6 +6,7 @@ import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/enums/post_category.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
@@ -88,7 +89,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               width: 80.w,
               radius: 50.r,
               elevation: 0,
-              onpressed: isButtonEnabled
+              onPressed: isButtonEnabled
                   ? () {
                       final selectedCategories = _selectedCategoryIds
                           .map((id) => PostCategory.fromId(id))
@@ -117,8 +118,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                       showSnackBar(
                         context,
                         isEditing
-                            ? "تم تعديل المنشور بنجاح"
-                            : AppLocalizations.of(context)!.postCreatedSuccess,
+                            ? context.l10n.postEditedSuccessfully
+                            : context.l10n.postCreatedSuccess,
                       );
 
                       Navigator.pop(context, newPost);

@@ -27,7 +27,7 @@ class SaveButton extends StatelessWidget {
     return CustomButton(
       title: AppLocalizations.of(context)!.save_changes,
       fontWeight: FontWeight.w500,
-      onpressed: () {
+      onPressed: () {
         // 1. التحقق من الحقول الإجبارية (الاسم الأول والأخير)
         if (firstNameController.text.trim().isEmpty || 
             lastNameController.text.trim().isEmpty) {

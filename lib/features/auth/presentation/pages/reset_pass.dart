@@ -1,10 +1,13 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
-import 'package:rafiq/core/helper/validation_helper.dart'; // 1. استدعاء Helper
+import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
+import 'package:rafiq/core/widgets/loading_overlay.dart';
+import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_layout.dart';
 import 'package:rafiq/features/auth/presentation/widgets/password_field.dart';
@@ -12,7 +15,14 @@ import 'package:rafiq/features/settings/presentation/Widgets/password_rules.dart
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+  final String email;
+  final String otp;
+
+  const ResetPasswordScreen({
+    super.key,
+    required this.email,
+    required this.otp,
+  });
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -31,72 +41,117 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   }
 
   // دالة الحفظ
-  void _submit() async {
+  void _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      // 1. هنا كود الـ API
-      // await authProvider.resetPassword(...);
-
-      log("تم تغيير كلمة المرور والدخول بنجاح");
-
-      // 2. التوجيه للـ Home
-      if (mounted) {
-        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-      }
+      // 👇 استدعاء دالة تغيير الباسورد من الكيوبت
+      context.read<ForgetPasswordCubit>().resetNewPassword(
+        email: widget.email,
+        otp: widget.otp,
+        newPassword: _passController.text,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return AuthLayout(
-      // زرار الرجوع
-      onBackTap: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-          (route) => route.isFirst,
-        );
+    return BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
+      listener: (context, state) {
+        if (state is ResetPasswordSuccess) {
+          // ✅ 1. نجاح: رسالة ورجوع لشاشة اللوجين
+          log("تم تغيير كلمة المرور بنجاح");
+
+          showSnackBar(
+            context,
+            AppLocalizations.of(context)!.passwordResetSuccess,
+            isError: false,
+          );
+
+          // مسح الستاك والعودة لشاشة الدخول
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/login',
+            (route) => false,
+          );
+        } else if (state is ForgetPasswordFailure) {
+          // ❌ 2. فشل: عرض رسالة خطأ
+          String getLocalizedMessage(String key) {
+            final lang = AppLocalizations.of(context)!;
+            // ممكن تضيفي حالات تانية حسب الحاجة
+            if (key == 'connectionError') return lang.connectionError;
+            return lang.unexpectedError;
+          }
+
+          showSnackBar(
+            context,
+            getLocalizedMessage(state.errMessage),
+            isError: true,
+          );
+        }
       },
-
-      title: AppLocalizations.of(context)!.newPassword,
-      subtitle: AppLocalizations.of(context)!.chooseStrongPassword,
-
-      child: Form(
-        key: _formKey,
-        child: Column(
+      builder: (context, state) {
+        return Stack(
           children: [
-            // --- 1. كلمة المرور الجديدة ---
-            PasswordField(
-              controller: _passController,
-              labelText: AppLocalizations.of(context)!.newPassword,
-              textInputAction: TextInputAction.next,
-              validator: (val) =>
-                  ValidationHelper.validateStrongPassword(val, context),
-            ),
+            // واجهة المستخدم الأصلية
+            AuthLayout(
+              showBackButton: false,
+              // زرار الرجوع
+              onBackTap: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  (route) => route.isFirst,
+                );
+              },
 
-            SizedBox(height: 16.h),
-            // --- 2. تأكيد كلمة المرور ---
-            PasswordField(
-              controller: _confirmPassController,
-              labelText: AppLocalizations.of(context)!.confirmPassword,
-              validator: (val) => ValidationHelper.validateMatch(
-                val,
-                _passController.text,
-                context,
+              title: AppLocalizations.of(context)!.newPassword,
+              subtitle: AppLocalizations.of(context)!.chooseStrongPassword,
+
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    // --- 1. كلمة المرور الجديدة ---
+                    PasswordField(
+                      controller: _passController,
+                      labelText: AppLocalizations.of(context)!.newPassword,
+                      textInputAction: TextInputAction.next,
+                      validator: (val) =>
+                          ValidationHelper.validateStrongPassword(val, context),
+                    ),
+
+                    SizedBox(height: 16.h),
+                    // --- 2. تأكيد كلمة المرور ---
+                    PasswordField(
+                      controller: _confirmPassController,
+                      labelText: AppLocalizations.of(context)!.confirmPassword,
+                      validator: (val) => ValidationHelper.validateMatch(
+                        val,
+                        _passController.text,
+                        context,
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: AppDimensions.padding,
+                      ),
+                      child: const PasswordRules(),
+                    ),
+
+                    CustomButton(
+                      title: AppLocalizations.of(context)!.changePassword,
+                      onPressed: () => _submit(context),
+                    ),
+                  ],
+                ),
               ),
             ),
 
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: AppDimensions.padding),
-              child: const PasswordRules(),
-            ),
-
-            CustomButton(
-              title: AppLocalizations.of(context)!.changePassword,
-              onpressed: _submit,
-            ),
+            // Loading Overlay
+            if (state is ForgetPasswordLoading) const LoadingOverlay(),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }

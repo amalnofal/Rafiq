@@ -39,7 +39,6 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
   }
 
   // --- Logic ---
-
   void _handleSend() {
     if (_commentController.text.trim().isEmpty) return;
     if (_isEditing) {
@@ -58,7 +57,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
       "name": currentUser.fullName,
       "image": currentUser.photoUrl ?? "",
       "text": _commentController.text,
-      "time": DateHelper.timeAgo(DateTime.now(), context),
+      "time": DateHelper.timeAgoShort(DateTime.now(), context),
       "isLiked": false,
       "likesCount": 0,
       "isEdited": false,
@@ -79,13 +78,11 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
   void _updateComment() {
     setState(() {
       if (_editingReplyIndex != null) {
-        // تعديل رد فرعي
         var reply =
             comments[_editingParentIndex!]['replies'][_editingReplyIndex!];
         reply['text'] = _commentController.text;
         reply['isEdited'] = true;
       } else {
-        // تعديل كومنت رئيسي
         var comment = comments[_editingParentIndex!];
         comment['text'] = _commentController.text;
         comment['isEdited'] = true;
@@ -106,12 +103,14 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
   }
 
   void _resetState() {
-    _commentController.clear();
-    _replyingToCommentIndex = null;
-    _replyingToUserName = null;
-    _isEditing = false;
-    _editingParentIndex = null;
-    _editingReplyIndex = null;
+    setState(() {
+      _commentController.clear();
+      _replyingToCommentIndex = null;
+      _replyingToUserName = null;
+      _isEditing = false;
+      _editingParentIndex = null;
+      _editingReplyIndex = null;
+    });
   }
 
   void _onReplyTap(int index, String name) {
@@ -178,7 +177,7 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   padding: EdgeInsets.only(top: 4.h),
                   child: Text(
                     AppLocalizations.of(context)!.deleteAction,
-                    style: TextStyle(color: Colors.red),
+                    style: const TextStyle(color: Colors.red),
                   ),
                 ),
                 onTap: () {
@@ -193,12 +192,10 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                         confirmBtnText: AppLocalizations.of(
                           context,
                         )!.deleteAction,
-
                         mainColor: Colors.red,
-
                         onConfirm: () {
                           _deleteComment(parentIndex, replyIndex);
-
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         },
                       );
@@ -225,11 +222,12 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
         child: Container(
           height: 0.9.sh,
           decoration: BoxDecoration(
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
           ),
           child: Column(
             children: [
+              // شرطة السحب اللي فوق
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Container(
@@ -241,19 +239,19 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                   ),
                 ),
               ),
-              const Divider(height: 1),
 
+              // الكومنتات
               Expanded(
                 child: comments.isEmpty
                     ? const EmptyCommentsView()
                     : ListView.builder(
-                        padding: EdgeInsets.all(16.w),
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
                         itemCount: comments.length,
                         itemBuilder: (context, index) =>
                             _buildCommentTree(index),
                       ),
               ),
-
+              const Divider(height: 1),
               if (_replyingToUserName != null || _isEditing)
                 CommentStatusBanner(
                   text: _isEditing
@@ -261,8 +259,6 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                       : "${AppLocalizations.of(context)!.replyingToHint} $_replyingToUserName",
                   onCancel: _resetState,
                 ),
-
-              const Divider(height: 1),
 
               CommentInputArea(
                 controller: _commentController,
@@ -280,12 +276,9 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
     final comment = comments[index];
     final replies = comment['replies'] as List;
 
-    // 1. نجيب اليوزر الحالي
     final currentUser = Provider.of<UserProvider>(context, listen: false).user;
 
-    // 2. دالة صغيرة عشان نعرف هل الكومنت ده بتاعي ولا لأ
     bool isMyComment(Map<String, dynamic> item) {
-      // هنا بنقارن بالاسم عشان الداتا وهمية، في الحقيقي بنقارن بـ id
       return currentUser != null && item['name'] == currentUser.fullName;
     }
 
@@ -297,32 +290,33 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
           isReply: false,
           onReplyTap: () => _onReplyTap(index, comment['name']),
           onLikeTap: () => _toggleLike(comment),
-
-          // ✅ التعديل هنا: لو الكومنت بتاعي، فعل القائمة. لو لأ، خليها null
           onLongPress: isMyComment(comment)
               ? () => _showOptions(index, null)
               : null,
+          isReplyingToThis: _replyingToCommentIndex == index,
         ),
 
         // الردود
         if (replies.isNotEmpty)
           Padding(
-            padding: EdgeInsets.only(left: 30.w),
+            padding: EdgeInsetsDirectional.only(start: 35.w, top: 4.h),
             child: Column(
               children: replies.asMap().entries.map((entry) {
                 final replyIndex = entry.key;
                 final reply = entry.value;
 
-                return CommentItem(
-                  commentData: reply,
-                  isReply: true,
-                  onReplyTap: () => _onReplyTap(index, reply['name']),
-                  onLikeTap: () => _toggleLike(reply),
-
-                  // ✅ نفس الكلام للردود
-                  onLongPress: isMyComment(reply)
-                      ? () => _showOptions(index, replyIndex)
-                      : null,
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 8.h),
+                  child: CommentItem(
+                    commentData: reply,
+                    isReply: true,
+                    onReplyTap: () => _onReplyTap(index, reply['name']),
+                    onLikeTap: () => _toggleLike(reply),
+                    onLongPress: isMyComment(reply)
+                        ? () => _showOptions(index, replyIndex)
+                        : null,
+                    isReplyingToThis: false,
+                  ),
                 );
               }).toList(),
             ),

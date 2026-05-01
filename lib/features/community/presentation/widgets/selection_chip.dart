@@ -44,8 +44,10 @@ class SelectionChip extends StatelessWidget {
 
           border: isSelected
               ? Border.all(
-                  color: Theme.of(context).colorScheme.surfaceContainer,
-                  width: 1.5.w,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.surfaceContainer.withValues(alpha: 0.5),
+                  width: 1.w,
                 )
               : null,
         ),

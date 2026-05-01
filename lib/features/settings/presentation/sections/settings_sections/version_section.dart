@@ -28,8 +28,8 @@ class VersionSection extends StatelessWidget {
             AccountInfoRow(
               padding: AppDimensions.paddingS,
               label: AppLocalizations.of(context)!.last_update,
-              value: DateHelper.formatYearMonth(
-                DateTime(2024, 10, 1), //Last update date
+              value: DateHelper.formatFullDate(
+                DateTime(2026, 3, 5), //Last update date
                 context,
               ),
             ),
