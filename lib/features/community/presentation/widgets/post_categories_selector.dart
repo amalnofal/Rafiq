@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/enums/post_category.dart';
-import 'package:rafiq/features/community/presentation/widgets/selection_chip.dart';
+import 'package:rafiq/core/widgets/selection_chip.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class PostCategoriesSelector extends StatelessWidget {

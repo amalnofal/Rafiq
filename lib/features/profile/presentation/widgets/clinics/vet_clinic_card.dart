@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafiq/core/helper/date_helper.dart';
 import 'package:rafiq/core/helper/dialog_helper.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/helper/menu_utils.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 import 'package:rafiq/features/clinics/presentation/pages/clinic_profile_screen.dart';
 import 'package:rafiq/features/profile/presentation/widgets/icon_text_row.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
 class VetClinicCard extends StatelessWidget {
   final ClinicModel clinic;
@@ -64,17 +65,12 @@ class VetClinicCard extends StatelessWidget {
                     ),
                     SizedBox(height: 8.h),
 
-                    // رقم الموبايل
-                    IconTextRow(
-                      iconPath: "assets/icons/phone.svg",
-                      text: clinic.phone,
-                    ),
-                    SizedBox(height: 8.h),
-
                     // ساعات العمل
                     IconTextRow(
                       iconPath: "assets/icons/clock.svg",
-                      text: clinic.workingHours,
+                      text:
+                          "${DateHelper.formatWorkingDays(clinic.workingDays, context)} "
+                          "(${DateHelper.formatWorkingHours(clinic.openingTime, clinic.closingTime, context)})",
                     ),
                   ],
                 ),
@@ -94,11 +90,10 @@ class VetClinicCard extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (dialogContext) {
-                            final l10n = AppLocalizations.of(context)!;
                             return CustomInfoDialog(
-                              title: l10n.deletePetTitle(clinic.name),
-                              description: l10n.deletePetWarning,
-                              confirmBtnText: l10n.deleteAction,
+                              title: context.l10n.deletePetTitle(clinic.name),
+                              description: context.l10n.deletePetWarning,
+                              confirmBtnText: context.l10n.deleteAction,
                               onConfirm: () async {
                                 Navigator.pop(context);
                                 if (onDelete != null) onDelete!();
@@ -107,7 +102,7 @@ class VetClinicCard extends StatelessWidget {
                           },
                         );
                       },
-                      actiontxt: AppLocalizations.of(context)!.deleteAction,
+                      actiontxt: context.l10n.deleteAction,
                     );
                   },
                   child: Icon(

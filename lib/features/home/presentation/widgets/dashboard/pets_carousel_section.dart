@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/animal_card.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
 
 class PetsCarouselSection extends StatefulWidget {
   final List<PetModel> pets;
@@ -52,20 +52,6 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
     }
   }
 
-  double _calculateDynamicHeight(int index) {
-    final pet = widget.pets[index];
-    double baseHeight = 270.h;
-
-    if (pet.collar == null) {
-      return baseHeight + 120.h;
-    } else {
-      double collarWidgetsHeight = 60.h;
-      String tipText = pet.collar!.dailyTip;
-      double textHeight = (tipText.length / 35) * 20.h;
-      return baseHeight + collarWidgetsHeight + textHeight + 120.h;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final bool canGoBack = _currentIndex > 0;
@@ -75,7 +61,7 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
-      height: _calculateDynamicHeight(_currentIndex),
+      height: 393.h,
       width: double.infinity,
       child: Stack(
         alignment: Alignment.topCenter,

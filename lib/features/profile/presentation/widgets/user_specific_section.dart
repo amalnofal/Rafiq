@@ -19,17 +19,15 @@ class UserSpecificSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // قسم العيادات (بيظهر فقط لو اليوزر طبيب بيطري)
-        if (user.role == UserType.vet) ...[
+        if (user.role != UserType.petOwner) ...[
           CustomContainer(
             padding: EdgeInsets.all(AppDimensions.paddingXL),
-            child: ClinicsSection(isMe: isMe),
+            child: ClinicsSection(isMe: isMe, user: user),
           ),
         ],
-        // قسم الحيوانات الأليفة (ثابت وبيظهر للكل: مالك أو دكتور)
         CustomContainer(
           padding: EdgeInsets.all(AppDimensions.paddingXL),
-          child: PetsSection(isMe: isMe),
+          child: PetsSection(isMe: isMe, user: user),
         ),
       ],
     );

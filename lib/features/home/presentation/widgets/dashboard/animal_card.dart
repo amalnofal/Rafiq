@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
+import 'package:rafiq/features/collar/data/models/collar_model.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/has_collar.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/no_collar_card.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/pet_profile_card.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
 
 class AnimalCard extends StatelessWidget {
   const AnimalCard({
@@ -32,8 +33,11 @@ class AnimalCard extends StatelessWidget {
               totalPets: totalCount,
             ),
 
-            if (pet.collar != null)
-              HasCollar(collar: pet.collar!)
+            if (index == 0)
+              HasCollar(
+                collar: pet.collar ?? CollarModel(id: 'fake_collar'),
+                pet: pet,
+              )
             else
               const NoCollarCard(),
           ],

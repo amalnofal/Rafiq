@@ -8,16 +8,29 @@ class UserService {
   UserService(this._dio);
 
   // ==========================================
-  // جلب بيانات الملف الشخصي بالكامل
+  // جلب بيانات الملف الشخصي بالكامل (لي)
   // ==========================================
   Future<Response> getMyProfile() async {
     try {
       final response = await _dio.get('/User/my-profile');
       log("[UserService]: تم استلام بيانات الملف الشخصي بنجاح.");
-      log("[UserService]: بيانات المستخدم: ${response.data}");
       return response;
     } catch (e) {
       log("[UserService]: فشل جلب بيانات الملف الشخصي: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // 🚨 جلب بيانات أي مستخدم آخر عن طريق الـ ID (الجديدة)
+  // ==========================================
+  Future<Response> getUserProfileById(String userId) async {
+    try {
+      final response = await _dio.get('/User/profile/$userId');
+      log("[UserService]: تم استلام بيانات بروفايل المستخدم $userId بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل جلب بيانات المستخدم $userId: $e");
       rethrow;
     }
   }
@@ -56,6 +69,59 @@ class UserService {
       log("[UserService]: تم رفع صورة الغلاف بنجاح.");
     } catch (e) {
       log("[UserService]: فشل رفع صورة الغلاف: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // متابعة مستخدم
+  // ==========================================
+  Future<Response> followUser(String userId) async {
+    try {
+      final response = await _dio.post('/User/$userId/follow');
+      log("[UserService]: تم متابعة المستخدم $userId بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل متابعة المستخدم: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // إلغاء متابعة مستخدم
+  // ==========================================
+  Future<Response> unfollowUser(String userId) async {
+    try {
+      final response = await _dio.post('/User/$userId/unfollow');
+      log("[UserService]: تم إلغاء متابعة المستخدم $userId بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل إلغاء المتابعة: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // البحث عن مستخدمين
+  // ==========================================
+  Future<Response> searchUsers(
+    String query, {
+    int pageNumber = 1,
+    int pageSize = 20,
+  }) async {
+    try {
+      final response = await _dio.get(
+        '/User/search',
+        queryParameters: {
+          'query': query,
+          'pageNumber': pageNumber,
+          'pageSize': pageSize,
+        },
+      );
+      log("[UserService]: تم البحث عن '$query' بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل البحث عن مستخدمين: $e");
       rethrow;
     }
   }

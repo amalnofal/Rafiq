@@ -12,7 +12,7 @@ import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/core/widgets/smart_image_display.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
-import 'package:rafiq/features/clinics/presentation/widgets/clinic_info_card.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/clinic_profile_card.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/clinic_rating_card.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/clinic_reviews_list.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
@@ -41,14 +41,12 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
   }
 
   Future<void> _refreshData() async {
-    final clinicId = int.tryParse(widget.clinic.id);
+    final clinicId = widget.clinic.id;
 
-    if (clinicId != null && clinicId != 0) {
+    if (clinicId != 0) {
       await context.read<ClinicProvider>().fetchClinicDetails(clinicId);
     } else {
-      debugPrint(
-        "⚠️ Warning: Clinic ID is invalid or empty: '${widget.clinic.id}'",
-      );
+      debugPrint("⚠️ Warning: Clinic ID is invalid or empty");
     }
   }
 
@@ -189,7 +187,8 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                                 child: const BackButtonWidget(),
                               ),
 
-                              ClinicInfoCard(
+                              // العنوان والمواعيد والتخصص
+                              ClinicProfileCard(
                                 currentClinic: currentClinic,
                                 currentUser: currentUser,
                                 isMe: widget.isMe,

@@ -5,6 +5,8 @@ import 'package:rafiq/core/controller/clinic_provider.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
+import 'package:rafiq/core/models/user_model.dart';
+import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 import 'package:rafiq/features/profile/presentation/pages/add_clinic_screen.dart';
 import 'package:rafiq/features/profile/presentation/widgets/clinics/vet_clinic_card.dart';
 import 'package:rafiq/features/profile/presentation/widgets/empty_state_card.dart';
@@ -12,7 +14,9 @@ import 'package:rafiq/l10n/app_localizations.dart';
 
 class ClinicsSection extends StatefulWidget {
   final bool isMe;
-  const ClinicsSection({super.key, required this.isMe});
+  final UserModel? user;
+
+  const ClinicsSection({super.key, required this.isMe, this.user});
 
   @override
   State<ClinicsSection> createState() => _ClinicsSectionState();
@@ -24,7 +28,17 @@ class _ClinicsSectionState extends State<ClinicsSection> {
   @override
   Widget build(BuildContext context) {
     final clinicProvider = context.watch<ClinicProvider>();
-    final clinicsList = clinicProvider.clinics;
+
+    List<dynamic> clinicsList = [];
+    if (widget.isMe) {
+      clinicsList = clinicProvider.clinics;
+    } else {
+      if (widget.user?.doctorDetails != null &&
+          widget.user!.doctorDetails!['clinics'] != null) {
+        final List rawClinics = widget.user!.doctorDetails!['clinics'];
+        clinicsList = rawClinics.map((c) => ClinicModel.fromJson(c)).toList();
+      }
+    }
 
     String title = widget.isMe
         ? AppLocalizations.of(context)!.myClinicsTitle
@@ -68,18 +82,16 @@ class _ClinicsSectionState extends State<ClinicsSection> {
                         context,
                         newClinicData,
                       );
-
-                      if (context.mounted) Navigator.pop(context);
-
                       if (context.mounted) {
+                        Navigator.pop(context);
                         showSnackBar(
                           context,
                           AppLocalizations.of(context)!.addClinicSuccess,
                         );
                       }
                     } catch (e) {
-                      if (context.mounted) Navigator.pop(context);
                       if (context.mounted) {
+                        Navigator.pop(context);
                         showSnackBar(
                           context,
                           AppLocalizations.of(context)!.unexpectedError,

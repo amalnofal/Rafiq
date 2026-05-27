@@ -1,28 +1,36 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class ImageUploadCard extends StatelessWidget {
   final String? label;
   final File? imageFile;
+  final String? imageUrl;
   final VoidCallback onTap;
   final VoidCallback? onRemove;
   final bool showError;
   final String? hintText;
+  final double? height;
 
   const ImageUploadCard({
     super.key,
     this.label,
     required this.imageFile,
+    this.imageUrl,
     required this.onTap,
     this.onRemove,
     this.showError = false,
     this.hintText,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
+    final bool hasImage =
+        imageFile != null || (imageUrl != null && imageUrl!.isNotEmpty);
     // تحديد لون الحدود
     Color borderColor;
     if (showError) {
@@ -49,7 +57,7 @@ class ImageUploadCard extends StatelessWidget {
               onTap: onTap,
               borderRadius: BorderRadius.circular(12.r),
               child: Container(
-                height: 150.h,
+                height: height ?? 150.h,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Theme.of(
@@ -64,8 +72,27 @@ class ImageUploadCard extends StatelessWidget {
                         )
                       : null,
                 ),
-                child: imageFile == null
-                    ? Column(
+                child: hasImage
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: imageFile != null
+                            ? Image.file(
+                                imageFile!,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              )
+                            : CachedNetworkImage(
+                                imageUrl: imageUrl!,
+                                cacheKey: imageUrl!.split('?').first,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                                placeholder: (context, url) =>
+                                    Container(color: Colors.grey[100]),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              ),
+                      )
+                    : Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -75,23 +102,19 @@ class ImageUploadCard extends StatelessWidget {
                           ),
                           SizedBox(height: 8.h),
                           Text(
-                            hintText ??
-                                AppLocalizations.of(
-                                  context,
-                                )!.uploadIdText, // نص افتراضي
+                            hintText ?? context.l10n.uploadIdText,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                         ],
-                      )
-                    : null,
+                      ),
               ),
             ),
 
             // زر الحذف (يظهر فقط لو فيه صورة وفيه دالة حذف)
-            if (imageFile != null && onRemove != null)
-              Positioned(
+            if (hasImage && onRemove != null)
+              PositionedDirectional(
                 top: 8.h,
-                right: 8.w,
+                end: 8.w,
                 child: InkWell(
                   onTap: onRemove,
                   child: Container(

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
-import 'package:rafiq/features/profile/presentation/widgets/appointments/dialog_header.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/appointments/dialog_header.dart';
 
 class AddReviewBottomSheet extends StatefulWidget {
   final Function(int rating, String comment) onSubmit;

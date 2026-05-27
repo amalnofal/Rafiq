@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:rafiq/core/di/service_locator.dart';
+import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/services/appointment_service.dart';
-import 'package:rafiq/features/profile/data/models/appointment_model.dart';
+import 'package:rafiq/features/clinics/data/models/appointment_model.dart';
 
 class AppointmentProvider extends ChangeNotifier {
   List<AppointmentModel> _appointments = [];
@@ -11,13 +14,18 @@ class AppointmentProvider extends ChangeNotifier {
   List<dynamic> _doctorClinics = [];
   List<dynamic> get doctorClinics => _doctorClinics;
 
+  List<String> _availableSlots = [];
+  List<String> get availableSlots => _availableSlots;
+
+  bool _isLoadingSlots = false;
+  bool get isLoadingSlots => _isLoadingSlots;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
   bool _isFetched = false;
   bool get isFetched => _isFetched;
 
-  // فلاتر جاهزة للشاشة بتاعتك
   List<AppointmentModel> get pendingAppointments =>
       _appointments.where((a) => a.status.toLowerCase() == 'pending').toList();
 
@@ -29,41 +37,62 @@ class AppointmentProvider extends ChangeNotifier {
       .where((a) => a.status.toLowerCase() == 'completed')
       .toList();
 
-  // ==========================================
-  // 1. جلب المواعيد
-  // ==========================================
+  // دالة لحفظ المواعيد محلياً
+  Future<void> _saveAppointmentsToCache(
+    List<AppointmentModel> appointments,
+  ) async {
+    final encoded = jsonEncode(appointments.map((a) => a.toJson()).toList());
+    await CacheHelper.saveData(key: 'cached_appointments', value: encoded);
+  }
+
+  // دالة لجلب المواعيد من الكاش
+  Future<void> _loadAppointmentsFromCache() async {
+    final cachedData = CacheHelper.getData(key: 'cached_appointments');
+    if (cachedData != null) {
+      try {
+        final List decoded = jsonDecode(cachedData);
+        _appointments = decoded
+            .map((e) => AppointmentModel.fromJson(e))
+            .toList();
+        notifyListeners();
+      } catch (e) {
+        log("❌ خطأ في تحميل كاش المواعيد: $e");
+      }
+    }
+  }
+
+  // تحديث دالة fetchMyAppointments
   Future<void> fetchMyAppointments() async {
-    _isLoading = true;
+    // 1. تحميل الكاش أولاً (سيظهر البيانات فوراً)
+    await _loadAppointmentsFromCache();
+
+    // لا نغير _isLoading = true إذا كان لدينا بيانات في الكاش بالفعل لتجنب اختفاء البيانات
+    if (_appointments.isEmpty) _isLoading = true;
     notifyListeners();
 
     try {
       final response = await getIt<AppointmentService>().getMyAppointments();
-
-      // تفريغ الداتا (عشان لو الباك إند مغلفها في 'data' زي العادة)
       final dynamic responseData = response.data['data'] ?? response.data;
 
       if (responseData is List) {
         _appointments = responseData
             .map((json) => AppointmentModel.fromJson(json))
             .toList();
+        _isFetched = true;
+        // 2. تحديث الكاش بالبيانات الجديدة
+        await _saveAppointmentsToCache(_appointments);
       }
-      _isFetched = true;
-      log(
-        "[AppointmentProvider]: Fetched ${_appointments.length} appointments.",
-      );
     } catch (e) {
-      log("[AppointmentProvider]: Fetch failed - $e");
-      _appointments = [];
+      log("❌ [AppointmentProvider]: فشل التحديث من السيرفر - $e");
+      // هنا لا نمسح البيانات، المستخدم سيظل يرى بيانات الكاش
     } finally {
       _isLoading = false;
       notifyListeners();
     }
   }
 
-  // ==========================================
   // 2. إضافة موعد خاص
-  // ==========================================
-  Future<void> createPrivateAppointment(Map<String, dynamic> data) async {
+  Future<void> addPrivateAppointment(Map<String, dynamic> data) async {
     _isLoading = true;
     notifyListeners();
 
@@ -82,25 +111,27 @@ class AppointmentProvider extends ChangeNotifier {
   }
 
   // ==========================================
-  // 2. دالة إنهاء الموعد
+  // 3. دالة إنهاء الموعد
   // ==========================================
-  Future<bool> completeAppointment(String appointmentId) async {
+  Future<bool> completeAppointment(int appointmentId) async {
     try {
       await getIt<AppointmentService>().completeAppointment(appointmentId);
       await fetchMyAppointments();
-      return true; // نجاح
+      return true;
     } catch (e) {
-      return false; // فشل
+      return false;
     }
   }
 
   // ==========================================
-  // 3. حذف موعد
+  // 4. حذف موعد
   // ==========================================
-  Future<bool> deleteAppointment(String appointmentId) async {
+  Future<bool> deleteAppointment(int appointmentId) async {
     try {
       await getIt<AppointmentService>().deleteAppointment(appointmentId);
-      _appointments.removeWhere((a) => a.id == appointmentId);
+      _appointments.removeWhere(
+        (a) => a.id.toString() == appointmentId.toString(),
+      );
       notifyListeners();
       log("[AppointmentProvider]: Appointment deleted successfully.");
       return true;
@@ -111,10 +142,10 @@ class AppointmentProvider extends ChangeNotifier {
   }
 
   // ==========================================
-  // تحديث موعد عيادة (Update Appointment)
+  // تحديث موعد عيادة
   // ==========================================
   Future<void> updateAppointment(
-    String appointmentId,
+    int appointmentId,
     Map<String, dynamic> data,
   ) async {
     _isLoading = true;
@@ -123,7 +154,6 @@ class AppointmentProvider extends ChangeNotifier {
     try {
       await getIt<AppointmentService>().updateAppointment(appointmentId, data);
       log("[AppointmentProvider]: Appointment updated successfully.");
-
       await fetchMyAppointments();
     } catch (e) {
       log("[AppointmentProvider]: Failed to update appointment - $e");
@@ -159,12 +189,69 @@ class AppointmentProvider extends ChangeNotifier {
     }
   }
 
+  /// ==========================================
+  // حجز موعد في عيادة (مع دعم الحجز الذاتي) 🚨
   // ==========================================
-  // حجز موعد في عيادة
-  // ==========================================
-  Future<void> bookClinicAppointment(Map<String, dynamic> data) async {
+  Future<void> bookClinicAppointment(
+    Map<String, dynamic> data, {
+    bool isSelfBooking = false,
+  }) async {
     try {
-      await getIt<AppointmentService>().bookClinicAppointment(data);
+      // 1. استخراج معرف العيادة من الداتا
+      final clinicId = data['ClinicId'] ?? data['clinicId'];
+
+      // 2. التأكد هل دي عيادتي؟
+      bool isMyClinic = isSelfBooking;
+      if (!isMyClinic && clinicId != null) {
+        if (_doctorClinics.isEmpty) {
+          await fetchDoctorClinics();
+        }
+
+        isMyClinic = _doctorClinics.any((c) {
+          final id = c is Map ? (c['id'] ?? c['clinicId']) : (c.id ?? 0);
+          return id.toString() == clinicId.toString();
+        });
+      }
+
+      // 3. تعديل الداتا قبل ما تروح للباك إند
+      if (isMyClinic) {
+        log(
+          "✅ [AppointmentProvider]: Self-Booking Detected! Modifying status to Confirmed.",
+        );
+        data['Status'] = 2;
+        data['status'] = 2;
+        data['StatusLabel'] = 'Confirmed';
+      }
+
+      // 4. إرسال الطلب
+      final response = await getIt<AppointmentService>().bookClinicAppointment(
+        data,
+      );
+
+      // 5. حيلة برمجية (Fallback): لو الباك إند تجاهل التعديل وخلاه Pending
+      // نعمل له Approve تلقائي فوراً
+      if (isMyClinic) {
+        try {
+          final responseData = response.data is Map
+              ? response.data['data'] ?? response.data
+              : null;
+          if (responseData != null) {
+            final newId = responseData['appointmentId'] ?? responseData['id'];
+            if (newId != null) {
+              int parsedId = newId is int ? newId : int.parse(newId.toString());
+              await getIt<AppointmentService>().approveAppointment(parsedId);
+              log(
+                "✅ [AppointmentProvider]: Auto-Approved the self-booked appointment.",
+              );
+            }
+          }
+        } catch (e) {
+          log("⚠️ [AppointmentProvider]: Auto-Approve skipped. ($e)");
+        }
+      }
+
+      // 6. تحديث الواجهة
+      await fetchMyAppointments();
     } catch (e) {
       log("❌ [AppointmentProvider]: Error booking clinic appointment: $e");
       rethrow;
@@ -172,9 +259,53 @@ class AppointmentProvider extends ChangeNotifier {
   }
 
   // ==========================================
+  // جلب الأوقات المتاحة للحجز بناءً على التاريخ
+  // ==========================================
+  Future<void> fetchAvailableSlots(int clinicId, String date) async {
+    _isLoadingSlots = true;
+    _availableSlots = [];
+    notifyListeners();
+
+    try {
+      final response = await getIt<AppointmentService>().getAvailableSlots(
+        clinicId,
+        date,
+      );
+
+      dynamic responseData;
+      if (response.data is Map && (response.data as Map).containsKey('data')) {
+        responseData = response.data['data'];
+      } else {
+        responseData = response.data;
+      }
+
+      if (responseData is List) {
+        _availableSlots = responseData.map((e) {
+          if (e is Map && e.containsKey('startTime')) {
+            return e['startTime'].toString();
+          }
+          return e.toString();
+        }).toList();
+      }
+      log(
+        "[AppointmentProvider]: Fetched ${_availableSlots.length} available slots for $date.",
+      );
+    } on DioException catch (e) {
+      log("🚨 [Backend Error Data]: ${e.response?.data}");
+      log("🚨 [Backend Status Code]: ${e.response?.statusCode}");
+      log("❌ [AppointmentProvider]: Failed to fetch slots - $e");
+    } catch (e) {
+      log("❌ [AppointmentProvider]: Failed to fetch slots - $e");
+    } finally {
+      _isLoadingSlots = false;
+      notifyListeners();
+    }
+  }
+
+  // ==========================================
   // قبول الموعد (للدكتور)
   // ==========================================
-  Future<bool> approveClinicAppointment(String appointmentId) async {
+  Future<bool> approveClinicAppointment(int appointmentId) async {
     try {
       await getIt<AppointmentService>().approveAppointment(appointmentId);
       await fetchMyAppointments();
@@ -187,12 +318,16 @@ class AppointmentProvider extends ChangeNotifier {
   // ==========================================
   // رفض الموعد (للدكتور)
   // ==========================================
-  Future<bool> rejectClinicAppointment(String appointmentId) async {
+  Future<bool> rejectClinicAppointment(int appointmentId) async {
     try {
+      if (appointmentId <= 0) return false;
+
       await getIt<AppointmentService>().rejectAppointment(appointmentId);
+
       await fetchMyAppointments();
       return true;
     } catch (e) {
+      log("❌ [AppointmentProvider]: Reject failed for ID $appointmentId - $e");
       return false;
     }
   }

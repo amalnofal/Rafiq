@@ -42,10 +42,13 @@ class CustomSearchBar extends StatelessWidget {
           isDense: true,
           fillColor: Theme.of(context).colorScheme.surface,
           filled: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 12.h,
+          ),
           hintText: hintText ?? "ابحث هنا...",
           hintStyle: Theme.of(context).textTheme.labelLarge,
-          
+
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16.r),
             borderSide: BorderSide.none,
@@ -58,7 +61,7 @@ class CustomSearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             borderSide: BorderSide.none,
           ),
-          
+
           // تغيير الأيقونة ديناميكياً
           suffixIcon: hasText
               ? IconButton(
@@ -69,7 +72,7 @@ class CustomSearchBar extends StatelessWidget {
                   },
                 )
               : Padding(
-                  padding: const EdgeInsets.all(12.0),
+                  padding: EdgeInsets.symmetric(horizontal: 12.h),
                   child: SvgPicture.asset(
                     "assets/icons/search.svg",
                     colorFilter: ColorFilter.mode(

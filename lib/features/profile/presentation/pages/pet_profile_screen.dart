@@ -7,6 +7,7 @@ import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/pet_provider.dart';
 import 'package:rafiq/core/helper/image_picker_helper.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/widgets/back_button.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
@@ -14,7 +15,6 @@ import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/latest_medical_record_card.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/upcoming_appointment_card.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_image.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_info_card.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
@@ -252,11 +252,15 @@ class _PetProfileScreenState extends State<PetProfileScreen> {
                             SizedBox(height: 8.h),
 
                             // 1. السجل الطبي
-                            LatestMedicalRecordCard(records: medicalRecords),
+                            LatestMedicalRecordCard(
+                              records: medicalRecords,
+                              showOnlyLatest: false,
+                            ),
 
                             // 2. المواعيد القادمة
                             UpcomingAppointmentCard(
                               appointments: upcomingAppointments,
+                              showOnlyNext: false,
                             ),
                             SizedBox(height: 40.h),
                           ],

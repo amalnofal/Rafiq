@@ -72,16 +72,26 @@ class SmartImageDisplay extends StatelessWidget {
     return Image.file(file, fit: fit, errorBuilder: (_, _, _) => _buildError());
   }
 
-  // حالة الخطأ = صورة مكسورة
+  // حالة الخطأ = صورة مكسورة خلفيتها رمادي (هتظهر في إيرور 403 أو 404)
   Widget _buildError() {
     return Container(
-      color: Colors.grey.shade300,
-      child: Center(
-        child: Icon(
-          Icons.broken_image_rounded,
-          color: Colors.grey.shade500,
-          size: iconSize.r,
-        ),
+      color: Colors.grey.shade200,
+      width: width ?? double.infinity,
+      height: height ?? double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_not_supported_outlined,
+            color: Colors.grey.shade400,
+            size: iconSize.r,
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            "غير متاحة",
+            style: TextStyle(color: Colors.grey.shade500, fontSize: 10.sp),
+          ),
+        ],
       ),
     );
   }

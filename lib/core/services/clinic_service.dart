@@ -77,8 +77,10 @@ class ClinicService {
   Future<Response> deleteClinic(String id) async {
     try {
       final response = await _dio.delete('/Clinic/delete-clinic/$id');
-      log("[ClinicService]: تم حذف العيادة بنجاح.");
       return response;
+    } on DioException catch (e) {
+      log("❌ [ClinicService] Delete Error Body: ${e.response?.data}");
+      rethrow;
     } catch (e) {
       log("[ClinicService]: فشل حذف العيادة: $e");
       rethrow;
@@ -91,10 +93,14 @@ class ClinicService {
   Future<Response> getClinicDetails(int clinicId) async {
     try {
       final response = await _dio.get('/Clinic/$clinicId');
-      log("[ClinicService]: تم جلب تفاصيل العيادة بنجاح.");
+
+      log("✅ [ClinicService] Clinic Data from Backend: ${response.data}");
       return response;
+    } on DioException catch (e) {
+      log("❌ [ClinicService] Get Details Error Body: ${e.response?.data}");
+      rethrow;
     } catch (e) {
-      log("[ClinicService]: فشل جلب تفاصيل العيادة: $e");
+      log("[ClinicService]: فشل جلب بيانات العيادة: $e");
       rethrow;
     }
   }
@@ -180,4 +186,6 @@ class ClinicService {
       rethrow;
     }
   }
+
+  
 }

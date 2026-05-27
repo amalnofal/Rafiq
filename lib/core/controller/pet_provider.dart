@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/services/pet_service.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
 
 class PetProvider extends ChangeNotifier {
   final List<PetModel> _pets = [];

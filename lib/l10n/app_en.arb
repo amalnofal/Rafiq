@@ -7,6 +7,26 @@
     "type": "text"
   },
 
+  "onboarding_title_1": "Welcome to Rafiq !",
+  "@onboarding_title_1": {},
+  "onboarding_desc_1": "Your complete platform connecting pet owners and expert vets for ideal, comprehensive care.",
+  "@onboarding_desc_1": {},
+
+  "onboarding_title_2": "Smart Collar !",
+  "@onboarding_title_2": {},
+  "onboarding_desc_2": "Track location, monitor health metrics, and understand their condition, powered by AI.",
+  "@onboarding_desc_2": {},
+
+  "onboarding_title_3": "Vet Clinics !",
+  "@onboarding_title_3": {},
+  "onboarding_desc_3": "Browse available clinics, choose the right vet for your pet, and book smoothly.",
+  "@onboarding_desc_3": {},
+  
+  "skip": "Skip",
+  "@skip": {},
+  "getStarted": "Get Started",
+  "@getStarted": {},
+
   "pet_care_assistant": "Smart assistant for taking care of your pet",
   "@pet_care_assistant": {
     "description": "Smart assistant for taking care of your pet",
@@ -19,6 +39,7 @@
   "@welcomeSubtitle": {
     "description": "Subtitle in the pet owner's home empty state"
   },
+
   "addPetBtn": "Add Your Pet",
   "@addPetBtn": {
     "description": "Button to add the first pet"
@@ -98,7 +119,7 @@
     "description": "Label for email text field"
   },
 
-  "phone_number": "Phone number",
+  "phone_number": "Phone Number",
   "@phone_number": {
     "description": "Full phone number label",
     "type": "text"
@@ -127,6 +148,10 @@
   "@chooseAccountType": {},
   "chooseAccountTypeSubtitle": "Select how you want to use the app",
   "@chooseAccountTypeSubtitle": {},
+
+  "adminTitle": "Admin",
+  "@adminTitle": {},
+
   "petOwnerTitle": "Pet Owner",
   "@petOwnerTitle": {},
   "petOwnerSubtitle": "Manage your pets' health and connect with the community",
@@ -141,7 +166,7 @@
   "petTypeHint": "Type (e.g. Dog, Cat)",
   "@petTypeHint": {},
 
-  "vetTitle": "Veteterinarian",
+  "vetTitle": "Veterinarian",
   "@vetTitle": {},
   "vetSubtitle": "Offer your services as a licensed veterinarian",
   "@vetSubtitle": {},
@@ -300,7 +325,6 @@
 
   "wrongCredentials": "Wrong email or password",
   "@wrongCredentials": {},
-  
 
   "termsAgreementStart": "By creating an account, you agree to ",
   "@termsAgreementStart": {
@@ -484,8 +508,22 @@
 
   "followBtn": "Follow",
   "@followBtn": {},
-  "unfollowBtn": "Unfollow",
+  "unfollowBtn": "Following",
   "@unfollowBtn": {},
+
+  "noSearchResults": "No results found for ''{query}''",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+
+  "commentDeletedSuccessfully": "Comment deleted successfully",
+  "@commentDeletedSuccessfully": {},
+  "commentEditedSuccessfully": "Comment edited successfully",
+  "@commentEditedSuccessfully": {},
 
   "manageAppointmentsBtn": "Manage Appointments",
   "@manageAppointmentsBtn": {},
@@ -740,8 +778,53 @@
   "@clinicNameLabel": {},
   "clinicAddressLabel": "Address",
   "@clinicAddressLabel": {},
-  "clinicWorkingHoursLabel": "Working Hours",
-  "@clinicWorkingHoursLabel": {},
+ 
+  "clinicScheduleTitle": "Select Clinic Schedule",
+  "@clinicScheduleTitle": {},
+
+  "selectAtLeastOneDay": "You must select at least one day",
+  "@selectAtLeastOneDay": {},
+  "saturday": "Saturday",
+  "@saturday": {},
+  "sunday": "Sunday",
+  "@sunday": {},
+  "monday": "Monday",
+  "@monday": {},
+  "tuesday": "Tuesday",
+  "@tuesday": {},
+  "wednesday": "Wednesday",
+  "@wednesday": {},
+  "thursday": "Thursday",
+  "@thursday": {},
+  "friday": "Friday",
+  "@friday": {},
+
+  "noAvailableSlots": "Sorry, there are no available slots on this day",
+  "@noAvailableSlots": {},
+
+  "daily": "Daily",
+  "@daily": {},
+  "dailyExcept": "Daily except",
+  "@dailyExcept": {},
+
+  "startTime": "Start Time",
+  "@startTime": {},
+  "endTime": "End Time",
+  "@endTime": {},
+
+  "selectTimeError": "You must select start and end times",
+  "@selectTimeError": {},
+
+  "fromTime": "From",
+  "@fromTime": {},
+  "toTime": "To",
+  "@toTime": {},
+
+  "open24Hours": "Open 24 Hours",
+  "@open24Hours": {},
+
+  "description": "Description",
+  "@description": {},
   "clinicDescriptionHint": "Write a brief description of the clinic and its services...",
   "@clinicDescriptionHint": {},
   "uploadClinicPhotoHint": "Upload your clinic's photo",
@@ -817,10 +900,20 @@
     }
   },
 
+  "available": "Available",
+  "@available": {},
+  "availableSlots": "Available Slots",
+  "@availableSlots": {},
+  "booked": "Booked",
+  "@booked": {},
+
   "clinicConfirmationNotice": "The appointment will be confirmed by the clinic",
   "@clinicConfirmationNotice": {},
   "confirmBooking": "Confirm Booking",
   "@confirmBooking": {},
+
+  "appointmentConflictError": "You already have another appointment scheduled at this time.",
+  "@appointmentConflictError": {},
 
   "checkBackLater": "Check back later for updates",
   "@checkBackLater": {
@@ -874,6 +967,11 @@
     "description": "Hint text shown in the post creation text field"
   },
 
+  "searchStartMessage": "Search for a pet owner or a vet.. 🐾",
+  "@searchStartMessage": {
+    "description": "Message shown in the center of the search screen before the user starts searching"
+  },
+
   "newPostTitle": "New Post",
   "@newPostTitle": {},
 
@@ -891,6 +989,23 @@
   "postCreatedSuccess": "Posted!",
   "@postCreatedSuccess": {
     "description": "Success message shown after creating a new post"
+  },
+
+  "postsWithCount": "{count} Posts",
+  "@postsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsWithCount": "Comments ({count})",
+  "@commentsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
 
   "likeAction": "Like",
@@ -941,6 +1056,9 @@
   "@deleteDialogMessage": {
     "description": "Content message of the delete confirmation dialog"
   },
+
+  "postDeletedSuccessfully": "Post deleted successfully",
+  "@postDeletedSuccessfully": {},
 
   "deleteCommentTitle": "Delete Comment?",
   "@deleteCommentTitle": {
@@ -1050,10 +1168,59 @@
   "tipRespect": "Be respectful and kind to the community",
   "@tipRespect": {},
 
+  "addMedia": "Add media",
+  "@addMedia": {},
+
+  "fileTooLarge": "The selected file is too large! Please choose a file under 30 MB.",
+  "@fileTooLarge": {},
+
+  "uploadingPost": "Posting...",
+  "@uploadingPost": {},
+  "uploadPostFailed": "Failed to post. Check your connection.",
+  "@uploadPostFailed": {},
+  "retryBtn": "Retry",
+  "@retryBtn": {},
+  "cancelUploadBtn": "Cancel",
+  "@cancelUploadBtn": {},
+
   "store": "Store",
   "@store": {
     "description": "Bottom navigation bar item: Store"
   },
+
+  "addProductTitle": "Add New Product",
+  "@addProductTitle": {},
+  "editProductTitle": "Edit Product",
+  "@editProductTitle": {},
+  "productNameLabel": "Product Name",
+  "@productNameLabel": {},
+  "productDescLabel": "Product Description",
+  "@productDescLabel": {},
+  "quantityLabel": "Quantity",
+  "@quantityLabel": {},
+  "priceLabel": "Price",
+  "@priceLabel": {},
+  "currencyEGP": "EGP",
+  "@currencyEGP": {},
+  "searchProductHint": "Search for a product...",
+  "@searchProductHint": {},
+  "productDeletedSuccessfully": "Product deleted successfully",
+  "@productDeletedSuccessfully": {},
+
+  "productDetails": "Product details",
+  "@productDetails": {},
+  "inStock": "{count, plural, =1{Only 1 piece left} other{In stock ({count} pieces)}}",
+  "@inStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "outOfStock": "Out of stock",
+  "@outOfStock": {},
+  "addToCart": "Add to cart",
+  "@addToCart": {},
 
   "settings": "Settings",
   "@settings": {
@@ -1285,6 +1452,8 @@
   "@temperature": {
     "description": "Label for body temperature metric"
   },
+  "temperatureDegree": "Temperature",
+  "@temperatureDegree": {},
 
   "activity": "Activity",
   "@activity": {
@@ -1296,10 +1465,22 @@
     "description": "Label for heart rate/pulse metric"
   },
 
-    "viewDetailedStatistics": "View Detailed Statistics",
+  "heartRate": "Heart Rate",
+  "@heartRate": {},
+
+  "normal": "Normal",
+  "@normal": {},
+
+  "currentLocation": "Current Location",
+  "@currentLocation": {},
+
+  "viewDetailedStatistics": "View Detailed Statistics",
   "@viewDetailedStatistics": {
     "description": "Button label to navigate to detailed statistics screen"
   },
+
+  "hideStatistics": "Hide Statistics",
+  "@hideStatistics": {},
 
   "details": "Details",
   "@details": {
@@ -1338,13 +1519,71 @@
     "description": "Title shown when no smart collar is paired"
   },
 
+  "connectedCollarsCount": "{count, plural, =0{No connected collars} =1{1 connected collar} other{{count} connected collars}}",
+  "@connectedCollarsCount": {
+    "description": "Number of connected collars",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "connected": "Connected",
+  "@connected": {},
+  "disconnected": "Disconnected",
+  "@disconnected": {},
+
+  "lastSync": "Last sync",
+  "@lastSync": {},
+
+  "deviceStatus": "Device Status",
+  "@deviceStatus": {},
+
+  "battery": "Battery",
+  "@battery": {},
+
+  "conversationsTitle": "Conversations",
+  "@conversationsTitle": {},
+  "noConversationsYet": "No conversations yet",
+  "@noConversationsYet": {},
+  "writeMessageHint": "Write a message...",
+  "@writeMessageHint": {},
+
+  "online": "Online",
+  "@online": {},
+  "offline": "Offline",
+  "@offline": {},
+
+  "isTyping": "typing...",
+  "@isTyping": {},
+  
+  "startConversationWith": "Start a conversation with {userName}...",
+  "@startConversationWith": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+
   "orderSmartCollarDescription": "Order a smart collar to track your pet's health.",
   "@orderSmartCollarDescription": {
     "description": "Promotional text to order a smart collar"
   },
 
+  "wrongPassword": "Wrong password, please check and try again",
+  "@wrongPassword": {
+    "description": "Error message shown when the user enters an incorrect password"
+  },
+
   "orderNow": "Order Now",
   "@orderNow": {
     "description": "Button label to order a product"
-  }
+  },
+
+  "sessionExpiredTitle": "Session Expired",
+  "@sessionExpiredTitle": {},
+  "sessionExpiredMessage": "Your login session has expired. Please log in again to continue.",
+  "@sessionExpiredMessage": {}
 }

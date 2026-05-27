@@ -3,6 +3,14 @@ import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/constants/app_colors.dart';
 
 class RafiqScaffold extends StatelessWidget {
+  final Widget body;
+  final PreferredSizeWidget? appBar;
+  final EdgeInsetsGeometry? padding;
+  final Widget? bottomNavBar;
+  final Color? backgroundColor;
+  final bool hasMainBottomNav;
+  final Widget? floatingActionButton;
+
   const RafiqScaffold({
     super.key,
     required this.body,
@@ -11,14 +19,8 @@ class RafiqScaffold extends StatelessWidget {
     this.bottomNavBar,
     this.backgroundColor,
     this.hasMainBottomNav = false,
+    this.floatingActionButton,
   });
-
-  final Widget body;
-  final PreferredSizeWidget? appBar;
-  final EdgeInsetsGeometry? padding;
-  final Widget? bottomNavBar;
-  final Color? backgroundColor;
-  final bool hasMainBottomNav;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +50,8 @@ class RafiqScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: appBar,
+      floatingActionButton: floatingActionButton,
+
       bottomNavigationBar: bottomNavBar == null
           ? null
           : SafeArea(top: false, child: bottomNavBar!),

@@ -1,12 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/confirm_delete_dialog.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
+import 'package:rafiq/core/controller/user_provider.dart';
+import 'package:rafiq/main.dart';
+import 'package:rafiq/core/helper/custom_snackbar.dart';
 
 class DeleteAccButton extends StatelessWidget {
   const DeleteAccButton({super.key});
@@ -41,9 +44,47 @@ class DeleteAccButton extends StatelessWidget {
         showDialog(
           context: context,
           builder: (context) => DeleteAccountDialog(
-            onConfirm: (String password) {
-              // Handle delete account action
-              log("تم الحذف بكلمة مرور: $password");
+            onConfirm: (String password) async {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (loadingContext) =>
+                    const Center(child: CircularProgressIndicator()),
+              );
+
+              try {
+                await context.read<UserProvider>().deleteAccount(password);
+
+                if (!context.mounted) return;
+
+                Navigator.pop(context);
+
+                // التوجيه لشاشة الدخول
+                navigatorKey.currentState?.pushNamedAndRemoveUntil(
+                  '/login',
+                  (route) => false,
+                );
+              } catch (e) {
+                if (!context.mounted) return;
+
+                Navigator.pop(context);
+
+                final errorStr = e.toString();
+
+                if (errorStr.contains("connectionError")) {
+                  return;
+                }
+
+                String errorMsg = context.l10n.unexpectedError;
+
+                if (errorStr.contains("wrongPassword")) {
+                  errorMsg = context.l10n.wrongPassword;
+                } else if (errorStr.contains("serverError")) {
+                  errorMsg = context.l10n.unexpectedError;
+                }
+
+                showSnackBar(context, errorMsg, isError: true);
+              }
             },
           ),
         );

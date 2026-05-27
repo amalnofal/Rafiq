@@ -7,7 +7,7 @@ import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/core/widgets/smart_image_display.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/clinic_action_buttons.dart';
-import 'package:rafiq/features/profile/presentation/widgets/icon_text_row.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/clinic_info.dart';
 
 class ClinicCard extends StatelessWidget {
   final ClinicModel clinic;
@@ -23,6 +23,7 @@ class ClinicCard extends StatelessWidget {
       onTap: onTap,
       child: CustomContainer(
         padding: EdgeInsets.zero,
+        margin: EdgeInsets.symmetric(horizontal: 4.h, vertical: 8.h),
         child: Column(
           children: [
             //  1. صورة العيادة فوق
@@ -94,20 +95,7 @@ class ClinicCard extends StatelessWidget {
                   SizedBox(height: 10.h),
 
                   // العنوان والمواعيد والتخصص
-                  IconTextRow(
-                    iconPath: "assets/icons/location.svg",
-                    text: clinic.address,
-                  ),
-                  SizedBox(height: 6.h),
-                  IconTextRow(
-                    iconPath: "assets/icons/clock.svg",
-                    text: clinic.workingHours,
-                  ),
-                  SizedBox(height: 6.h),
-                  IconTextRow(
-                    iconPath: "assets/icons/clinics.svg",
-                    text: clinic.specialization,
-                  ),
+                  ClinicInfo(clinic: clinic),
 
                   SizedBox(height: 16.h),
 

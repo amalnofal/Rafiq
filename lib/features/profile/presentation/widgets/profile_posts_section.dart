@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
+import 'package:rafiq/features/community/data/models/post_model.dart';
+import 'package:rafiq/features/profile/presentation/pages/post_details_screen.dart';
 import 'package:rafiq/features/profile/presentation/widgets/empty_state_card.dart';
-import 'package:rafiq/features/profile/presentation/widgets/post_preview_item.dart'; // استيراد الويدجت الجديدة
+import 'package:rafiq/features/profile/presentation/widgets/post_preview_item.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class ProfilePostsSection extends StatelessWidget {
   final VoidCallback onSeeAllTap;
-  final List<dynamic> posts;
+  final List<PostModel> posts;
   final bool isMe;
 
   const ProfilePostsSection({
@@ -28,9 +30,9 @@ class ProfilePostsSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-               isMe 
-                  ? AppLocalizations.of(context)!.myPostsTitle // "منشوراتي"
-                  : AppLocalizations.of(context)!.userPostsTitle,
+                isMe
+                    ? AppLocalizations.of(context)!.myPostsTitle
+                    : AppLocalizations.of(context)!.userPostsTitle,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
 
@@ -38,7 +40,7 @@ class ProfilePostsSection extends StatelessWidget {
                 GestureDetector(
                   onTap: onSeeAllTap,
                   child: Text(
-                    AppLocalizations.of(context)!.seeAllBtn, // "عرض الكل"
+                    AppLocalizations.of(context)!.seeAllBtn,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                       fontWeight: FontWeight.w400,
                     ),
@@ -49,7 +51,6 @@ class ProfilePostsSection extends StatelessWidget {
 
           SizedBox(height: 12.h),
 
-          // البوستات (مع حالة فارغة)
           posts.isEmpty
               ? EmptyStateCard(
                   message: AppLocalizations.of(context)!.noPostsYet,
@@ -65,7 +66,20 @@ class ProfilePostsSection extends StatelessWidget {
                   ),
                   itemCount: posts.length > 6 ? 6 : posts.length,
                   itemBuilder: (context, index) {
-                    return PostPreviewItem(index: index);
+                    final currentPost = posts[index];
+
+                    return PostPreviewItem(
+                      post: currentPost,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                PostDetailsScreen(post: currentPost),
+                          ),
+                        );
+                      },
+                    );
                   },
                 ),
         ],

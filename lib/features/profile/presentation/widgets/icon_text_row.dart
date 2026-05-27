@@ -11,7 +11,7 @@ class IconTextRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: EdgeInsets.only(bottom: 2.h),
@@ -31,7 +31,7 @@ class IconTextRow extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.labelMedium,
-            maxLines: 1,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
         ),

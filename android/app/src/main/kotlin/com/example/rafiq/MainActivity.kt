@@ -1,4 +1,4 @@
-package com.example.rafiq
+package com.amalnofal.rafiq
 
 import io.flutter.embedding.android.FlutterActivity
 

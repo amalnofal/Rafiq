@@ -8,6 +8,7 @@ import 'package:rafiq/core/enums/post_category.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
+import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_categories_selector.dart';
@@ -15,6 +16,7 @@ import 'package:rafiq/features/community/presentation/widgets/post_input_area.da
 import 'package:rafiq/features/community/presentation/widgets/post_tips_card.dart';
 import 'package:rafiq/features/community/presentation/widgets/post_user_header.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
+import 'package:rafiq/core/controller/community_provider.dart';
 
 class CreatePostScreen extends StatefulWidget {
   final PostModel? postToEdit;
@@ -28,22 +30,28 @@ class CreatePostScreen extends StatefulWidget {
 class _CreatePostScreenState extends State<CreatePostScreen> {
   final TextEditingController _postController = TextEditingController();
 
-  File? _selectedImage;
-  String? _existingImageUrl;
+  final List<File> _selectedImages = [];
+  List<PostMedia> _existingMedia = [];
+  final List<int> _mediaIdsToRemove = [];
 
   final List<int> _selectedCategoryIds = [];
 
   @override
   void initState() {
     super.initState();
+
     if (widget.postToEdit != null) {
       final post = widget.postToEdit!;
       _postController.text = post.text;
       _selectedCategoryIds.addAll(post.categories.map((c) => c.id));
-      _existingImageUrl = post.imageUrl;
+      // جلب الميديا القديمة
+      _existingMedia = List.from(post.media);
     }
+
     _postController.addListener(() {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -53,129 +61,216 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     super.dispose();
   }
 
+  Map<String, bool> _getCategoryBooleans(List<int> selectedIds) {
+    return {
+      "isHealthAndCare": selectedIds.contains(1),
+      "isNutritionAndFood": selectedIds.contains(2),
+      "isTrainingAndBehavior": selectedIds.contains(3),
+      "isGroomingAndAppearances": selectedIds.contains(4),
+      "isTravelAndTransport": selectedIds.contains(5),
+      "isAdoptionAndRescue": selectedIds.contains(6),
+      "isStoriesAndExperiences": selectedIds.contains(7),
+      "isUpbringingAndParenting": selectedIds.contains(8),
+    };
+  }
+
+  Future<void> _handlePostAction({
+    required bool isEditing,
+    required UserProvider userProvider,
+  }) async {
+    final provider = context.read<CommunityProvider>();
+
+    final categoryBooleans = _getCategoryBooleans(_selectedCategoryIds);
+
+    final selectedCategories = _selectedCategoryIds
+        .map((id) => PostCategory.fromId(id))
+        .toList();
+
+    // ================== حالة التعديل ==================
+    if (isEditing) {
+      final success = await provider.updatePost(
+        postId: widget.postToEdit!.id,
+        contentText: _postController.text.trim(),
+        newMediaFiles: _selectedImages.isNotEmpty ? _selectedImages : null,
+        categories: categoryBooleans,
+        mediaIdsToRemove: _mediaIdsToRemove.isNotEmpty
+            ? _mediaIdsToRemove
+            : null,
+      );
+
+      if (!mounted) return;
+
+      if (success) {
+        // تحديث الموديل الوهمي عشان يظهر في الشاشة فوراً
+        List<PostMedia> updatedMedia = [
+          ..._existingMedia,
+          ..._selectedImages.asMap().entries.map(
+            (e) => PostMedia(id: e.key, url: e.value.path),
+          ),
+        ];
+
+        final updatedPost = widget.postToEdit!.copyWith(
+          text: _postController.text.trim(),
+          categories: selectedCategories,
+          media: updatedMedia,
+        );
+
+        Navigator.of(context).pop(updatedPost);
+      } else {
+        showSnackBar(context, context.l10n.unexpectedError, isError: true);
+      }
+    }
+    // ================== حالة الإنشاء ==================
+    else {
+      final currentUser = userProvider.user;
+      if (currentUser == null) return;
+
+      // تجهيز الميديا الوهمية عشان تظهر في الشاشة فوراً
+      List<PostMedia> tempMedia = _selectedImages
+          .asMap()
+          .entries
+          .map((e) => PostMedia(id: e.key, url: e.value.path))
+          .toList();
+
+      final tempPost = PostModel(
+        id: 'temp_${DateTime.now().millisecondsSinceEpoch}',
+        createdAt: DateTime.now(),
+        userId: currentUser.id,
+        user: currentUser,
+        text: _postController.text.trim(),
+        categories: selectedCategories,
+        media: tempMedia,
+        isUploading: true,
+      );
+
+      // نبعت البوست يترفع في الخلفية
+      provider.createPostInBackground(
+        tempPost: tempPost,
+        contentText: _postController.text.trim(),
+        mediaFiles: _selectedImages,
+        categories: categoryBooleans,
+      );
+
+      // نقفل الشاشة فوراً
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
     final currentUser = userProvider.user;
     final isEditing = widget.postToEdit != null;
 
+    final isLoading = context.watch<CommunityProvider>().isActionLoading;
+
     if (currentUser == null) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
-    bool hasContent =
+    final bool hasContent =
         _postController.text.trim().isNotEmpty ||
-        _selectedImage != null ||
-        (_existingImageUrl != null && _existingImageUrl!.isNotEmpty);
+        _selectedImages.isNotEmpty ||
+        _existingMedia.isNotEmpty;
 
-    bool hasCategory = _selectedCategoryIds.isNotEmpty;
-    bool isButtonEnabled = hasContent && hasCategory;
+    final bool hasCategory = _selectedCategoryIds.isNotEmpty;
+    final bool isButtonEnabled = hasContent && hasCategory;
 
-    return RafiqScaffold(
-      appBar: AppBar(
-        title: Text(
-          isEditing
-              ? AppLocalizations.of(context)!.editPost
-              : AppLocalizations.of(context)!.newPostTitle,
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(AppDimensions.padding),
-            child: CustomButton(
-              title: isEditing
-                  ? AppLocalizations.of(context)!.save
-                  : AppLocalizations.of(context)!.postBtn,
-              height: 35.h,
-              width: 80.w,
-              radius: 50.r,
-              elevation: 0,
-              onPressed: isButtonEnabled
-                  ? () {
-                      final selectedCategories = _selectedCategoryIds
-                          .map((id) => PostCategory.fromId(id))
-                          .toList();
+    return Stack(
+      children: [
+        RafiqScaffold(
+          appBar: AppBar(
+            title: Text(
+              isEditing
+                  ? AppLocalizations.of(context)!.editPost
+                  : AppLocalizations.of(context)!.newPostTitle,
+            ),
+            actions: [
+              Padding(
+                padding: EdgeInsets.all(AppDimensions.padding),
+                child: CustomButton(
+                  title: isEditing
+                      ? AppLocalizations.of(context)!.save
+                      : AppLocalizations.of(context)!.postBtn,
+                  height: 35.h,
+                  width: 80.w,
+                  radius: 50.r,
+                  elevation: 0,
+                  onPressed: (isButtonEnabled && !isLoading)
+                      ? () => _handlePostAction(
+                          isEditing: isEditing,
+                          userProvider: userProvider,
+                        )
+                      : null,
+                ),
+              ),
+            ],
+          ),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PostUserHeader(user: currentUser),
+                SizedBox(height: 20.h),
 
-                      final newPost = PostModel(
-                        id: isEditing ? widget.postToEdit!.id : '',
-                        createdAt: isEditing
-                            ? widget.postToEdit!.createdAt
-                            : DateTime.now(),
-                        isEdited: isEditing,
-                        userId: currentUser.id,
-                        user: currentUser,
-                        text: _postController.text.trim(),
-                        categories: selectedCategories,
-                        imageUrl: _selectedImage?.path ?? _existingImageUrl,
-                        likesCount: isEditing
-                            ? widget.postToEdit!.likesCount
-                            : 0,
-                        commentsCount: isEditing
-                            ? widget.postToEdit!.commentsCount
-                            : 0,
-                        isLiked: isEditing ? widget.postToEdit!.isLiked : false,
-                      );
+                // 🚨 الـ Input Area الجديد
+                PostInputArea(
+                  controller: _postController,
+                  selectedImages: _selectedImages,
+                  existingMedia: _existingMedia,
+                  onImageAdded: (file) {
+                    if (!mounted) return;
+                    setState(() {
+                      _selectedImages.add(file);
+                    });
+                  },
+                  onNewImageRemoved: (index) {
+                    if (!mounted) return;
+                    setState(() {
+                      _selectedImages.removeAt(index);
+                    });
+                  },
+                  onExistingImageRemoved: (index) {
+                    if (!mounted) return;
+                    setState(() {
+                      _mediaIdsToRemove.add(_existingMedia[index].id);
+                      _existingMedia.removeAt(index);
+                    });
+                  },
+                ),
 
-                      showSnackBar(
-                        context,
-                        isEditing
-                            ? context.l10n.postEditedSuccessfully
-                            : context.l10n.postCreatedSuccess,
-                      );
+                SizedBox(height: 16.h),
 
-                      Navigator.pop(context, newPost);
-                    }
-                  : null,
+                PostCategoriesSelector(
+                  selectedIds: _selectedCategoryIds,
+                  onToggle: (id) {
+                    if (!mounted) return;
+
+                    setState(() {
+                      if (_selectedCategoryIds.contains(id)) {
+                        _selectedCategoryIds.remove(id);
+                      } else {
+                        _selectedCategoryIds.add(id);
+                      }
+                    });
+                  },
+                ),
+
+                SizedBox(height: 20.h),
+
+                const PostTipsCard(),
+
+                SizedBox(height: 30.h),
+              ],
             ),
           ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(vertical: AppDimensions.paddingM),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            PostUserHeader(user: currentUser),
-            SizedBox(height: 20.h),
-
-            PostInputArea(
-              controller: _postController,
-              selectedImage: _selectedImage,
-              existingImageUrl: _existingImageUrl,
-
-              onImageSelected: (file) {
-                setState(() {
-                  _selectedImage = file;
-                });
-              },
-              onImageRemoved: () {
-                setState(() {
-                  _selectedImage = null;
-                  _existingImageUrl = null;
-                });
-              },
-            ),
-
-            SizedBox(height: 16.h),
-
-            PostCategoriesSelector(
-              selectedIds: _selectedCategoryIds,
-              onToggle: (id) {
-                setState(() {
-                  if (_selectedCategoryIds.contains(id)) {
-                    _selectedCategoryIds.remove(id);
-                  } else {
-                    _selectedCategoryIds.add(id);
-                  }
-                });
-              },
-            ),
-            SizedBox(height: 20.h),
-
-            const PostTipsCard(),
-            SizedBox(height: 30.h),
-          ],
         ),
-      ),
+
+        if (isLoading) const Positioned.fill(child: LoadingOverlay()),
+      ],
     );
   }
 }

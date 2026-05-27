@@ -35,10 +35,20 @@ class _HomeScreenState extends State<HomeScreen> {
         left: AppDimensions.paddingS,
         right: AppDimensions.paddingS,
       ),
-      appBar: homeAppBar(notificationsCount: 0),
+      appBar: homeAppBar(notificationsCount: 1, unreadMessagesCount: 1),
       body: RefreshIndicator(
         onRefresh: () async {
           await petProvider.fetchMyPets(context);
+
+          if (context.mounted && petProvider.pets.isNotEmpty) {
+            int indexToFetch = _selectedPetIndex < petProvider.pets.length
+                ? _selectedPetIndex
+                : 0;
+
+            final petId = petProvider.pets[indexToFetch].id;
+
+            await petProvider.fetchPetProfile(petId);
+          }
         },
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
@@ -52,6 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       _selectedPetIndex = index;
                     });
+
+                    final petId = myPets[index].id;
+                    context.read<PetProvider>().fetchPetProfile(petId);
                   },
                 ),
         ),

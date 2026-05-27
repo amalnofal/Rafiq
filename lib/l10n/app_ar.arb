@@ -7,6 +7,26 @@
     "type": "text"
   },
 
+  "onboarding_title_1": "أهلاً بك في رفيق !",
+  "@onboarding_title_1": {},
+  "onboarding_desc_1": "منصتك المتكاملة التي تجمع ملاك الحيوانات الأليفة ونخبة من الأطباء البيطريين لضمان رعاية مثالية.",
+  "@onboarding_desc_1": {},
+
+  "onboarding_title_2": "الطوق الذكي !",
+  "@onboarding_title_2": {},
+  "onboarding_desc_2": "تتبع الموقع، راقب المؤشرات الصحية، وافهم حالة أليفك بتقنية مدعومة بالذكاء الاصطناعي.",
+  "@onboarding_desc_2": {},
+
+  "onboarding_title_3": "عيادات بيطرية !",
+  "@onboarding_title_3": {},
+  "onboarding_desc_3": "تصفح العيادات المتاحة، واختر الطبيب الأنسب لحالة أليفك، واحجز موعدك بسلاسة.",
+  "@onboarding_desc_3": {},
+
+  "skip": "تخطي",
+  "@skip": {},
+  "getStarted": "ابدأ الآن",
+  "@getStarted": {},
+
   "pet_care_assistant": "مساعد الذكي للعناية بحيوانك الأليف",
   "@pet_care_assistant": {
     "description": "Smart assistant for taking care of your pet",
@@ -126,6 +146,9 @@
   "@chooseAccountType": {},
   "chooseAccountTypeSubtitle": "حدد كيف تريد استخدام التطبيق",
   "@chooseAccountTypeSubtitle": {},
+
+  "adminTitle": "مسؤول",
+  "@adminTitle": {},
 
   "petOwnerTitle": "مالك حيوان أليف",
   "@petOwnerTitle": {},
@@ -488,8 +511,22 @@
 
   "followBtn": "متابعة",
   "@followBtn": {},
-  "unfollowBtn": "إلغاء المتابعة",
+  "unfollowBtn": "تتابعه",
   "@unfollowBtn": {},
+
+  "noSearchResults": "لا توجد نتائج مطابقة لـ ''{query}''",
+  "@noSearchResults": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+
+  "commentDeletedSuccessfully": "تم حذف التعليق بنجاح",
+  "@commentDeletedSuccessfully": {},
+  "commentEditedSuccessfully": "تم تعديل التعليق بنجاح",
+  "@commentEditedSuccessfully": {},
 
   "manageAppointmentsBtn": "إدارة مواعيدي",
   "@manageAppointmentsBtn": {},
@@ -720,8 +757,53 @@
   "@clinicNameLabel": {},
   "clinicAddressLabel": "العنوان",
   "@clinicAddressLabel": {},
-  "clinicWorkingHoursLabel": "ساعات العمل",
-  "@clinicWorkingHoursLabel": {},
+  
+  "clinicScheduleTitle": "اختر مواعيد عمل العيادة",
+  "@clinicScheduleTitle": {},
+
+  "selectAtLeastOneDay": "يجب اختيار يوم واحد على الأقل",
+  "@selectAtLeastOneDay": {},
+  "saturday": "السبت",
+  "@saturday": {},
+  "sunday": "الأحد",
+  "@sunday": {},
+  "monday": "الاثنين",
+  "@monday": {},
+  "tuesday": "الثلاثاء",
+  "@tuesday": {},
+  "wednesday": "الأربعاء",
+  "@wednesday": {},
+  "thursday": "الخميس",
+  "@thursday": {},
+  "friday": "الجمعة",
+  "@friday": {},
+
+  "noAvailableSlots": "عذراً، لا توجد أوقات متاحة في هذا اليوم",
+  "@noAvailableSlots": {},
+
+  "daily": "يومياً",
+  "@daily": {},
+  "dailyExcept": "يومياً ما عدا",
+  "@dailyExcept": {},
+
+  "fromTime": "من",
+  "@fromTime": {},
+  "toTime": "إلى",
+  "@toTime": {},
+  "selectTimeError": "يجب تحديد وقت البدء والانتهاء",
+  "@selectTimeError": {},
+
+  "startTime": "وقت البدء",
+  "@startTime": {},
+  "endTime": "وقت الانتهاء",
+  "@endTime": {},
+
+  "open24Hours": "مفتوح 24 ساعة",
+  "@open24Hours": {},
+
+  "description": "الوصف",
+  "@description": {},
+
   "clinicDescriptionHint": "اكتب وصفاً مختصراً للعيادة وخدماتها...",
   "@clinicDescriptionHint": {},
   "uploadClinicPhotoHint": "قم برفع صورة عيادتك",
@@ -790,10 +872,20 @@
     }
   },
 
+  "available": "متاح",
+  "@available": {},
+  "availableSlots": "الأوقات المتاحة",
+  "@availableSlots": {},
+  "booked": "محجوز",
+  "@booked": {},
+
   "clinicConfirmationNotice": "سيتم تأكيد الموعد من قبل العيادة",
   "@clinicConfirmationNotice": {},
   "confirmBooking": "تأكيد الحجز",
   "@confirmBooking": {},
+
+  "appointmentConflictError": "لديك موعد آخر مسجل بالفعل في نفس هذا الوقت.",
+  "@appointmentConflictError": {},
 
   "checkBackLater": "عد لاحقاً لرؤية التحديثات",
   "@checkBackLater": {
@@ -846,6 +938,11 @@
   "postContentHint": "ماذا تريد أن تشارك؟",
   "@postContentHint": {
     "description": "Hint text shown in the post creation text field"
+  },
+
+  "searchStartMessage": "ابحث عن مالك حيوان أليف أو طبيب بيطري.. 🐾",
+  "@searchStartMessage": {
+    "description": "Message shown in the center of the search screen before the user starts searching"
   },
 
   "newPostTitle": "منشور جديد",
@@ -910,6 +1007,9 @@
     "description": "Content message of the delete confirmation dialog"
   },
 
+  "postDeletedSuccessfully": "تم حذف المنشور بنجاح",
+  "@postDeletedSuccessfully": {},
+
   "deleteCommentTitle": "حذف التعليق؟",
   "@deleteCommentTitle": {
     "description": "Title of the delete comment confirmation dialog"
@@ -950,6 +1050,23 @@
 
   "postBtn": "نشر",
   "@postBtn": {},
+
+  "postsWithCount": "{count} منشور",
+  "@postsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "commentsWithCount": "التعليقات ({count})",
+  "@commentsWithCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
 
   "selectPostCategoriesTitle": "اختر الفئات المناسبة للمنشور",
   "@selectPostCategoriesTitle": {},
@@ -1024,10 +1141,60 @@
   "tipRespect": "كن محترماً ولطيفاً مع الآخرين",
   "@tipRespect": {},
 
+  "addMedia": "إضافة وسائط",
+  "@addMedia": {},
+
+  "fileTooLarge": "يبدو أن حجم الملف كبير جداً! يرجى اختيار ملف لا يتعدى 30 ميجابايت.",
+  "@fileTooLarge": {},  
+  
+  "uploadingPost": "جاري النشر...",
+  "@uploadingPost": {},
+  "uploadPostFailed": "فشل رفع المنشور. تحقق من الاتصال.",
+  "@uploadPostFailed": {},
+  "retryBtn": "إعادة المحاولة",
+  "@retryBtn": {},
+  "cancelUploadBtn": "إلغاء النشر",
+  "@cancelUploadBtn": {},
+
   "store": "المتجر",
   "@store": {
     "description": "Bottom navigation bar item: Store"
   },
+
+  "addProductTitle": "إضافة منتج جديد",
+  "@addProductTitle": {},
+  "editProductTitle": "تعديل المنتج",
+  "@editProductTitle": {},
+  "productNameLabel": "اسم المنتج",
+  "@productNameLabel": {},
+  "productDescLabel": "وصف المنتج",
+  "@productDescLabel": {},
+  "quantityLabel": "الكمية",
+  "@quantityLabel": {},
+  "priceLabel": "السعر",
+  "@priceLabel": {},
+  "currencyEGP": "ج.م",
+  "@currencyEGP": {},
+  "searchProductHint": "ابحث عن منتج...",
+  "@searchProductHint": {},
+  "productDeletedSuccessfully": "تم حذف المنتج بنجاح",
+  "@productDeletedSuccessfully": {},
+
+  "productDetails": "تفاصيل المنتج",
+  "@productDetails": {},
+  "inStock": "{count, plural, =1{متاح قطعة واحدة فقط} =2{متاح قطعتان} few{متاح {count} قطع} other{متاح في المخزن ({count} قطعة)}}",
+  "@inStock": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "outOfStock": "غير متوفر حالياً",
+  "@outOfStock": {},
+  "addToCart": "إضافة للسلة",
+  "@addToCart": {},
 
   "settings": "الإعدادات",
   "@settings": {
@@ -1260,6 +1427,9 @@
     "description": "Label for body temperature metric"
   },
 
+  "temperatureDegree": "درجة الحرارة",
+  "@temperatureDegree": {},
+
   "activity": "النشاط",
   "@activity": {
     "description": "Label for physical activity metric"
@@ -1269,11 +1439,23 @@
   "@pulse": {
     "description": "Label for heart rate/pulse metric"
   },
-  
+
+  "heartRate": "معدل النبض",
+  "@heartRate": {},
+
+  "normal": "طبيعي",
+  "@normal": {},
+
+  "currentLocation": "الموقع الحالي",
+  "@currentLocation": {},
+
   "viewDetailedStatistics": "عرض الإحصائيات المفصلة",
   "@viewDetailedStatistics": {
     "description": "Button label to navigate to detailed statistics screen"
   },
+
+  "hideStatistics": "إخفاء الإحصائيات",
+  "@hideStatistics": {},
 
   "details": "التفاصيل",
   "@details": {
@@ -1310,9 +1492,65 @@
   "noSmartCollarTitle": "هذا الحيوان ليس لديه طوق ذكي",
   "@noSmartCollarTitle": {},
 
+  "connectedCollarsCount": "{count, plural, =0{لا يوجد أطواق متصلة} =1{طوق واحد متصل} =2{طوقان متصلان} few{{count} أطواق متصلة} many{{count} طوقًا متصلًا} other{{count} طوق متصل}}",
+  "@connectedCollarsCount": {
+    "description": "عدد الأطواق المتصلة",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "connected": "متصل",
+  "@connected": {},
+  "disconnected": "غير متصل",
+  "@disconnected": {},
+  
+  "lastSync": "آخر مزامنة",
+  "@lastSync": {},
+
+  "deviceStatus": "حالة الجهاز",
+  "@deviceStatus": {},
+
+  "battery": "البطارية",
+  "@battery": {},
+
+  "conversationsTitle": "المحادثات",
+  "@conversationsTitle": {},
+  "noConversationsYet": "لا توجد محادثات حتى الآن",
+  "@noConversationsYet": {},
+  "writeMessageHint": "اكتب رسالة...",
+  "@writeMessageHint": {},
+
+  "online": "متصل الآن",
+  "@online": {},
+  "offline": "غير متصل",
+  "@offline": {},
+
+  "isTyping": "يكتب الآن...",
+  "@isTyping": {},
+
+  "startConversationWith": "ابدأ المحادثة مع {userName}...",
+  "@startConversationWith": {
+    "placeholders": {
+      "userName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "wrongPassword": "كلمة المرور خاطئة، يرجى التأكد والمحاولة مرة أخرى",
+  "@wrongPassword": {},
+  
   "orderSmartCollarDescription": "اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!",
   "@orderSmartCollarDescription": {},
   
   "orderNow": "اطلب الآن",
-  "@orderNow": {}
+  "@orderNow": {},
+
+  "sessionExpiredTitle": "انتهت الجلسة",
+  "@sessionExpiredTitle": {},
+  "sessionExpiredMessage": "انتهت صلاحية تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى للمتابعة.",
+  "@sessionExpiredMessage": {}
 }

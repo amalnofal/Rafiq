@@ -5,11 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/clinic_provider.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
+import 'package:rafiq/features/profile/presentation/widgets/clinics/clinic_schedule_section.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class AddClinicScreen extends StatefulWidget {
@@ -29,14 +31,28 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
   final TextEditingController _descController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _hoursController = TextEditingController();
+
+  TimeOfDay? _openingTime;
+  TimeOfDay? _closingTime;
+
+  // 🚨 المتغير بتاعنا
+  bool _is24Hours = false;
+
+  final Map<String, bool> _days = {
+    'Saturday': false,
+    'Sunday': false,
+    'Monday': false,
+    'Tuesday': false,
+    'Wednesday': false,
+    'Thursday': false,
+    'Friday': false,
+  };
 
   bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
-
     if (widget.clinicToEdit != null) {
       _isLoading = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -59,7 +75,40 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
           _descController.text = fullClinic.description ?? "";
           _addressController.text = fullClinic.address;
           _phoneController.text = fullClinic.phone;
-          _hoursController.text = fullClinic.workingHours;
+
+          _days['Saturday'] = fullClinic.workingDays['Saturday'] ?? false;
+          _days['Sunday'] = fullClinic.workingDays['Sunday'] ?? false;
+          _days['Monday'] = fullClinic.workingDays['Monday'] ?? false;
+          _days['Tuesday'] = fullClinic.workingDays['Tuesday'] ?? false;
+          _days['Wednesday'] = fullClinic.workingDays['Wednesday'] ?? false;
+          _days['Thursday'] = fullClinic.workingDays['Thursday'] ?? false;
+          _days['Friday'] = fullClinic.workingDays['Friday'] ?? false;
+
+          if (fullClinic.openingTime.isNotEmpty) {
+            final parts = fullClinic.openingTime.split(':');
+            _openingTime = TimeOfDay(
+              hour: int.parse(parts[0]),
+              minute: int.parse(parts[1]),
+            );
+          }
+
+          if (fullClinic.closingTime.isNotEmpty) {
+            final parts = fullClinic.closingTime.split(':');
+            _closingTime = TimeOfDay(
+              hour: int.parse(parts[0]),
+              minute: int.parse(parts[1]),
+            );
+          }
+
+          // 🚨 لو هو بيعدل عيادة، بنكتشف هل هي 24 ساعة ولا لأ عشان نفعل الـ Checkbox
+          if (_openingTime != null && _closingTime != null) {
+            if (_openingTime!.hour == 0 &&
+                _openingTime!.minute == 0 &&
+                _closingTime!.hour == 23 &&
+                _closingTime!.minute == 59) {
+              _is24Hours = true;
+            }
+          }
 
           _isLoading = false;
         });
@@ -68,11 +117,7 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
       log("فشل جلب بيانات العيادة للتعديل: $e");
       if (mounted) {
         Navigator.pop(context);
-        showSnackBar(
-          context,
-          AppLocalizations.of(context)!.unexpectedError,
-          isError: true,
-        );
+        showSnackBar(context, context.l10n.unexpectedError, isError: true);
       }
     }
   }
@@ -84,7 +129,6 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
     _descController.dispose();
     _addressController.dispose();
     _phoneController.dispose();
-    _hoursController.dispose();
     super.dispose();
   }
 
@@ -146,19 +190,41 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
                       validator: (val) =>
                           ValidationHelper.validatePhone(val, context),
                     ),
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 20.h),
 
-                    CustomTextField(
-                      prefixIcon: "assets/icons/clock.svg",
-                      labelText: l10n.clinicWorkingHoursLabel,
-                      controller: _hoursController,
-                      validator: (val) =>
-                          ValidationHelper.validateWorkingHours(val, context),
+                    // مواعيد العمل
+                    ClinicScheduleSection(
+                      selectedDays: _days,
+                      openingTime: _openingTime,
+                      closingTime: _closingTime,
+                      is24Hours: _is24Hours,
+                      onDayToggled: (key, isSelected) {
+                        setState(() => _days[key] = isSelected);
+                      },
+                      onOpeningTimeChanged: (newTime) {
+                        setState(() => _openingTime = newTime);
+                      },
+                      onClosingTimeChanged: (newTime) {
+                        setState(() => _closingTime = newTime);
+                      },
+                      //  اللوجيك بتاع تشغيل الـ 24 ساعة
+                      on24HoursToggled: (val) {
+                        setState(() {
+                          _is24Hours = val;
+                          if (_is24Hours) {
+                            _openingTime = const TimeOfDay(hour: 0, minute: 0);
+                            _closingTime = const TimeOfDay(
+                              hour: 23,
+                              minute: 59,
+                            );
+                          }
+                        });
+                      },
                     ),
-                    SizedBox(height: 12.h),
+                    SizedBox(height: 20.h),
 
                     CustomTextField(
-                      hintText: l10n.clinicDescriptionHint,
+                      hintText: context.l10n.clinicDescriptionHint,
                       controller: _descController,
                       maxLines: 4,
                       validator: (val) =>
@@ -167,7 +233,9 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
                     SizedBox(height: 20.h),
 
                     CustomButton(
-                      title: isEdit ? l10n.save_changes : l10n.addClinicBtn,
+                      title: isEdit
+                          ? context.l10n.save_changes
+                          : context.l10n.addClinicBtn,
                       onPressed: _submitForm,
                     ),
                     SizedBox(height: 8.h),
@@ -179,8 +247,20 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
   }
 
   void _submitForm() {
+    if (!_days.values.contains(true)) {
+      showSnackBar(context, context.l10n.selectAtLeastOneDay, isError: true);
+      return;
+    }
+
+    if (_openingTime == null || _closingTime == null) {
+      showSnackBar(context, context.l10n.selectTimeError, isError: true);
+      return;
+    }
+
     if (_formKey.currentState!.validate()) {
       final desc = _descController.text.trim();
+
+      // دالة الإرسال زي ما هي (الباك إند هيستقبلها صح 00:00 و 23:59)
       final clinicData = {
         "id": widget.clinicToEdit?.id,
         "name": _nameController.text.trim(),
@@ -188,7 +268,17 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
         "description": desc.isEmpty ? null : desc,
         "address": _addressController.text.trim(),
         "phone": _phoneController.text.trim(),
-        "workingHours": _hoursController.text.trim(),
+        "OpeningTime":
+            "${_openingTime!.hour.toString().padLeft(2, '0')}:${_openingTime!.minute.toString().padLeft(2, '0')}",
+        "ClosingTime":
+            "${_closingTime!.hour.toString().padLeft(2, '0')}:${_closingTime!.minute.toString().padLeft(2, '0')}",
+        "Saturday": _days['Saturday'],
+        "Sunday": _days['Sunday'],
+        "Monday": _days['Monday'],
+        "Tuesday": _days['Tuesday'],
+        "Wednesday": _days['Wednesday'],
+        "Thursday": _days['Thursday'],
+        "Friday": _days['Friday'],
       };
 
       Navigator.pop(context, clinicData);

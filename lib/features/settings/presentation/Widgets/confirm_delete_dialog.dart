@@ -26,7 +26,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   void _handleConfirm() {
     if (_formKey.currentState!.validate()) {
       widget.onConfirm(_passwordController.text);
-      Navigator.pop(context); // قفل الـ Dialog
+      Navigator.pop(context);
     }
   }
 
@@ -34,7 +34,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      // بنستخدم الـ Dialog العام ونبعتله التفاصيل
       child: CustomInfoDialog(
         title: AppLocalizations.of(context)!.confirmAccountDeletion,
         description:
@@ -43,10 +42,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
         mainColor: AppColors.kStatusError,
         icon: Icons.error_outline_rounded,
 
-        // هنا بنمرر الباسورد فيلد كـ "محتوى إضافي"
         content: PasswordField(
           controller: _passwordController,
-          // هنستخدم الـ validation الافتراضي إنه "مطلوب"
           textInputAction: TextInputAction.done,
           onFieldSubmitted: (_) => _handleConfirm(),
         ),

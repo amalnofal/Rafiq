@@ -8,10 +8,10 @@ import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
+import 'package:rafiq/features/clinics/data/models/appointment_model.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
-import 'package:rafiq/features/profile/data/models/appointment_model.dart';
-import 'package:rafiq/features/profile/presentation/widgets/appointments/appointment_form.dart';
-import 'package:rafiq/features/profile/presentation/widgets/appointments/dialog_header.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/appointments/appointment_form.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/appointments/dialog_header.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_image.dart';
 
 class BookClinicAppointmentDialog extends StatefulWidget {
@@ -60,6 +60,64 @@ class _BookClinicAppointmentDialogState
       showSnackBar(context, context.l10n.selectPetLabel, isError: true);
       return;
     }
+
+    // ==========================================
+    // 🚨 فحص تعارض المواعيد (مع حساب مدة الجلسة 30 دقيقة) 🚨
+    // ==========================================
+    final appointments = context.read<AppointmentProvider>().appointments;
+    final hasConflict = appointments.any((app) {
+      // تجاهل الموعد الحالي لو في وضع التعديل
+      if (widget.appointment != null && app.id == widget.appointment!.id) {
+        return false;
+      }
+
+      final appDate = app.date.split('T')[0];
+      final formDate = _formData["Date"] ?? "";
+      final isSameDate = appDate == formDate;
+
+      // لو مش نفس اليوم، يبقى مفيش تعارض
+      if (!isSameDate) return false;
+
+      final isFinished =
+          app.status.toLowerCase() == 'completed' ||
+          app.status.toLowerCase() == 'cancelled';
+
+      // لو الموعد القديم خلصان أو ملغي، يبقى مفيش تعارض
+      if (isFinished) return false;
+
+      final appTimeStr = app.time;
+      final formTimeStr = _formData["StartTime"] ?? "";
+
+      if (appTimeStr.isEmpty || formTimeStr.isEmpty) return false;
+
+      // دالة داخلية لتحويل الوقت (ساعات ودقائق) إلى إجمالي الدقائق
+      int timeToMinutes(String t) {
+        final parts = t.split(':');
+        if (parts.length >= 2) {
+          return (int.tryParse(parts[0]) ?? 0) * 60 +
+              (int.tryParse(parts[1]) ?? 0);
+        }
+        return 0;
+      }
+
+      final appMinutes = timeToMinutes(appTimeStr);
+      final formMinutes = timeToMinutes(formTimeStr);
+
+      // الجلسة مدتها 30 دقيقة، لو الفرق الزمني أقل من 30، إذن هناك تداخل (Conflict)!
+      final isTimeConflict = (appMinutes - formMinutes).abs() < 30;
+
+      return isTimeConflict;
+    });
+
+    if (hasConflict) {
+      showSnackBar(
+        context,
+        context.l10n.appointmentConflictError,
+        isError: true,
+      );
+      return;
+    }
+    // ==========================================
 
     final finalAppointmentData = {
       ..._formData,
@@ -193,22 +251,16 @@ class _BookClinicAppointmentDialogState
                       formKey: _formKey,
                       appointment: widget.appointment,
                       selectedId: _selectedPetId,
+                      clinicId: widget.clinic.id,
                       selectorWidget: _buildPetSelector(),
                       idKey: "PetId",
                       onDataReady: (data) => _formData = data,
                       middleContent: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(top: 8.h),
-                            child: Text(
-                              context.l10n.clinicConfirmationNotice,
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                          ),
-                          SizedBox(height: 16.h),
+                          SizedBox(height: 12.h),
                           Text(
-                            context.l10n.phone,
+                            context.l10n.phone_number,
                             style: Theme.of(context).textTheme.bodyMedium,
                           ),
                           CustomTextField(
@@ -220,9 +272,10 @@ class _BookClinicAppointmentDialogState
                           ),
                         ],
                       ),
+                      isClinicBooking: true,
                     ),
 
-                    SizedBox(height: 24.h),
+                    SizedBox(height: 16.h),
 
                     // زر الحفظ / التأكيد
                     CustomButton(

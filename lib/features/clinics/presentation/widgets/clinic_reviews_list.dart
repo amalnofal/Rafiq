@@ -8,9 +8,11 @@ import 'package:rafiq/core/controller/clinic_provider.dart';
 import 'package:rafiq/core/helper/date_helper.dart';
 import 'package:rafiq/core/helper/dialog_helper.dart';
 import 'package:rafiq/core/helper/menu_utils.dart';
+import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/add_review_bottom_sheet.dart';
+import 'package:rafiq/features/profile/presentation/pages/profile_screen.dart';
 
 class ClinicReviewsList extends StatefulWidget {
   final ClinicModel clinic;
@@ -60,78 +62,111 @@ class _ClinicReviewsListState extends State<ClinicReviewsList> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1. الصورة الشخصية
-                  CircleAvatar(
-                    radius: 26.r,
-                    backgroundColor: Colors.grey[200],
-                    backgroundImage:
-                        (review.userImageUrl != null &&
-                            review.userImageUrl!.isNotEmpty)
-                        ? CachedNetworkImageProvider(
-                                review.userImageUrl!,
-                                cacheKey: review.userImageUrl!.split('?').first,
-                              )
-                              as ImageProvider
-                        : const AssetImage(
-                            'assets/images/user_placeholder.jpg',
-                          ),
-                  ),
-                  SizedBox(width: 12.w),
+                  // 🚨 التعديل: غلفنا الصورة والاسم بـ Expanded و InkWell عشان يبقوا قابلين للضغط
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        // 1. بنجهز User Model مبدئي بالبيانات المتاحة من التقييم
+                        final reviewUser = UserModel(
+                          id: review.reviewerId,
+                          firstName: review.userName,
+                          lastName: "",
+                          email: "",
+                          role: UserType.petOwner, // افتراضي
+                          photoUrl: review.userImageUrl,
+                        );
 
-                  // 2. الاسم والنجوم
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            review.userName,
-                            style: Theme.of(context).textTheme.bodyLarge!
-                                .copyWith(fontWeight: FontWeight.w500),
+                        // 2. بنفتح شاشة البروفايل
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(
+                              user: reviewUser,
+                              isMe: isMyReview,
+                            ),
                           ),
-                          SizedBox(width: 8.w),
-                          Text(
-                            "• $formattedTime",
-                            style: Theme.of(context).textTheme.labelSmall,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: Row(
+                        children: [
+                          // 1. الصورة الشخصية
+                          CircleAvatar(
+                            radius: 26.r,
+                            backgroundColor: Colors.grey[200],
+                            backgroundImage:
+                                (review.userImageUrl != null &&
+                                    review.userImageUrl!.isNotEmpty)
+                                ? CachedNetworkImageProvider(
+                                        review.userImageUrl!,
+                                        cacheKey: review.userImageUrl!
+                                            .split('?')
+                                            .first,
+                                      )
+                                      as ImageProvider
+                                : const AssetImage(
+                                    'assets/images/user_placeholder.jpg',
+                                  ),
+                          ),
+                          SizedBox(width: 12.w),
+
+                          // 2. الاسم والنجوم
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                        review.userName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      "• $formattedTime",
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelSmall,
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 4.h),
+                                Row(
+                                  children: List.generate(5, (starIndex) {
+                                    return SvgPicture.asset(
+                                      starIndex < review.rating.round()
+                                          ? "assets/icons/star.svg"
+                                          : "assets/icons/unstar.svg",
+                                      width: 15.r,
+                                      height: 15.r,
+                                      colorFilter: ColorFilter.mode(
+                                        starIndex < review.rating.round()
+                                            ? const Color(0xFFFDC700)
+                                            : Colors.grey[300]!,
+                                        BlendMode.srcIn,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      SizedBox(height: 4.h),
-                      Row(
-                        children: List.generate(5, (starIndex) {
-                          return SvgPicture.asset(
-                            starIndex < review.rating.round()
-                                ? "assets/icons/star.svg"
-                                : "assets/icons/unstar.svg",
-                            width: 15.r,
-                            height: 15.r,
-                            colorFilter: ColorFilter.mode(
-                              starIndex < review.rating.round()
-                                  ? Color(0xFFFDC700)
-                                  : Colors.grey[300]!,
-                              BlendMode.srcIn,
-                            ),
-                          );
-
-                          //  Icon(
-                          //   starIndex < review.rating.round()
-                          //       ? Icons.star
-                          //       : Icons.star_border,
-                          //   color: starIndex < review.rating.round()
-                          //       ? Colors.amber
-                          //       : Colors.grey[300],
-                          //   size: 16.r,
-                          // );
-                        }),
-                      ),
-                    ],
+                    ),
                   ),
 
-                  Spacer(),
-
-                  // 3. المنيو والوقت (أقصى الشمال)
+                  // 3. المنيو (أقصى الشمال)
                   if (isMyReview) ...[
-                    SizedBox(width: 4.w),
+                    SizedBox(width: 8.w),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTapDown: _getTapPosition,
@@ -145,7 +180,10 @@ class _ClinicReviewsListState extends State<ClinicReviewsList> {
                           onDelete: () => _confirmDelete(context, review.id),
                         );
                       },
-                      child: Icon(Icons.more_vert, size: 20.r),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 4.w, bottom: 4.h),
+                        child: Icon(Icons.more_vert, size: 20.r),
+                      ),
                     ),
                   ],
                 ],
@@ -183,7 +221,7 @@ class _ClinicReviewsListState extends State<ClinicReviewsList> {
           Navigator.pop(ctx);
           await context.read<ClinicProvider>().updateReview(
             review.id,
-            int.parse(widget.clinic.id),
+            widget.clinic.id,
             rating.toDouble(),
             comment,
           );
@@ -205,7 +243,7 @@ class _ClinicReviewsListState extends State<ClinicReviewsList> {
           if (!mounted) return;
           await context.read<ClinicProvider>().deleteReview(
             reviewId,
-            int.parse(widget.clinic.id),
+            widget.clinic.id,
           );
         },
       ),

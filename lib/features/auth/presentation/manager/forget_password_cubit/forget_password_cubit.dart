@@ -22,8 +22,6 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
       String errorKey = "unexpectedError";
       if (e.response?.statusCode == 400 || e.response?.statusCode == 404) {
         errorKey = "userNotFound"; // الإيميل مش مسجل
-      } else if (_isConnectionError(e)) {
-        errorKey = "connectionError";
       }
       if (isClosed) return;
       emit(ForgetPasswordFailure(errMessage: errorKey));

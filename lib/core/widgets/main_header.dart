@@ -5,15 +5,15 @@ import 'package:rafiq/core/widgets/custom_search_bar.dart';
 
 class MainHeader extends StatelessWidget {
   final String title;
+  final String? subtitle;
   final String icon;
   final double? height;
 
+  final double? iconSize;
+  final VoidCallback? onIconTap;
+
   final String? searchHintText;
   final ValueChanged<String>? onSearchChanged;
-
-  final List<String>? filterCategories;
-  final int selectedFilterIndex;
-  final ValueChanged<int>? onFilterSelected;
 
   final VoidCallback? onSearchTap;
   final bool readOnlySearch;
@@ -25,13 +25,13 @@ class MainHeader extends StatelessWidget {
   const MainHeader({
     super.key,
     required this.title,
+    this.subtitle,
     required this.icon,
     this.height,
+    this.iconSize,
+    this.onIconTap,
     this.searchHintText,
     this.onSearchChanged,
-    this.filterCategories,
-    this.selectedFilterIndex = 0,
-    this.onFilterSelected,
     this.onSearchTap,
     this.readOnlySearch = false,
     this.showBackButton = false,
@@ -75,7 +75,11 @@ class MainHeader extends StatelessWidget {
           end: Alignment.bottomCenter,
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
+            Color.lerp(
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.surfaceContainer,
+              0.2,
+            )!,
           ],
         ),
         borderRadius: const BorderRadius.only(
@@ -89,19 +93,49 @@ class MainHeader extends StatelessWidget {
         children: [
           // 1. العنوان والأيقونة
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                title,
-                style: Theme.of(context).textTheme.headlineLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  if (subtitle != null) ...[
+                    SizedBox(height: 4.h),
+                    Text(
+                      subtitle!,
+                      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                      ),
+                    ),
+                  ],
+                ],
               ),
               const Spacer(),
-              SvgPicture.asset(
-                icon,
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.onPrimary,
-                  BlendMode.srcIn,
+
+              GestureDetector(
+                onTap: onIconTap ?? () {},
+                child: Container(
+                  padding: EdgeInsets.all(10.w),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withValues(alpha: 0.2),
+                  ),
+                  child: SvgPicture.asset(
+                    icon,
+                    width: iconSize ?? 20.w,
+                    height: iconSize ?? 20.h,
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).colorScheme.onPrimary,
+                      BlendMode.srcIn,
+                    ),
+                  ),
                 ),
               ),
             ],

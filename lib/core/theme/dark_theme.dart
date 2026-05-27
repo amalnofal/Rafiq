@@ -253,7 +253,7 @@ class DarkTheme {
 
       // Icon Theme
       iconTheme: IconThemeData(
-        color: AppColors.kDarkContentPrimary,
+        color: AppColors.kDarkContentSecondary,
         size: AppDimensions.iconM,
       ),
 

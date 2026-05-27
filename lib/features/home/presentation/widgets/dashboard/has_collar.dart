@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
-import 'package:rafiq/features/home/presentation/widgets/dashboard/daily_tip_card.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/animal_details_buttons.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/pet_stats_row.dart';
 import 'package:rafiq/features/collar/data/models/collar_model.dart';
 
 class HasCollar extends StatelessWidget {
   final CollarModel collar;
-  const HasCollar({super.key, required this.collar});
+  final PetModel pet;
+  const HasCollar({super.key, required this.collar, required this.pet});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +17,7 @@ class HasCollar extends StatelessWidget {
       child: Column(
         children: [
           PetStatsRow(collar: collar),
-          DailyTipCard(message: collar.dailyTip),
-          AnimalDetailsButtons(),
+          AnimalDetailsButtons(pet: pet),
         ],
       ),
     );

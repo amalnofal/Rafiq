@@ -27,7 +27,7 @@ class BackButtonWidget extends StatelessWidget {
         child: Icon(
           Icons.arrow_back,
           size: AppDimensions.iconM,
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onSecondary,
         ),
       ),
     );

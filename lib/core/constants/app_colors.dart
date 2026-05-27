@@ -116,7 +116,7 @@ class AppColors {
   static const Color kDarkBrandPrimaryLighter = Color(0xFF6B7E3F);
 
   /// Dark Surface Background - خلفية الشاشة الداكنة (#0A0A0A)
-  static const Color kDarkSurfaceBackground = Color(0xFF0A0A0A);
+  static const Color kDarkSurfaceBackground = Color(0xFF121212);
 
   /// Dark Surface Card - خلفية الحاويات الداكنة (#1A1A1A)
   static const Color kDarkContainer = Color(0xFF1A1A1A);

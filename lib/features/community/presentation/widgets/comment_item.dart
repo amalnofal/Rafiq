@@ -1,58 +1,60 @@
-import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:rafiq/core/controller/user_provider.dart';
+import 'package:rafiq/core/helper/arabic_numbers_formatter.dart';
+import 'package:rafiq/core/helper/date_helper.dart';
+import 'package:rafiq/core/widgets/expandable_text.dart';
+import 'package:rafiq/features/community/data/models/comment_model.dart';
+import 'package:rafiq/features/profile/presentation/pages/profile_screen.dart'; // 💡 استيراد شاشة البروفايل
 
 class CommentItem extends StatelessWidget {
-  final Map<String, dynamic> commentData;
-  final bool isReply;
-  final VoidCallback? onReplyTap;
-  final VoidCallback onLikeTap;
+  final CommentModel comment;
   final VoidCallback? onLongPress;
-  final bool isReplyingToThis;
 
-  const CommentItem({
-    super.key,
-    required this.commentData,
-    required this.isReply,
-    this.onReplyTap,
-    required this.onLikeTap,
-    this.onLongPress,
-    this.isReplyingToThis = false,
-  });
-
-  ImageProvider? _getAvatarImage(String path) {
-    if (path.isEmpty) return null;
-    if (path.startsWith('http')) return NetworkImage(path);
-    return FileImage(File(path));
-  }
+  const CommentItem({super.key, required this.comment, this.onLongPress});
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      color: isReplyingToThis
-          ? Theme.of(context).cardTheme.color!.withValues(alpha: 0.5)
-          : Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+    // 💡 التحقق إذا كان صاحب الكومنت هو المستخدم الحالي
+    final userProvider = context.read<UserProvider>();
+    final isMe = comment.user.id == userProvider.user?.id;
+
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 1. الصورة (Avatar)
-          CircleAvatar(
-            radius: isReply ? 16.r : 20.r,
-            backgroundColor: Colors.grey[200],
-            backgroundImage:
-                commentData['image'] != null &&
-                    commentData['image'].toString().isNotEmpty
-                ? _getAvatarImage(commentData['image'])!
-                : const AssetImage("assets/images/user_placeholder.jpg"),
+          // 1. الصورة (مغلفة بـ InkWell للضغط)
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ProfileScreen(user: comment.user, isMe: isMe),
+                ),
+              );
+            },
+            borderRadius: BorderRadius.circular(20.r),
+            child: CircleAvatar(
+              radius: 20.r,
+              backgroundColor: Colors.grey[200],
+              backgroundImage:
+                  comment.user.photoUrl != null &&
+                      comment.user.photoUrl!.isNotEmpty
+                  ? CachedNetworkImageProvider(
+                      comment.user.photoUrl!,
+                      cacheKey: comment.user.photoUrl!.split('?').first,
+                    )
+                  : const AssetImage("assets/images/user_placeholder.jpg")
+                        as ImageProvider,
+            ),
           ),
-
           SizedBox(width: 12.w),
 
-          // 2. المحتوى الأساسي
+          // 2. المحتوى
           Expanded(
             child: InkWell(
               onLongPress: onLongPress,
@@ -60,98 +62,50 @@ class CommentItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // سطر الاسم والوقت
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        commentData['name'],
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w500,
+                  // 💡 تغليف الاسم بـ InkWell للضغط
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProfileScreen(user: comment.user, isMe: isMe),
                         ),
-                      ),
-                      SizedBox(width: 8.w),
-                      // الوقت
-                      Text(
-                        commentData['time'],
-                        style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          color: Colors.grey[600],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      // كلمة Edited
-                      if (commentData['isEdited'] == true) ...[
-                        SizedBox(width: 4.w),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(4.r),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Text(
-                          "• ${AppLocalizations.of(context)!.edited}",
+                          comment.user.fullName,
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(width: 8.w),
+                        Text(
+                          DateHelper.timeAgoShort(comment.createdAt, context),
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
-                    ],
+                    ),
                   ),
                   SizedBox(height: 6.h),
-
-                  // نص الكومنت
-                  Text(
-                    commentData['text'],
+                  ExpandableText(
+                    comment.content,
                     style: Theme.of(
                       context,
                     ).textTheme.bodyMedium?.copyWith(height: 1.4),
+                    isArabic:
+                        ArabicToEnglishNumbersFormatter.getTextDirection(
+                          comment.content,
+                        ) ==
+                        TextDirection.rtl,
                   ),
-
-                  SizedBox(height: 8.h),
-
-                  // زر الرد
-                  if (onReplyTap != null)
-                    InkWell(
-                      onTap: onReplyTap,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          // vertical: 4.h,
-                          horizontal: 2.w,
-                        ),
-                        child: Text(
-                          AppLocalizations.of(context)!.replyAction,
-                          style: Theme.of(context).textTheme.labelSmall!
-                              .copyWith(fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
-          ),
-
-          SizedBox(width: 12.w),
-
-          // 3. قسم اللايكات
-          Column(
-            children: [
-              InkWell(
-                onTap: onLikeTap,
-                child: Padding(
-                  padding: EdgeInsets.all(4.w),
-                  child: SvgPicture.asset(
-                    commentData['isLiked']
-                        ? "assets/icons/like.svg"
-                        : "assets/icons/unlike.svg",
-                    height: 18.h,
-                    colorFilter: ColorFilter.mode(
-                      commentData['isLiked']
-                          ? Colors.red
-                          : Theme.of(context).colorScheme.onTertiary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
-                ),
-              ),
-              Text(
-                "${commentData['likesCount']}",
-                style: Theme.of(
-                  context,
-                ).textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w500),
-              ),
-            ],
           ),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_info_card.dart';
 
 class PetProfileCard extends StatelessWidget {
@@ -92,7 +92,9 @@ class PetProfileCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppDimensions.radiusL),
             ),
             child: Row(
-              children: [Expanded(child: PetInfoCard(pet: pet))],
+              children: [
+                Expanded(child: PetInfoCard(pet: pet, isInline: true)),
+              ],
             ),
           ),
         ),

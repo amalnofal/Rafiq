@@ -1,12 +1,9 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:rafiq/core/enums/post_category.dart';
+import 'package:rafiq/features/community/data/models/post_model.dart';
 
-enum UserType {
-  petOwner,
-  vet,
-  // admin
-}
+enum UserType { petOwner, vet, admin }
 
 class UserModel {
   final String id;
@@ -27,6 +24,7 @@ class UserModel {
   final String? frontNationalIdUrl;
   final String? backNationalIdUrl;
   final bool isVerified;
+  final bool isFollowing;
 
   // عام
   final String? photoUrl;
@@ -40,7 +38,8 @@ class UserModel {
 
   final Map<String, dynamic>? petOwnerDetails;
   final Map<String, dynamic>? doctorDetails;
-  final List<dynamic>? posts;
+
+  final List<PostModel>? posts;
 
   UserModel({
     this.id = '',
@@ -57,6 +56,7 @@ class UserModel {
     this.frontNationalIdUrl,
     this.backNationalIdUrl,
     this.isVerified = false,
+    this.isFollowing = false,
     this.photoUrl,
     this.coverUrl,
     this.joinedAt,
@@ -104,19 +104,31 @@ class UserModel {
         data['IsUpbringingAndParenting'] == true)
       loadedInterests.add(PostCategory.activities);
 
-    String fName = '';
-    String lName = '';
-    final fullName = data['fullName']?.toString() ?? '';
-    if (fullName.isNotEmpty) {
-      final nameParts = fullName.split(' ');
-      fName = nameParts.first;
-      if (nameParts.length > 1) {
-        lName = nameParts.sublist(1).join(' ');
-      }
-    } else {
-      fName = data['firstName'] ?? data['FirstName'] ?? '';
-      lName = data['lastName'] ?? data['LastName'] ?? '';
+    // 🚨 1. استخراج الـ ID الذكي (عشان السيرش والبروفايل)
+    final String parsedId =
+        data['id']?.toString() ??
+        data['userId']?.toString() ??
+        data['UserId']?.toString() ??
+        '';
+
+    // 🚨 2. استخراج الاسم بذكاء (عشان السيرش بيبعت fullName)
+    String fName = data['firstName'] ?? data['FirstName'] ?? '';
+    String lName = data['lastName'] ?? data['LastName'] ?? '';
+
+    if (fName.isEmpty && lName.isEmpty && data['fullName'] != null) {
+      final parts = data['fullName'].toString().trim().split(' ');
+      fName = parts.isNotEmpty ? parts.first : '';
+      lName = parts.length > 1 ? parts.sublist(1).join(' ') : '';
     }
+
+    // 🚨 3. استخراج الصورة بذكاء بأي مسمى
+    final String parsedPhoto =
+        data['photoUrl']?.toString() ??
+        data['profilePhotoUrl']?.toString() ??
+        data['ProfilePhotoUrl']?.toString() ??
+        data['profilePicture']?.toString() ??
+        data['ProfilePicture']?.toString() ??
+        '';
 
     // Gender
     int? genderVal;
@@ -137,26 +149,27 @@ class UserModel {
 
     if (roleString == 'doctor' || roleString == 'vet') {
       type = UserType.vet;
+    } else if (roleString == 'admin') {
+      type = UserType.admin;
     }
 
     final docDetails = data['doctorDetails'] ?? {};
 
-    return UserModel(
-      id: data['id']?.toString() ?? '',
+    //  4. بناء الموديل مع تمرير المتغيرات المستخرجة الجديدة بذكاء
+    final parsedUser = UserModel(
+      id: parsedId,
       firstName: fName,
       lastName: lName,
+      photoUrl: parsedPhoto,
       email: data['email'] ?? data['Email'] ?? '',
       phone: data['phoneNumber'] ?? data['PhoneNumber'],
-
       role: type,
       gender: genderVal,
-
       birthDate: (data['dateOfBirth'] ?? data['DateOfBirth']) != null
           ? DateTime.tryParse(
               (data['dateOfBirth'] ?? data['DateOfBirth']).toString(),
             )
           : null,
-
       joinedAt:
           (data['joinedDate'] ?? data['joinedAt'] ?? data['JoinedAt']) != null
           ? DateTime.tryParse(
@@ -164,7 +177,6 @@ class UserModel {
                   .toString(),
             )
           : null,
-
       specialization:
           docDetails['specialization'] ??
           data['specialization'] ??
@@ -185,16 +197,10 @@ class UserModel {
           docDetails['backNationalId'] ??
           data['backNationalIdUrl'] ??
           data['BackNationalID'],
-
       isVerified: data['isVerified'] ?? data['IsVerified'] ?? false,
-
-      photoUrl:
-          data['profilePhotoUrl'] ??
-          data['profilePicture'] ??
-          data['ProfilePicture'],
+      isFollowing: data['isFollowing'] ?? data['IsFollowing'] ?? false,
       coverUrl:
           data['coverPhotoUrl'] ?? data['coverPicture'] ?? data['CoverPicture'],
-
       postsCount:
           data['numberOfPosts'] ??
           data['postsCount'] ??
@@ -210,14 +216,22 @@ class UserModel {
           data['followingCount'] ??
           data['FollowingCount'] ??
           0,
-
       interests: loadedInterests,
-
       petOwnerDetails: data['petOwnerDetails'],
       doctorDetails: data['doctorDetails'],
-
-      posts: data['posts'] as List<dynamic>?,
+      posts: const [],
     );
+
+    // بنقرأ البوستات ونديها بيانات اليوزر ده
+    final parsedPosts = data['posts'] != null
+        ? (data['posts'] as List).map((p) {
+            final post = PostModel.fromMap(p);
+            return post.copyWith(user: parsedUser);
+          }).toList()
+        : <PostModel>[];
+
+    // نرجع اليوزر كامل ببوستاته
+    return parsedUser.copyWith(posts: parsedPosts);
   }
 
   // ==========================================================
@@ -230,7 +244,9 @@ class UserModel {
       'LastName': lastName,
       'Email': email,
       'PhoneNumber': phone,
-      'Role': role == UserType.vet ? 'Doctor' : 'PetOwner',
+      'Role': role == UserType.admin
+          ? 'Admin'
+          : (role == UserType.vet ? 'Doctor' : 'PetOwner'),
       'Gender': gender,
       'DateOfBirth': birthDate?.toIso8601String(),
       'JoinedAt': joinedAt?.toIso8601String(),
@@ -255,7 +271,7 @@ class UserModel {
 
       'petOwnerDetails': petOwnerDetails,
       'doctorDetails': doctorDetails,
-      'posts': posts,
+      'posts': posts?.map((p) => p.toMap()).toList(),
     };
   }
 
@@ -277,6 +293,7 @@ class UserModel {
     String? frontNationalIdUrl,
     String? backNationalIdUrl,
     bool? isVerified,
+    bool? isFollowing,
     String? photoUrl,
     String? coverUrl,
     DateTime? joinedAt,
@@ -286,7 +303,7 @@ class UserModel {
     List<PostCategory>? interests,
     Map<String, dynamic>? petOwnerDetails,
     Map<String, dynamic>? doctorDetails,
-    List<dynamic>? posts,
+    List<PostModel>? posts,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -303,6 +320,7 @@ class UserModel {
       frontNationalIdUrl: frontNationalIdUrl ?? this.frontNationalIdUrl,
       backNationalIdUrl: backNationalIdUrl ?? this.backNationalIdUrl,
       isVerified: isVerified ?? this.isVerified,
+      isFollowing: isFollowing ?? this.isFollowing,
       photoUrl: photoUrl ?? this.photoUrl,
       coverUrl: coverUrl ?? this.coverUrl,
       joinedAt: joinedAt ?? this.joinedAt,

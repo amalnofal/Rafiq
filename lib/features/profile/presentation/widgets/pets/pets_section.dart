@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/pet_provider.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
+import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/features/profile/presentation/pages/add_pet_screen.dart';
 import 'package:rafiq/features/profile/presentation/widgets/empty_state_card.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_card.dart';
@@ -10,7 +12,9 @@ import 'package:rafiq/l10n/app_localizations.dart';
 
 class PetsSection extends StatefulWidget {
   final bool isMe;
-  const PetsSection({super.key, required this.isMe});
+  final UserModel? user;
+
+  const PetsSection({super.key, required this.isMe, this.user});
 
   @override
   State<PetsSection> createState() => _PetsSectionState();
@@ -22,7 +26,18 @@ class _PetsSectionState extends State<PetsSection> {
   @override
   Widget build(BuildContext context) {
     final petProvider = context.watch<PetProvider>();
-    final petsList = petProvider.pets;
+
+    List<dynamic> petsList = [];
+    if (widget.isMe) {
+      petsList = petProvider.pets;
+    } else {
+      if (widget.user != null &&
+          widget.user!.petOwnerDetails != null &&
+          widget.user!.petOwnerDetails!['pets'] != null) {
+        final List rawPets = widget.user!.petOwnerDetails!['pets'];
+        petsList = rawPets.map((p) => PetModel.fromJson(p)).toList();
+      }
+    }
 
     String title = widget.isMe
         ? AppLocalizations.of(context)!.myPetsTitle
@@ -45,7 +60,6 @@ class _PetsSectionState extends State<PetsSection> {
                 iconSize: 18.r,
                 bgColor: Theme.of(context).colorScheme.primary,
                 color: Colors.white,
-
                 onTap: () async {
                   final result = await Navigator.push(
                     context,
@@ -53,13 +67,9 @@ class _PetsSectionState extends State<PetsSection> {
                       builder: (context) => const AddPetScreen(),
                     ),
                   );
-
                   if (result == true && context.mounted) {
                     await context.read<PetProvider>().fetchMyPets(context);
-
-                    setState(() {
-                      _visibleCount++;
-                    });
+                    setState(() => _visibleCount++);
                   }
                 },
               ),
@@ -83,15 +93,17 @@ class _PetsSectionState extends State<PetsSection> {
                         key: ValueKey(pet.id),
                         pet: pet,
                         isMe: widget.isMe,
-                        onEdit: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  AddPetScreen(petToEdit: pet),
-                            ),
-                          );
-                        },
+                        onEdit: widget.isMe
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        AddPetScreen(petToEdit: pet),
+                                  ),
+                                );
+                              }
+                            : null,
                       ),
                     ),
                 if (petsList.length > 2)

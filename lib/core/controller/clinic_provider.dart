@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
+import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/services/clinic_service.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 
@@ -11,8 +13,8 @@ class ClinicProvider extends ChangeNotifier {
   final ClinicService _clinicService;
   final List<ClinicModel> _clinics = [];
 
-  final Map<String, File> _localClinicImages = {};
-  File? getLocalClinicImage(String clinicId) => _localClinicImages[clinicId];
+  final Map<int, File> _localClinicImages = {};
+  File? getLocalClinicImage(int clinicId) => _localClinicImages[clinicId];
 
   ClinicProvider(this._clinicService);
 
@@ -20,6 +22,9 @@ class ClinicProvider extends ChangeNotifier {
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  bool _hasConnectionError = false;
+  bool get hasConnectionError => _hasConnectionError;
 
   ClinicModel? _currentClinicDetails;
   ClinicModel? get currentClinicDetails => _currentClinicDetails;
@@ -99,17 +104,27 @@ class ClinicProvider extends ChangeNotifier {
   ) async {
     try {
       final newClinic = ClinicModel(
-        id: '',
-        name: clinicData['name'],
-        specialization: clinicData['specialization'],
+        id: 0,
+        name: clinicData['name'] ?? '',
+        specialization: clinicData['specialization'] ?? '',
         description: clinicData['description'],
-        address: clinicData['address'],
-        phone: clinicData['phone'],
-        workingHours: clinicData['workingHours'],
-        doctorName: null,
-        doctorProfilePhotoUrl: null,
-        doctorSpecialization: null,
-        doctorSubSpecialization: null,
+        address: clinicData['address'] ?? '',
+        phone: clinicData['phone'] ?? '',
+        openingTime: clinicData['OpeningTime'] ?? '00:00',
+        closingTime: clinicData['ClosingTime'] ?? '00:00',
+        workingDays: {
+          'Saturday': clinicData['Saturday'] ?? false,
+          'Sunday': clinicData['Sunday'] ?? false,
+          'Monday': clinicData['Monday'] ?? false,
+          'Tuesday': clinicData['Tuesday'] ?? false,
+          'Wednesday': clinicData['Wednesday'] ?? false,
+          'Thursday': clinicData['Thursday'] ?? false,
+          'Friday': clinicData['Friday'] ?? false,
+        },
+        doctorName: _currentClinicDetails?.doctorName,
+        doctorProfilePhotoUrl: _currentClinicDetails?.doctorProfilePhotoUrl,
+        doctorSpecialization: _currentClinicDetails?.doctorSpecialization,
+        doctorSubSpecialization: _currentClinicDetails?.doctorSubSpecialization,
       );
 
       await _clinicService.addClinic(newClinic.toJson());
@@ -127,9 +142,11 @@ class ClinicProvider extends ChangeNotifier {
   // ==========================================
   // جلب عيادة للتعديل
   // ==========================================
-  Future<ClinicModel> fetchClinicForEdit(String clinicId) async {
+  Future<ClinicModel> fetchClinicForEdit(int clinicId) async {
     try {
-      final response = await _clinicService.getClinicForEdit(clinicId);
+      final response = await _clinicService.getClinicForEdit(
+        clinicId.toString(),
+      );
       final data = response.data['data'] ?? response.data;
       return ClinicModel.fromJson(data);
     } catch (e) {
@@ -143,25 +160,35 @@ class ClinicProvider extends ChangeNotifier {
   // ==========================================
   Future<void> updateClinicInServer(
     BuildContext context,
-    String id,
+    int id,
     Map<String, dynamic> clinicData,
   ) async {
     try {
       final updatedModel = ClinicModel(
         id: id,
-        name: clinicData['name'],
-        specialization: clinicData['specialization'],
+        name: clinicData['name'] ?? '',
+        specialization: clinicData['specialization'] ?? '',
         description: clinicData['description'],
-        address: clinicData['address'],
-        phone: clinicData['phone'],
-        workingHours: clinicData['workingHours'],
-        doctorName: null,
-        doctorProfilePhotoUrl: null,
-        doctorSpecialization: null,
-        doctorSubSpecialization: null,
+        address: clinicData['address'] ?? '',
+        phone: clinicData['phone'] ?? '',
+        openingTime: clinicData['OpeningTime'] ?? '00:00',
+        closingTime: clinicData['ClosingTime'] ?? '00:00',
+        workingDays: {
+          'Saturday': clinicData['Saturday'] ?? false,
+          'Sunday': clinicData['Sunday'] ?? false,
+          'Monday': clinicData['Monday'] ?? false,
+          'Tuesday': clinicData['Tuesday'] ?? false,
+          'Wednesday': clinicData['Wednesday'] ?? false,
+          'Thursday': clinicData['Thursday'] ?? false,
+          'Friday': clinicData['Friday'] ?? false,
+        },
+        doctorName: _currentClinicDetails?.doctorName,
+        doctorProfilePhotoUrl: _currentClinicDetails?.doctorProfilePhotoUrl,
+        doctorSpecialization: _currentClinicDetails?.doctorSpecialization,
+        doctorSubSpecialization: _currentClinicDetails?.doctorSubSpecialization,
       );
 
-      await _clinicService.updateClinic(id, updatedModel.toJson());
+      await _clinicService.updateClinic(id.toString(), updatedModel.toJson());
 
       if (context.mounted) {
         await fetchMyClinics(context);
@@ -176,9 +203,9 @@ class ClinicProvider extends ChangeNotifier {
   // ==========================================
   // 5. حذف عيادة
   // ==========================================
-  Future<void> deleteClinicFromServer(BuildContext context, String id) async {
+  Future<void> deleteClinicFromServer(BuildContext context, int id) async {
     try {
-      await _clinicService.deleteClinic(id);
+      await _clinicService.deleteClinic(id.toString());
 
       _clinics.removeWhere((c) => c.id == id);
       _localClinicImages.remove(id);
@@ -196,14 +223,14 @@ class ClinicProvider extends ChangeNotifier {
   // ==========================================
   Future<void> uploadClinicPhoto(
     BuildContext context,
-    String clinicId,
+    int clinicId,
     File file,
   ) async {
     try {
       _localClinicImages[clinicId] = file;
       notifyListeners();
 
-      await _clinicService.uploadClinicPhoto(clinicId, file);
+      await _clinicService.uploadClinicPhoto(clinicId.toString(), file);
 
       if (context.mounted) {
         await fetchMyClinics(context);
@@ -221,7 +248,7 @@ class ClinicProvider extends ChangeNotifier {
   // 7. جلب تفاصيل العيادة لعرض البروفايل الخاص بها
   // ==========================================
   Future<void> fetchClinicDetails(int clinicId) async {
-    if (_currentClinicDetails?.id != clinicId.toString()) {
+    if (_currentClinicDetails?.id != clinicId) {
       _currentClinicDetails = null;
       _isLoading = true;
       notifyListeners();
@@ -239,20 +266,43 @@ class ClinicProvider extends ChangeNotifier {
     }
   }
 
+  Future<void> _saveClinicsToCache(List<ClinicModel> clinics) async {
+    final encoded = jsonEncode(clinics.map((c) => c.toJson()).toList());
+    await CacheHelper.saveData(key: 'cached_clinics', value: encoded);
+  }
+
+  Future<void> _loadClinicsFromCache() async {
+    final cachedData = CacheHelper.getData(key: 'cached_clinics');
+    if (cachedData != null) {
+      try {
+        final List decoded = jsonDecode(cachedData);
+        _allClinics = decoded.map((e) => ClinicModel.fromJson(e)).toList();
+        notifyListeners();
+      } catch (e) {
+        log("❌ خطأ في تحميل كاش العيادات: $e");
+      }
+    }
+  }
+
   // ==========================================
   // 8. جلب كل العيادات للتصفح
   // ==========================================
   Future<void> fetchAllClinics() async {
-    _isLoading = true;
+    _hasConnectionError = false;
+    await _loadClinicsFromCache();
+
+    if (_allClinics.isEmpty) _isLoading = true;
     notifyListeners();
 
     try {
       final response = await _clinicService.getAllClinics(skip: 0, take: 50);
-
       final List data = response.data['data'] ?? response.data ?? [];
       _allClinics = data.map((json) => ClinicModel.fromJson(json)).toList();
+
+      await _saveClinicsToCache(_allClinics);
     } catch (e) {
-      log("[ClinicProvider]: $e");
+      log("[ClinicProvider]: فشل جلب العيادات من السيرفر: $e");
+      _hasConnectionError = true;
     } finally {
       _isLoading = false;
       notifyListeners();
@@ -317,7 +367,7 @@ class ClinicProvider extends ChangeNotifier {
   // ==========================================
   // 10. البحث عن العيادات
   // ==========================================
- // متغيرات البحث الجديدة
+  // متغيرات البحث الجديدة
   List<ClinicModel> _searchResults = [];
   List<ClinicModel> get searchResults => _searchResults;
 
@@ -336,9 +386,13 @@ class ClinicProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _clinicService.searchClinics(keyword, skip: 1, take: 50);
+      final response = await _clinicService.searchClinics(
+        keyword,
+        skip: 1,
+        take: 50,
+      );
       final List data = response.data['data'] ?? response.data ?? [];
-      
+
       _searchResults = data.map((json) => ClinicModel.fromJson(json)).toList();
     } catch (e) {
       log("[ClinicProvider]: فشل البحث: $e");

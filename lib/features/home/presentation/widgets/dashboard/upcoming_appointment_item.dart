@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
 class UpcomingAppointmentItem extends StatelessWidget {
   final String title;
@@ -16,12 +16,11 @@ class UpcomingAppointmentItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final Color subCardColor = isDarkMode
         ? const Color(0xFF2B7FFF).withValues(alpha: 0.1)
         : const Color(0XFFEFF6FF);
-    final displayTitle = title.isEmpty ? l10n.noUpcomingAppointments : title;
+    final displayTitle = title.isEmpty ? context.l10n.noUpcomingAppointments : title;
 
     return Card(
       color: subCardColor,

@@ -12,6 +12,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rafiq => 'Rafiq';
 
   @override
+  String get onboarding_title_1 => 'Welcome to Rafiq !';
+
+  @override
+  String get onboarding_desc_1 => 'Your complete platform connecting pet owners and expert vets for ideal, comprehensive care.';
+
+  @override
+  String get onboarding_title_2 => 'Smart Collar !';
+
+  @override
+  String get onboarding_desc_2 => 'Track location, monitor health metrics, and understand their condition, powered by AI.';
+
+  @override
+  String get onboarding_title_3 => 'Vet Clinics !';
+
+  @override
+  String get onboarding_desc_3 => 'Browse available clinics, choose the right vet for your pet, and book smoothly.';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get getStarted => 'Get Started';
+
+  @override
   String get pet_care_assistant => 'Smart assistant for taking care of your pet';
 
   @override
@@ -93,7 +117,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get email => 'Email Address';
 
   @override
-  String get phone_number => 'Phone number';
+  String get phone_number => 'Phone Number';
 
   @override
   String get optional => '(optional)';
@@ -126,6 +150,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseAccountTypeSubtitle => 'Select how you want to use the app';
 
   @override
+  String get adminTitle => 'Admin';
+
+  @override
   String get petOwnerTitle => 'Pet Owner';
 
   @override
@@ -144,7 +171,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get petTypeHint => 'Type (e.g. Dog, Cat)';
 
   @override
-  String get vetTitle => 'Veteterinarian';
+  String get vetTitle => 'Veterinarian';
 
   @override
   String get vetSubtitle => 'Offer your services as a licensed veterinarian';
@@ -439,7 +466,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get followBtn => 'Follow';
 
   @override
-  String get unfollowBtn => 'Unfollow';
+  String get unfollowBtn => 'Following';
+
+  @override
+  String noSearchResults(String query) {
+    return 'No results found for \'\'$query\'\'';
+  }
+
+  @override
+  String get commentDeletedSuccessfully => 'Comment deleted successfully';
+
+  @override
+  String get commentEditedSuccessfully => 'Comment edited successfully';
 
   @override
   String get manageAppointmentsBtn => 'Manage Appointments';
@@ -687,7 +725,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String get clinicAddressLabel => 'Address';
 
   @override
-  String get clinicWorkingHoursLabel => 'Working Hours';
+  String get clinicScheduleTitle => 'Select Clinic Schedule';
+
+  @override
+  String get selectAtLeastOneDay => 'You must select at least one day';
+
+  @override
+  String get saturday => 'Saturday';
+
+  @override
+  String get sunday => 'Sunday';
+
+  @override
+  String get monday => 'Monday';
+
+  @override
+  String get tuesday => 'Tuesday';
+
+  @override
+  String get wednesday => 'Wednesday';
+
+  @override
+  String get thursday => 'Thursday';
+
+  @override
+  String get friday => 'Friday';
+
+  @override
+  String get noAvailableSlots => 'Sorry, there are no available slots on this day';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get dailyExcept => 'Daily except';
+
+  @override
+  String get startTime => 'Start Time';
+
+  @override
+  String get endTime => 'End Time';
+
+  @override
+  String get selectTimeError => 'You must select start and end times';
+
+  @override
+  String get fromTime => 'From';
+
+  @override
+  String get toTime => 'To';
+
+  @override
+  String get open24Hours => 'Open 24 Hours';
+
+  @override
+  String get description => 'Description';
 
   @override
   String get clinicDescriptionHint => 'Write a brief description of the clinic and its services...';
@@ -763,10 +855,22 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get available => 'Available';
+
+  @override
+  String get availableSlots => 'Available Slots';
+
+  @override
+  String get booked => 'Booked';
+
+  @override
   String get clinicConfirmationNotice => 'The appointment will be confirmed by the clinic';
 
   @override
   String get confirmBooking => 'Confirm Booking';
+
+  @override
+  String get appointmentConflictError => 'You already have another appointment scheduled at this time.';
 
   @override
   String get checkBackLater => 'Check back later for updates';
@@ -816,6 +920,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postContentHint => 'What would you like to share?';
 
   @override
+  String get searchStartMessage => 'Search for a pet owner or a vet.. 🐾';
+
+  @override
   String get newPostTitle => 'New Post';
 
   @override
@@ -829,6 +936,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get postCreatedSuccess => 'Posted!';
+
+  @override
+  String postsWithCount(int count) {
+    return '$count Posts';
+  }
+
+  @override
+  String commentsWithCount(int count) {
+    return 'Comments ($count)';
+  }
 
   @override
   String get likeAction => 'Like';
@@ -859,6 +976,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteDialogMessage => 'Are you sure? This action cannot be undone.';
+
+  @override
+  String get postDeletedSuccessfully => 'Post deleted successfully';
 
   @override
   String get deleteCommentTitle => 'Delete Comment?';
@@ -951,7 +1071,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tipRespect => 'Be respectful and kind to the community';
 
   @override
+  String get addMedia => 'Add media';
+
+  @override
+  String get fileTooLarge => 'The selected file is too large! Please choose a file under 30 MB.';
+
+  @override
+  String get uploadingPost => 'Posting...';
+
+  @override
+  String get uploadPostFailed => 'Failed to post. Check your connection.';
+
+  @override
+  String get retryBtn => 'Retry';
+
+  @override
+  String get cancelUploadBtn => 'Cancel';
+
+  @override
   String get store => 'Store';
+
+  @override
+  String get addProductTitle => 'Add New Product';
+
+  @override
+  String get editProductTitle => 'Edit Product';
+
+  @override
+  String get productNameLabel => 'Product Name';
+
+  @override
+  String get productDescLabel => 'Product Description';
+
+  @override
+  String get quantityLabel => 'Quantity';
+
+  @override
+  String get priceLabel => 'Price';
+
+  @override
+  String get currencyEGP => 'EGP';
+
+  @override
+  String get searchProductHint => 'Search for a product...';
+
+  @override
+  String get productDeletedSuccessfully => 'Product deleted successfully';
+
+  @override
+  String get productDetails => 'Product details';
+
+  @override
+  String inStock(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'In stock ($count pieces)',
+      one: 'Only 1 piece left',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get outOfStock => 'Out of stock';
+
+  @override
+  String get addToCart => 'Add to cart';
 
   @override
   String get settings => 'Settings';
@@ -1088,13 +1273,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get temperature => 'Temp';
 
   @override
+  String get temperatureDegree => 'Temperature';
+
+  @override
   String get activity => 'Activity';
 
   @override
   String get pulse => 'Pulse';
 
   @override
+  String get heartRate => 'Heart Rate';
+
+  @override
+  String get normal => 'Normal';
+
+  @override
+  String get currentLocation => 'Current Location';
+
+  @override
   String get viewDetailedStatistics => 'View Detailed Statistics';
+
+  @override
+  String get hideStatistics => 'Hide Statistics';
 
   @override
   String get details => 'Details';
@@ -1130,8 +1330,67 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noSmartCollarTitle => 'This pet has no smart collar';
 
   @override
+  String connectedCollarsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count connected collars',
+      one: '1 connected collar',
+      zero: 'No connected collars',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get connected => 'Connected';
+
+  @override
+  String get disconnected => 'Disconnected';
+
+  @override
+  String get lastSync => 'Last sync';
+
+  @override
+  String get deviceStatus => 'Device Status';
+
+  @override
+  String get battery => 'Battery';
+
+  @override
+  String get conversationsTitle => 'Conversations';
+
+  @override
+  String get noConversationsYet => 'No conversations yet';
+
+  @override
+  String get writeMessageHint => 'Write a message...';
+
+  @override
+  String get online => 'Online';
+
+  @override
+  String get offline => 'Offline';
+
+  @override
+  String get isTyping => 'typing...';
+
+  @override
+  String startConversationWith(String userName) {
+    return 'Start a conversation with $userName...';
+  }
+
+  @override
   String get orderSmartCollarDescription => 'Order a smart collar to track your pet\'s health.';
 
   @override
+  String get wrongPassword => 'Wrong password, please check and try again';
+
+  @override
   String get orderNow => 'Order Now';
+
+  @override
+  String get sessionExpiredTitle => 'Session Expired';
+
+  @override
+  String get sessionExpiredMessage => 'Your login session has expired. Please log in again to continue.';
 }

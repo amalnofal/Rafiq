@@ -14,9 +14,18 @@ class ArabicToEnglishNumbersFormatter extends TextInputFormatter {
       newText = newText.replaceAll(arabicNumbers[i], englishNumbers[i]);
     }
 
-    return newValue.copyWith(
-      text: newText,
-      selection: newValue.selection,
-    );
+    return newValue.copyWith(text: newText, selection: newValue.selection);
+  }
+
+  static TextDirection getTextDirection(String text) {
+    final trimmedText = text.trim();
+
+    if (trimmedText.isEmpty) return TextDirection.ltr;
+    // فحص لو أول حرف ينتمي للحروف العربية
+    final int firstCharCode = text.trim().codeUnitAt(0);
+    if (firstCharCode >= 0x0600 && firstCharCode <= 0x06FF) {
+      return TextDirection.rtl; // لغة عربية -> من اليمين لليسار
+    }
+    return TextDirection.ltr; // لغة إنجليزية أو رموز -> من اليسار لليمين
   }
 }

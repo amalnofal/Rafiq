@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
-import 'package:rafiq/features/profile/presentation/pages/profile_screen.dart'; // 1. تأكدي من الـ Import ده
-import 'package:rafiq/l10n/app_localizations.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
+import 'package:rafiq/features/profile/presentation/pages/profile_screen.dart';
 
 class UserGreeting extends StatelessWidget {
   const UserGreeting({super.key});
@@ -15,11 +15,6 @@ class UserGreeting extends StatelessWidget {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
         final user = userProvider.user;
-
-        // تجهيز الاسم والصورة
-        final String displayName = user != null
-            ? "${user.firstName} ${user.lastName}"
-            : "Rafiq User";
 
         return GestureDetector(
           onTap: () {
@@ -35,19 +30,31 @@ class UserGreeting extends StatelessWidget {
           child: Row(
             children: [
               // ايقون البروفايل
-              CircleAvatar(
-                radius: 20.r,
-                backgroundImage: userProvider.localProfileImage != null
-                    ? FileImage(userProvider.localProfileImage!)
-                    : (user?.photoUrl != null && user!.photoUrl!.isNotEmpty)
-                    ? CachedNetworkImageProvider(
-                        user.photoUrl!,
-                        cacheKey: user.photoUrl!.contains('?')
-                            ? user.photoUrl!.split('?').first
-                            : user.photoUrl!,
-                      )
-                    : const AssetImage("assets/images/user_placeholder.jpg")
-                          as ImageProvider,
+              Container(
+                padding: EdgeInsets.all(2.r),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.1),
+                    width: 2.w,
+                  ),
+                ),
+                child: CircleAvatar(
+                  radius: 22.r,
+                  backgroundImage: userProvider.localProfileImage != null
+                      ? FileImage(userProvider.localProfileImage!)
+                      : (user?.photoUrl != null && user!.photoUrl!.isNotEmpty)
+                      ? CachedNetworkImageProvider(
+                          user.photoUrl!,
+                          cacheKey: user.photoUrl!.contains('?')
+                              ? user.photoUrl!.split('?').first
+                              : user.photoUrl!,
+                        )
+                      : const AssetImage("assets/images/user_placeholder.jpg")
+                            as ImageProvider,
+                ),
               ),
               SizedBox(width: AppDimensions.paddingM),
 
@@ -56,12 +63,16 @@ class UserGreeting extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${AppLocalizations.of(context)!.welcome}،',
-                    style: Theme.of(context).textTheme.labelMedium,
+                    context.l10n.welcome,
+                    style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                   Text(
-                    displayName,
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    user?.firstName ?? "Unknown",
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),

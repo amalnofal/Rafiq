@@ -101,6 +101,54 @@ abstract class AppLocalizations {
   /// **'Rafiq'**
   String get rafiq;
 
+  /// No description provided for @onboarding_title_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Rafiq !'**
+  String get onboarding_title_1;
+
+  /// No description provided for @onboarding_desc_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Your complete platform connecting pet owners and expert vets for ideal, comprehensive care.'**
+  String get onboarding_desc_1;
+
+  /// No description provided for @onboarding_title_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Smart Collar !'**
+  String get onboarding_title_2;
+
+  /// No description provided for @onboarding_desc_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Track location, monitor health metrics, and understand their condition, powered by AI.'**
+  String get onboarding_desc_2;
+
+  /// No description provided for @onboarding_title_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Vet Clinics !'**
+  String get onboarding_title_3;
+
+  /// No description provided for @onboarding_desc_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse available clinics, choose the right vet for your pet, and book smoothly.'**
+  String get onboarding_desc_3;
+
+  /// No description provided for @skip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skip;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
+
   /// Smart assistant for taking care of your pet
   ///
   /// In en, this message translates to:
@@ -266,7 +314,7 @@ abstract class AppLocalizations {
   /// Full phone number label
   ///
   /// In en, this message translates to:
-  /// **'Phone number'**
+  /// **'Phone Number'**
   String get phone_number;
 
   /// No description provided for @optional.
@@ -329,6 +377,12 @@ abstract class AppLocalizations {
   /// **'Select how you want to use the app'**
   String get chooseAccountTypeSubtitle;
 
+  /// No description provided for @adminTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin'**
+  String get adminTitle;
+
   /// No description provided for @petOwnerTitle.
   ///
   /// In en, this message translates to:
@@ -368,7 +422,7 @@ abstract class AppLocalizations {
   /// No description provided for @vetTitle.
   ///
   /// In en, this message translates to:
-  /// **'Veteterinarian'**
+  /// **'Veterinarian'**
   String get vetTitle;
 
   /// No description provided for @vetSubtitle.
@@ -950,8 +1004,26 @@ abstract class AppLocalizations {
   /// No description provided for @unfollowBtn.
   ///
   /// In en, this message translates to:
-  /// **'Unfollow'**
+  /// **'Following'**
   String get unfollowBtn;
+
+  /// No description provided for @noSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found for \'\'{query}\'\''**
+  String noSearchResults(String query);
+
+  /// No description provided for @commentDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment deleted successfully'**
+  String get commentDeletedSuccessfully;
+
+  /// No description provided for @commentEditedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment edited successfully'**
+  String get commentEditedSuccessfully;
 
   /// No description provided for @manageAppointmentsBtn.
   ///
@@ -1403,11 +1475,119 @@ abstract class AppLocalizations {
   /// **'Address'**
   String get clinicAddressLabel;
 
-  /// No description provided for @clinicWorkingHoursLabel.
+  /// No description provided for @clinicScheduleTitle.
   ///
   /// In en, this message translates to:
-  /// **'Working Hours'**
-  String get clinicWorkingHoursLabel;
+  /// **'Select Clinic Schedule'**
+  String get clinicScheduleTitle;
+
+  /// No description provided for @selectAtLeastOneDay.
+  ///
+  /// In en, this message translates to:
+  /// **'You must select at least one day'**
+  String get selectAtLeastOneDay;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Saturday'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday'**
+  String get sunday;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Monday'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wednesday'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thursday'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Friday'**
+  String get friday;
+
+  /// No description provided for @noAvailableSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Sorry, there are no available slots on this day'**
+  String get noAvailableSlots;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @dailyExcept.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily except'**
+  String get dailyExcept;
+
+  /// No description provided for @startTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Start Time'**
+  String get startTime;
+
+  /// No description provided for @endTime.
+  ///
+  /// In en, this message translates to:
+  /// **'End Time'**
+  String get endTime;
+
+  /// No description provided for @selectTimeError.
+  ///
+  /// In en, this message translates to:
+  /// **'You must select start and end times'**
+  String get selectTimeError;
+
+  /// No description provided for @fromTime.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get fromTime;
+
+  /// No description provided for @toTime.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get toTime;
+
+  /// No description provided for @open24Hours.
+  ///
+  /// In en, this message translates to:
+  /// **'Open 24 Hours'**
+  String get open24Hours;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
 
   /// No description provided for @clinicDescriptionHint.
   ///
@@ -1535,6 +1715,24 @@ abstract class AppLocalizations {
   /// **'{count, plural, =1{1 Review} other{{count} Reviews}}'**
   String reviewsCount(int count);
 
+  /// No description provided for @available.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get available;
+
+  /// No description provided for @availableSlots.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Slots'**
+  String get availableSlots;
+
+  /// No description provided for @booked.
+  ///
+  /// In en, this message translates to:
+  /// **'Booked'**
+  String get booked;
+
   /// No description provided for @clinicConfirmationNotice.
   ///
   /// In en, this message translates to:
@@ -1546,6 +1744,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm Booking'**
   String get confirmBooking;
+
+  /// No description provided for @appointmentConflictError.
+  ///
+  /// In en, this message translates to:
+  /// **'You already have another appointment scheduled at this time.'**
+  String get appointmentConflictError;
 
   /// Message shown when there are no posts in the community feed
   ///
@@ -1637,6 +1841,12 @@ abstract class AppLocalizations {
   /// **'What would you like to share?'**
   String get postContentHint;
 
+  /// Message shown in the center of the search screen before the user starts searching
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a pet owner or a vet.. 🐾'**
+  String get searchStartMessage;
+
   /// No description provided for @newPostTitle.
   ///
   /// In en, this message translates to:
@@ -1666,6 +1876,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Posted!'**
   String get postCreatedSuccess;
+
+  /// No description provided for @postsWithCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} Posts'**
+  String postsWithCount(int count);
+
+  /// No description provided for @commentsWithCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments ({count})'**
+  String commentsWithCount(int count);
 
   /// Label for the like button on a post
   ///
@@ -1726,6 +1948,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure? This action cannot be undone.'**
   String get deleteDialogMessage;
+
+  /// No description provided for @postDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Post deleted successfully'**
+  String get postDeletedSuccessfully;
 
   /// Title of the delete comment confirmation dialog
   ///
@@ -1907,11 +2135,125 @@ abstract class AppLocalizations {
   /// **'Be respectful and kind to the community'**
   String get tipRespect;
 
+  /// No description provided for @addMedia.
+  ///
+  /// In en, this message translates to:
+  /// **'Add media'**
+  String get addMedia;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The selected file is too large! Please choose a file under 30 MB.'**
+  String get fileTooLarge;
+
+  /// No description provided for @uploadingPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Posting...'**
+  String get uploadingPost;
+
+  /// No description provided for @uploadPostFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to post. Check your connection.'**
+  String get uploadPostFailed;
+
+  /// No description provided for @retryBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retryBtn;
+
+  /// No description provided for @cancelUploadBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancelUploadBtn;
+
   /// Bottom navigation bar item: Store
   ///
   /// In en, this message translates to:
   /// **'Store'**
   String get store;
+
+  /// No description provided for @addProductTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Product'**
+  String get addProductTitle;
+
+  /// No description provided for @editProductTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Product'**
+  String get editProductTitle;
+
+  /// No description provided for @productNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Name'**
+  String get productNameLabel;
+
+  /// No description provided for @productDescLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Description'**
+  String get productDescLabel;
+
+  /// No description provided for @quantityLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantityLabel;
+
+  /// No description provided for @priceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get priceLabel;
+
+  /// No description provided for @currencyEGP.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get currencyEGP;
+
+  /// No description provided for @searchProductHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search for a product...'**
+  String get searchProductHint;
+
+  /// No description provided for @productDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Product deleted successfully'**
+  String get productDeletedSuccessfully;
+
+  /// No description provided for @productDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Product details'**
+  String get productDetails;
+
+  /// No description provided for @inStock.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Only 1 piece left} other{In stock ({count} pieces)}}'**
+  String inStock(int count);
+
+  /// No description provided for @outOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get outOfStock;
+
+  /// No description provided for @addToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to cart'**
+  String get addToCart;
 
   /// Settings page title
   ///
@@ -2177,6 +2519,12 @@ abstract class AppLocalizations {
   /// **'Temp'**
   String get temperature;
 
+  /// No description provided for @temperatureDegree.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature'**
+  String get temperatureDegree;
+
   /// Label for physical activity metric
   ///
   /// In en, this message translates to:
@@ -2189,11 +2537,35 @@ abstract class AppLocalizations {
   /// **'Pulse'**
   String get pulse;
 
+  /// No description provided for @heartRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Heart Rate'**
+  String get heartRate;
+
+  /// No description provided for @normal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get normal;
+
+  /// No description provided for @currentLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Location'**
+  String get currentLocation;
+
   /// Button label to navigate to detailed statistics screen
   ///
   /// In en, this message translates to:
   /// **'View Detailed Statistics'**
   String get viewDetailedStatistics;
+
+  /// No description provided for @hideStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide Statistics'**
+  String get hideStatistics;
 
   /// Button label to view more details
   ///
@@ -2261,17 +2633,113 @@ abstract class AppLocalizations {
   /// **'This pet has no smart collar'**
   String get noSmartCollarTitle;
 
+  /// Number of connected collars
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No connected collars} =1{1 connected collar} other{{count} connected collars}}'**
+  String connectedCollarsCount(int count);
+
+  /// No description provided for @connected.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected'**
+  String get connected;
+
+  /// No description provided for @disconnected.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected'**
+  String get disconnected;
+
+  /// No description provided for @lastSync.
+  ///
+  /// In en, this message translates to:
+  /// **'Last sync'**
+  String get lastSync;
+
+  /// No description provided for @deviceStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Device Status'**
+  String get deviceStatus;
+
+  /// No description provided for @battery.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery'**
+  String get battery;
+
+  /// No description provided for @conversationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversations'**
+  String get conversationsTitle;
+
+  /// No description provided for @noConversationsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No conversations yet'**
+  String get noConversationsYet;
+
+  /// No description provided for @writeMessageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a message...'**
+  String get writeMessageHint;
+
+  /// No description provided for @online.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get online;
+
+  /// No description provided for @offline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline'**
+  String get offline;
+
+  /// No description provided for @isTyping.
+  ///
+  /// In en, this message translates to:
+  /// **'typing...'**
+  String get isTyping;
+
+  /// No description provided for @startConversationWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a conversation with {userName}...'**
+  String startConversationWith(String userName);
+
   /// Promotional text to order a smart collar
   ///
   /// In en, this message translates to:
   /// **'Order a smart collar to track your pet\'s health.'**
   String get orderSmartCollarDescription;
 
+  /// Error message shown when the user enters an incorrect password
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong password, please check and try again'**
+  String get wrongPassword;
+
   /// Button label to order a product
   ///
   /// In en, this message translates to:
   /// **'Order Now'**
   String get orderNow;
+
+  /// No description provided for @sessionExpiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Session Expired'**
+  String get sessionExpiredTitle;
+
+  /// No description provided for @sessionExpiredMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your login session has expired. Please log in again to continue.'**
+  String get sessionExpiredMessage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

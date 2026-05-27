@@ -52,12 +52,6 @@ class LoginCubit extends Cubit<LoginState> {
         }
         // أي كود تاني (زي 500) هيفضل unexpectedError زي ما هو
       }
-      // 3️⃣ مشاكل الإنترنت
-      else if (e.type == DioExceptionType.connectionError ||
-          e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout) {
-        errorKey = "connectionError";
-      }
 
       log("❌ Login Error Key: $errorKey");
       emit(LoginFailure(errMessage: errorKey));

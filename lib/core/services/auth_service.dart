@@ -203,4 +203,20 @@ class AuthService {
       rethrow;
     }
   }
+
+  // ==========================================
+  // حذف الحساب
+  // ==========================================
+  Future<void> deleteAccount({required String password}) async {
+    try {
+      await _dio.delete(
+        '/User/delete-account', 
+        data: {'password': password},
+      );
+      log("[AuthService]: تم حذف الحساب بنجاح.");
+    } catch (e) {
+      log("[AuthService]: فشل حذف الحساب: $e");
+      rethrow;
+    }
+  }
 }

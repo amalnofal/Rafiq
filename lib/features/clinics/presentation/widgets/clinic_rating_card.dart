@@ -64,7 +64,7 @@ class ClinicRatingCard extends StatelessWidget {
                               "assets/icons/star.svg",
                               width: 14.r,
                               height: 14.r,
-                              colorFilter: ColorFilter.mode(
+                              colorFilter: const ColorFilter.mode(
                                 Color(0xFFFDC700),
                                 BlendMode.srcIn,
                               ),
@@ -76,7 +76,7 @@ class ClinicRatingCard extends StatelessWidget {
                                 child: LinearProgressIndicator(
                                   value: percent,
                                   backgroundColor: Colors.grey[300],
-                                  color: Color(0xFFFDC700),
+                                  color: const Color(0xFFFDC700),
                                   minHeight: 8.h,
                                 ),
                               ),
@@ -154,10 +154,9 @@ class ClinicRatingCard extends StatelessWidget {
                         onSubmit: (rating, comment) async {
                           Navigator.pop(context);
 
-                          final clinicId = int.tryParse(clinic.id) ?? 0;
-                          if (clinicId != 0) {
+                          if (clinic.id != 0) {
                             await context.read<ClinicProvider>().submitReview(
-                              clinicId,
+                              clinic.id,
                               rating.toDouble(),
                               comment,
                             );

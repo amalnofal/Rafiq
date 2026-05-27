@@ -6,8 +6,8 @@ import 'package:rafiq/core/controller/pet_provider.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/dialog_helper.dart';
 import 'package:rafiq/core/helper/menu_utils.dart';
+import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/profile/data/models/pet_model.dart';
 import 'package:rafiq/features/profile/presentation/pages/add_pet_screen.dart';
 import 'package:rafiq/features/profile/presentation/pages/pet_profile_screen.dart';
 import 'package:rafiq/features/profile/presentation/widgets/pets/pet_info_card.dart';
@@ -34,19 +34,17 @@ class PetCard extends StatelessWidget {
       elevation: 0,
       margin: EdgeInsets.symmetric(vertical: 6.h),
       child: InkWell(
+        onTap: isMe
+            ? () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PetProfileScreen(pet: pet),
+                  ),
+                );
+              }
+            : null,
         borderRadius: BorderRadius.circular(16.r),
-        onTap: () async {
-          await Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PetProfileScreen(pet: pet, isMe: isMe),
-            ),
-          );
-
-          if (context.mounted && isMe) {
-            context.read<PetProvider>().fetchMyPets(context);
-          }
-        },
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: AppDimensions.padding,

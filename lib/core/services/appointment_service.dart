@@ -35,7 +35,7 @@ class AppointmentService {
 
   // 3. تعديل موعد (Update)
   Future<Response> updateAppointment(
-    String appointmentId,
+    int appointmentId,
     Map<String, dynamic> data,
   ) async {
     try {
@@ -55,7 +55,7 @@ class AppointmentService {
   }
 
   // 4. إنهاء الموعد (تحديد كمكتمل)
-  Future<Response> completeAppointment(String appointmentId) async {
+  Future<Response> completeAppointment(int appointmentId) async {
     try {
       final response = await _dio.post('/Appointment/$appointmentId/complete');
       return response;
@@ -66,7 +66,7 @@ class AppointmentService {
   }
 
   // 5. حذف موعد
-  Future<Response> deleteAppointment(String appointmentId) async {
+  Future<Response> deleteAppointment(int appointmentId) async {
     try {
       final response = await _dio.delete('/Appointment/$appointmentId');
       return response;
@@ -114,8 +114,35 @@ class AppointmentService {
     }
   }
 
-  // 6. قبول الموعد (للدكتور)
-  Future<Response> approveAppointment(String appointmentId) async {
+  // ==========================================
+  // جلب الأوقات المتاحة للحجز (لليوزر)
+  // ==========================================
+  Future<Response> getAvailableSlots(int clinicId, String date) async {
+    try {
+      return await _dio.get(
+        '/Appointment/available-slots',
+        queryParameters: {'clinicId': clinicId, 'date': date},
+      );
+    } catch (e) {
+      log("[AppointmentService]: Error fetching available slots - $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // جلب مواعيد العيادة المحجوزة (للدكتور - Calendar)
+  // ==========================================
+  Future<Response> getClinicCalendar(int clinicId) async {
+    try {
+      return await _dio.get('/Appointment/clinic/$clinicId/calendar');
+    } catch (e) {
+      log("[AppointmentService]: Error fetching clinic calendar - $e");
+      rethrow;
+    }
+  }
+
+  // قبول الموعد (للدكتور)
+  Future<Response> approveAppointment(int appointmentId) async {
     try {
       final response = await _dio.post('/Appointment/$appointmentId/approve');
       return response;
@@ -125,11 +152,15 @@ class AppointmentService {
     }
   }
 
-  // 7. رفض الموعد (للدكتور)
-  Future<Response> rejectAppointment(String appointmentId) async {
+  // رفض الموعد (للدكتور)
+  Future<Response> rejectAppointment(int appointmentId) async {
     try {
       final response = await _dio.post('/Appointment/$appointmentId/reject');
       return response;
+    } on DioException catch (e) {
+      log("🚨 [Backend Error Data]: ${e.response?.data}");
+      log("🚨 [Backend Status Code]: ${e.response?.statusCode}");
+      rethrow;
     } catch (e) {
       log("[AppointmentService]: Error rejecting appointment - $e");
       rethrow;

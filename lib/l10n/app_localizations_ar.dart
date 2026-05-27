@@ -12,6 +12,30 @@ class AppLocalizationsAr extends AppLocalizations {
   String get rafiq => 'رفيق';
 
   @override
+  String get onboarding_title_1 => 'أهلاً بك في رفيق !';
+
+  @override
+  String get onboarding_desc_1 => 'منصتك المتكاملة التي تجمع ملاك الحيوانات الأليفة ونخبة من الأطباء البيطريين لضمان رعاية مثالية.';
+
+  @override
+  String get onboarding_title_2 => 'الطوق الذكي !';
+
+  @override
+  String get onboarding_desc_2 => 'تتبع الموقع، راقب المؤشرات الصحية، وافهم حالة أليفك بتقنية مدعومة بالذكاء الاصطناعي.';
+
+  @override
+  String get onboarding_title_3 => 'عيادات بيطرية !';
+
+  @override
+  String get onboarding_desc_3 => 'تصفح العيادات المتاحة، واختر الطبيب الأنسب لحالة أليفك، واحجز موعدك بسلاسة.';
+
+  @override
+  String get skip => 'تخطي';
+
+  @override
+  String get getStarted => 'ابدأ الآن';
+
+  @override
   String get pet_care_assistant => 'مساعد الذكي للعناية بحيوانك الأليف';
 
   @override
@@ -124,6 +148,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get chooseAccountTypeSubtitle => 'حدد كيف تريد استخدام التطبيق';
+
+  @override
+  String get adminTitle => 'مسؤول';
 
   @override
   String get petOwnerTitle => 'مالك حيوان أليف';
@@ -439,7 +466,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get followBtn => 'متابعة';
 
   @override
-  String get unfollowBtn => 'إلغاء المتابعة';
+  String get unfollowBtn => 'تتابعه';
+
+  @override
+  String noSearchResults(String query) {
+    return 'لا توجد نتائج مطابقة لـ \'\'$query\'\'';
+  }
+
+  @override
+  String get commentDeletedSuccessfully => 'تم حذف التعليق بنجاح';
+
+  @override
+  String get commentEditedSuccessfully => 'تم تعديل التعليق بنجاح';
 
   @override
   String get manageAppointmentsBtn => 'إدارة مواعيدي';
@@ -693,7 +731,61 @@ class AppLocalizationsAr extends AppLocalizations {
   String get clinicAddressLabel => 'العنوان';
 
   @override
-  String get clinicWorkingHoursLabel => 'ساعات العمل';
+  String get clinicScheduleTitle => 'اختر مواعيد عمل العيادة';
+
+  @override
+  String get selectAtLeastOneDay => 'يجب اختيار يوم واحد على الأقل';
+
+  @override
+  String get saturday => 'السبت';
+
+  @override
+  String get sunday => 'الأحد';
+
+  @override
+  String get monday => 'الاثنين';
+
+  @override
+  String get tuesday => 'الثلاثاء';
+
+  @override
+  String get wednesday => 'الأربعاء';
+
+  @override
+  String get thursday => 'الخميس';
+
+  @override
+  String get friday => 'الجمعة';
+
+  @override
+  String get noAvailableSlots => 'عذراً، لا توجد أوقات متاحة في هذا اليوم';
+
+  @override
+  String get daily => 'يومياً';
+
+  @override
+  String get dailyExcept => 'يومياً ما عدا';
+
+  @override
+  String get startTime => 'وقت البدء';
+
+  @override
+  String get endTime => 'وقت الانتهاء';
+
+  @override
+  String get selectTimeError => 'يجب تحديد وقت البدء والانتهاء';
+
+  @override
+  String get fromTime => 'من';
+
+  @override
+  String get toTime => 'إلى';
+
+  @override
+  String get open24Hours => 'مفتوح 24 ساعة';
+
+  @override
+  String get description => 'الوصف';
 
   @override
   String get clinicDescriptionHint => 'اكتب وصفاً مختصراً للعيادة وخدماتها...';
@@ -770,10 +862,22 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get available => 'متاح';
+
+  @override
+  String get availableSlots => 'الأوقات المتاحة';
+
+  @override
+  String get booked => 'محجوز';
+
+  @override
   String get clinicConfirmationNotice => 'سيتم تأكيد الموعد من قبل العيادة';
 
   @override
   String get confirmBooking => 'تأكيد الحجز';
+
+  @override
+  String get appointmentConflictError => 'لديك موعد آخر مسجل بالفعل في نفس هذا الوقت.';
 
   @override
   String get checkBackLater => 'عد لاحقاً لرؤية التحديثات';
@@ -823,6 +927,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get postContentHint => 'ماذا تريد أن تشارك؟';
 
   @override
+  String get searchStartMessage => 'ابحث عن مالك حيوان أليف أو طبيب بيطري.. 🐾';
+
+  @override
   String get newPostTitle => 'منشور جديد';
 
   @override
@@ -836,6 +943,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get postCreatedSuccess => 'تم النشر!';
+
+  @override
+  String postsWithCount(int count) {
+    return '$count منشور';
+  }
+
+  @override
+  String commentsWithCount(int count) {
+    return 'التعليقات ($count)';
+  }
 
   @override
   String get likeAction => 'إعجاب';
@@ -866,6 +983,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteDialogMessage => 'هل أنت متأكد؟ لا يمكن التراجع عن هذا الإجراء بعد الحذف.';
+
+  @override
+  String get postDeletedSuccessfully => 'تم حذف المنشور بنجاح';
 
   @override
   String get deleteCommentTitle => 'حذف التعليق؟';
@@ -958,7 +1078,74 @@ class AppLocalizationsAr extends AppLocalizations {
   String get tipRespect => 'كن محترماً ولطيفاً مع الآخرين';
 
   @override
+  String get addMedia => 'إضافة وسائط';
+
+  @override
+  String get fileTooLarge => 'يبدو أن حجم الملف كبير جداً! يرجى اختيار ملف لا يتعدى 30 ميجابايت.';
+
+  @override
+  String get uploadingPost => 'جاري النشر...';
+
+  @override
+  String get uploadPostFailed => 'فشل رفع المنشور. تحقق من الاتصال.';
+
+  @override
+  String get retryBtn => 'إعادة المحاولة';
+
+  @override
+  String get cancelUploadBtn => 'إلغاء النشر';
+
+  @override
   String get store => 'المتجر';
+
+  @override
+  String get addProductTitle => 'إضافة منتج جديد';
+
+  @override
+  String get editProductTitle => 'تعديل المنتج';
+
+  @override
+  String get productNameLabel => 'اسم المنتج';
+
+  @override
+  String get productDescLabel => 'وصف المنتج';
+
+  @override
+  String get quantityLabel => 'الكمية';
+
+  @override
+  String get priceLabel => 'السعر';
+
+  @override
+  String get currencyEGP => 'ج.م';
+
+  @override
+  String get searchProductHint => 'ابحث عن منتج...';
+
+  @override
+  String get productDeletedSuccessfully => 'تم حذف المنتج بنجاح';
+
+  @override
+  String get productDetails => 'تفاصيل المنتج';
+
+  @override
+  String inStock(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'متاح في المخزن ($count قطعة)',
+      few: 'متاح $count قطع',
+      two: 'متاح قطعتان',
+      one: 'متاح قطعة واحدة فقط',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get outOfStock => 'غير متوفر حالياً';
+
+  @override
+  String get addToCart => 'إضافة للسلة';
 
   @override
   String get settings => 'الإعدادات';
@@ -1095,13 +1282,28 @@ class AppLocalizationsAr extends AppLocalizations {
   String get temperature => 'الحرارة';
 
   @override
+  String get temperatureDegree => 'درجة الحرارة';
+
+  @override
   String get activity => 'النشاط';
 
   @override
   String get pulse => 'النبض';
 
   @override
+  String get heartRate => 'معدل النبض';
+
+  @override
+  String get normal => 'طبيعي';
+
+  @override
+  String get currentLocation => 'الموقع الحالي';
+
+  @override
   String get viewDetailedStatistics => 'عرض الإحصائيات المفصلة';
+
+  @override
+  String get hideStatistics => 'إخفاء الإحصائيات';
 
   @override
   String get details => 'التفاصيل';
@@ -1137,8 +1339,70 @@ class AppLocalizationsAr extends AppLocalizations {
   String get noSmartCollarTitle => 'هذا الحيوان ليس لديه طوق ذكي';
 
   @override
+  String connectedCollarsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count طوق متصل',
+      many: '$count طوقًا متصلًا',
+      few: '$count أطواق متصلة',
+      two: 'طوقان متصلان',
+      one: 'طوق واحد متصل',
+      zero: 'لا يوجد أطواق متصلة',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get connected => 'متصل';
+
+  @override
+  String get disconnected => 'غير متصل';
+
+  @override
+  String get lastSync => 'آخر مزامنة';
+
+  @override
+  String get deviceStatus => 'حالة الجهاز';
+
+  @override
+  String get battery => 'البطارية';
+
+  @override
+  String get conversationsTitle => 'المحادثات';
+
+  @override
+  String get noConversationsYet => 'لا توجد محادثات حتى الآن';
+
+  @override
+  String get writeMessageHint => 'اكتب رسالة...';
+
+  @override
+  String get online => 'متصل الآن';
+
+  @override
+  String get offline => 'غير متصل';
+
+  @override
+  String get isTyping => 'يكتب الآن...';
+
+  @override
+  String startConversationWith(String userName) {
+    return 'ابدأ المحادثة مع $userName...';
+  }
+
+  @override
   String get orderSmartCollarDescription => 'اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!';
 
   @override
+  String get wrongPassword => 'كلمة المرور خاطئة، يرجى التأكد والمحاولة مرة أخرى';
+
+  @override
   String get orderNow => 'اطلب الآن';
+
+  @override
+  String get sessionExpiredTitle => 'انتهت الجلسة';
+
+  @override
+  String get sessionExpiredMessage => 'انتهت صلاحية تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى للمتابعة.';
 }
