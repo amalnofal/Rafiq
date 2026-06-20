@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/home/presentation/widgets/app_bar/home_app_bar.dart';
 import 'package:rafiq/features/home/presentation/widgets/empty_home/home_empty_state.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/home_dashboard.dart';
 import 'package:rafiq/core/controller/pet_provider.dart';
+import 'package:rafiq/core/controller/user_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,7 +23,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final petProvider = Provider.of<PetProvider>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     final myPets = petProvider.pets;
+
+    if (userProvider.isLoading && myPets.isEmpty) {
+      return RafiqScaffold(
+        padding: EdgeInsets.only(
+          top: AppDimensions.paddingS,
+          left: AppDimensions.paddingS,
+          right: AppDimensions.paddingS,
+        ),
+        appBar: homeAppBar(),
+        body: const LoadingOverlay(),
+        hasMainBottomNav: true,
+      );
+    }
 
     if (_selectedPetIndex >= myPets.length && myPets.isNotEmpty) {
       _selectedPetIndex = 0;
@@ -35,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         left: AppDimensions.paddingS,
         right: AppDimensions.paddingS,
       ),
-      appBar: homeAppBar(notificationsCount: 1, unreadMessagesCount: 1),
+      appBar: homeAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
           await petProvider.fetchMyPets(context);

@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:rafiq/core/controller/appointment_provider.dart';
 import 'package:rafiq/core/controller/clinic_provider.dart';
+import 'package:rafiq/core/controller/collar_provider.dart';
 import 'package:rafiq/core/controller/community_provider.dart';
 import 'package:rafiq/core/controller/pet_provider.dart';
 import 'package:rafiq/core/controller/store_provider.dart';
@@ -18,6 +19,7 @@ import 'package:rafiq/core/services/appointment_service.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/chat_service.dart';
 import 'package:rafiq/core/services/clinic_service.dart';
+import 'package:rafiq/core/services/collar_service.dart';
 import 'package:rafiq/core/services/community_service.dart';
 import 'package:rafiq/core/services/pet_service.dart';
 import 'package:rafiq/core/services/store_service.dart';
@@ -31,6 +33,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
 
 final getIt = GetIt.instance;
+DateTime? _lastErrorTime;
 
 Future<void> setupServiceLocator() async {
   // ==========================================
@@ -50,6 +53,8 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(() => ChatService(getIt<Dio>()));
   getIt.registerLazySingleton(() => StoreService(getIt<Dio>()));
   getIt.registerLazySingleton(() => StoreProvider(getIt<StoreService>()));
+  getIt.registerLazySingleton(() => CollarService(getIt<Dio>()));
+  getIt.registerLazySingleton(() => CollarProvider(getIt<CollarService>()));
 
   // ==========================================
   // 2. External Packages
@@ -65,8 +70,19 @@ Future<void> setupServiceLocator() async {
       BaseOptions(
         baseUrl: 'https://rafiq-app.runasp.net/api',
         receiveDataWhenStatusError: true,
-        connectTimeout: const Duration(seconds: 10),
-        receiveTimeout: const Duration(seconds: 10),
+        connectTimeout: const Duration(seconds: 60),
+        receiveTimeout: const Duration(seconds: 60),
+      ),
+    );
+
+    dio.interceptors.add(
+      LogInterceptor(
+        request: false,
+        requestHeader: false,
+        requestBody: false,
+        responseHeader: false,
+        responseBody: false,
+        error: true,
       ),
     );
 
@@ -110,13 +126,18 @@ Future<void> setupServiceLocator() async {
               error.type == DioExceptionType.connectionError ||
               error.type == DioExceptionType.unknown) {
             if (context != null) {
-              try {
-                showSnackBar(
-                  context,
-                  context.l10n.connectionError,
-                  isError: true,
-                );
-              } catch (_) {}
+              final now = DateTime.now();
+              if (_lastErrorTime == null ||
+                  now.difference(_lastErrorTime!).inSeconds > 3) {
+                _lastErrorTime = now;
+                try {
+                  showSnackBar(
+                    context,
+                    context.l10n.connectionError,
+                    isError: true,
+                  );
+                } catch (_) {}
+              }
             }
             return handler.next(error);
           }
@@ -211,7 +232,7 @@ Future<void> setupServiceLocator() async {
             }
           }
 
-          return handler.next(error); // لأي إيرور تاني زي 400 أو 500
+          return handler.next(error);
         },
       ),
     );

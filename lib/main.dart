@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/app_controller.dart';
 import 'package:rafiq/core/controller/appointment_provider.dart';
 import 'package:rafiq/core/controller/clinic_provider.dart';
+import 'package:rafiq/core/controller/collar_provider.dart';
 import 'package:rafiq/core/controller/community_provider.dart';
 import 'package:rafiq/core/controller/pet_provider.dart';
 import 'package:rafiq/core/controller/store_provider.dart';
@@ -48,18 +49,17 @@ void main() async {
   final appController = AppController();
   await appController.loadSettings();
 
-  final userProvider = UserProvider();
-  await userProvider.loadUserData();
-
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
 
   bool onBoardingSeen = CacheHelper.getData(key: 'onBoardingSeen') ?? false;
 
-  // تحديد مسار البداية
+  String? token = CacheHelper.getData(key: 'accessToken');
+  bool isAuth = token != null && token.isNotEmpty;
+
   String startRoute = '/onboarding';
   if (onBoardingSeen) {
-    startRoute = userProvider.isAuth ? '/home' : '/login';
+    startRoute = isAuth ? '/home' : '/login';
   }
 
   runApp(
@@ -68,11 +68,14 @@ void main() async {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => appController),
-          ChangeNotifierProvider(create: (_) => getIt<UserProvider>()),
+          ChangeNotifierProvider(
+            create: (_) => getIt<UserProvider>()..loadUserData(),
+          ),
           ChangeNotifierProvider(create: (_) => getIt<PetProvider>()),
           ChangeNotifierProvider(create: (_) => getIt<ClinicProvider>()),
           ChangeNotifierProvider(create: (_) => getIt<CommunityProvider>()),
           ChangeNotifierProvider(create: (_) => getIt<AppointmentProvider>()),
+          ChangeNotifierProvider(create: (_) => getIt<CollarProvider>()),
           ChangeNotifierProvider(
             create: (_) => StoreProvider(getIt<StoreService>()),
           ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,8 @@ import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/core/widgets/main_header.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/store/data/product_model.dart';
+import 'package:rafiq/features/store/presentation/pages/cart_screen.dart';
+import 'package:rafiq/features/store/presentation/pages/orders_screen.dart';
 import 'package:rafiq/features/store/presentation/pages/product_details_screen.dart';
 import 'package:rafiq/features/store/presentation/widgets/add_product_dialog.dart';
 import 'package:rafiq/features/store/presentation/widgets/product_card_item.dart';
@@ -28,6 +31,9 @@ class _StoreScreenState extends State<StoreScreen> {
   int _currentPage = 1;
   bool _isFetchingMore = false;
   bool _hasMoreData = true;
+
+  String _searchQuery = '';
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -51,7 +57,10 @@ class _StoreScreenState extends State<StoreScreen> {
     });
 
     final provider = context.read<StoreProvider>();
-    final data = await provider.getProducts(page: _currentPage);
+
+    final data = _searchQuery.isEmpty
+        ? await provider.getProducts(page: _currentPage)
+        : await provider.searchProducts(_searchQuery, page: _currentPage);
 
     if (mounted) {
       setState(() {
@@ -65,24 +74,23 @@ class _StoreScreenState extends State<StoreScreen> {
   }
 
   Future<void> _loadMoreProducts() async {
-    // 👈 لو بنحمل حالياً، أو لو مفيش داتا تانية، نوقف الفانكشن فوراً
     if (_isFetchingMore || !_hasMoreData) return;
 
     setState(() => _isFetchingMore = true);
     _currentPage++;
 
-    final newData = await context.read<StoreProvider>().getProducts(
-      page: _currentPage,
-    );
+    final provider = context.read<StoreProvider>();
+
+    final newData = _searchQuery.isEmpty
+        ? await provider.getProducts(page: _currentPage)
+        : await provider.searchProducts(_searchQuery, page: _currentPage);
 
     if (mounted) {
       setState(() {
         if (newData.isEmpty) {
-          // 👈 لو السيرفر رجع لستة فاضية، نقفل الحنفية
           _hasMoreData = false;
         } else {
           _products.addAll(newData);
-          // 👈 لو رجع داتا أقل من 20، معناها دي آخر صفحة
           if (newData.length < 20) {
             _hasMoreData = false;
           }
@@ -101,28 +109,21 @@ class _StoreScreenState extends State<StoreScreen> {
         confirmBtnText: context.l10n.deleteAction,
         mainColor: Colors.red,
         onConfirm: () async {
-          // 1. نقفل الديالوج بتاع التأكيد الأول
           Navigator.pop(dialogContext);
-
-          // 2. نشغل مؤشر التحميل في الشاشة
           setState(() => _isLoading = true);
 
-          // 3. نكلم البروفايدر عشان يحذف من السيرفر
           final provider = context.read<StoreProvider>();
           bool success = await provider.deleteProduct(product.id);
 
-          // 4. نتأكد إن الشاشة لسه موجودة
           if (!mounted) return;
 
           if (success) {
-            // لو نجح، نمسح المنتج من اللستة ونقفل التحميل
             setState(() {
               _products.removeWhere((p) => p.id == product.id);
               _isLoading = false;
             });
             showSnackBar(context, context.l10n.productDeletedSuccessfully);
           } else {
-            // لو فشل، نقفل التحميل ونظهر إيرور
             setState(() => _isLoading = false);
             showSnackBar(context, context.l10n.unexpectedError, isError: true);
           }
@@ -133,6 +134,7 @@ class _StoreScreenState extends State<StoreScreen> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _scrollController.dispose();
     super.dispose();
   }
@@ -145,22 +147,19 @@ class _StoreScreenState extends State<StoreScreen> {
     return RafiqScaffold(
       padding: EdgeInsets.zero,
       hasMainBottomNav: true,
-      // زر الإضافة للادمن فقط
       floatingActionButton: isAdmin
           ? FloatingActionButton(
               onPressed: () async {
-                // بنستنى النتيجة من الديالوج
                 final result = await showDialog(
                   context: context,
                   builder: (context) => const AddProductDialog(),
                 );
-                // لو الديالوج رجع true (يعني الإضافة نجحت)، نعمل ريفريش
                 if (result == true) {
                   setState(() => _isLoading = true);
                   _fetchInitialProducts();
                 }
               },
-              backgroundColor: const Color(0xFF7A8D56),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               child: const Icon(Icons.add, color: Colors.white),
             )
           : null,
@@ -169,48 +168,82 @@ class _StoreScreenState extends State<StoreScreen> {
           MainHeader(
             title: AppLocalizations.of(context)!.store,
             icon: "assets/icons/cart.svg",
+            onIconTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartScreen()),
+              );
+            },
+            secondIcon: "assets/icons/bag.svg",
+            onSecondIconTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OrdersScreen(isAdmin: isAdmin),
+                ),
+              );
+            },
             searchHintText: context.l10n.searchProductHint,
             height: 195.h,
+            onSearchChanged: (value) {
+              if (_debounce?.isActive ?? false) _debounce!.cancel();
+              _debounce = Timer(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _searchQuery = value.trim();
+                });
+                _fetchInitialProducts();
+              });
+            },
+            onClearSearch: () {
+              setState(() {
+                _searchQuery = '';
+              });
+              _fetchInitialProducts();
+            },
           ),
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
-                : GridView.builder(
-                    controller: _scrollController,
-                    padding: EdgeInsets.all(16.w),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 12.w,
-                      mainAxisSpacing: 16.h,
-                      childAspectRatio: 0.75,
-                    ),
-                    itemCount: _products.length,
-                    itemBuilder: (context, index) => ProductCardItem(
-                      product: _products[index],
-                      isAdmin: isAdmin,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
+                : RefreshIndicator(
+                    onRefresh: _fetchInitialProducts,
+                    child: GridView.builder(
+                      controller: _scrollController,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: EdgeInsets.all(16.w),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 12.w,
+                        mainAxisSpacing: 16.h,
+                        childAspectRatio: 0.75,
+                      ),
+                      itemCount: _products.length,
+                      itemBuilder: (context, index) => ProductCardItem(
+                        product: _products[index],
+                        isAdmin: isAdmin,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsScreen(
+                                product: _products[index],
+                              ),
+                            ),
+                          );
+                        },
+                        onCartTap: () => debugPrint("إضافة للسلة"),
+                        onDelete: () => _onDeleteProduct(_products[index]),
+                        onEdit: () async {
+                          final result = await showDialog(
+                            context: context,
                             builder: (context) =>
-                                ProductDetailsScreen(product: _products[index]),
-                          ),
-                        );
-                      },
-                      onCartTap: () => debugPrint("إضافة للسلة"),
-
-                      onDelete: () => _onDeleteProduct(_products[index]),
-                      onEdit: () async {
-                        final result = await showDialog(
-                          context: context,
-                          builder: (context) =>
-                              AddProductDialog(product: _products[index]),
-                        );
-                        if (result == true) {
-                          setState(() => _isLoading = true);
-                          _fetchInitialProducts();
-                        }
-                      },
+                                AddProductDialog(product: _products[index]),
+                          );
+                          if (result == true) {
+                            setState(() => _isLoading = true);
+                            _fetchInitialProducts();
+                          }
+                        },
+                      ),
                     ),
                   ),
           ),

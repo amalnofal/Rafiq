@@ -1,54 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:provider/provider.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
-import 'package:rafiq/features/collar/data/models/collar_model.dart';
+import 'package:rafiq/core/controller/collar_provider.dart';
+import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class PetStatsRow extends StatelessWidget {
-  final CollarModel collar;
-
-  const PetStatsRow({super.key, required this.collar});
+  const PetStatsRow({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: AppDimensions.padding),
-      padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 24.w),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(
-          color: Theme.of(context).dividerColor.withValues(alpha: 0.4),
-          width: 1.w,
-        ),
-      ),
+    final reading = context.watch<CollarProvider>().latestReading;
+
+    final String heartRate = reading != null
+        ? reading.heartRateBpm.toString()
+        : "--";
+    final String temp = reading != null
+        ? reading.temperatureCelsius.toStringAsFixed(1)
+        : "--";
+
+    return CustomContainer(
+      margin: EdgeInsets.all(8.h),
       child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // النبض
+            // الحرارة
             _buildStatItem(
               context: context,
-              title: AppLocalizations.of(context)!.pulse,
-              // value: "${collar.heartRate}",
-              iconPath: "assets/icons/heart.svg",
-              value: "82",
+              title: AppLocalizations.of(context)!.temperature,
+              iconPath: "assets/icons/temp.svg",
+              value: "$temp°",
             ),
-
             // الخط الفاصل
             VerticalDivider(
               color: Theme.of(context).dividerColor.withValues(alpha: 0.4),
               thickness: 1.5,
               width: 1.w,
             ),
-
-            // الحرارة
+            // النبض
             _buildStatItem(
               context: context,
-              title: AppLocalizations.of(context)!.temperature,
-              // value: "${collar.temp}°",
-              iconPath: "assets/icons/temp.svg",
-              value: "38.2°",
+              title: AppLocalizations.of(context)!.pulse,
+              iconPath: "assets/icons/heart.svg",
+              value: heartRate,
             ),
           ],
         ),
@@ -66,8 +62,6 @@ class PetStatsRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        CircleIconButton(iconPath, size: 48.w, iconSize: 24.w),
-        SizedBox(width: 12.w),
         Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,6 +82,8 @@ class PetStatsRow extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(width: 12.w),
+        CircleIconButton(iconPath, size: 48.w, iconSize: 24.w),
       ],
     );
   }

@@ -7,11 +7,16 @@ import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/core/widgets/stat_card.dart';
 
 class TemperatureDetailedCard extends StatelessWidget {
-  const TemperatureDetailedCard({super.key});
+  final double temperature;
+  const TemperatureDetailedCard({super.key, required this.temperature});
 
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    // حالة وهمية لتحديد النص (طبيعي ولا مرتفع)
+    String statusText = temperature > 39.0
+        ? context.l10n.high
+        : (temperature < 37.5 ? context.l10n.low : context.l10n.normal);
 
     return CustomContainer(
       margin: EdgeInsets.all(AppDimensions.paddingS),
@@ -45,7 +50,7 @@ class TemperatureDetailedCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "38.2°",
+                            "${temperature.toStringAsFixed(1)}°",
                             style: Theme.of(
                               context,
                             ).textTheme.bodyLarge!.copyWith(fontSize: 20.sp),
@@ -63,7 +68,7 @@ class TemperatureDetailedCard extends StatelessWidget {
               ),
 
               // الحالة
-              StatCard(title: context.l10n.normal),
+              StatCard(title: statusText),
             ],
           ),
 
@@ -79,53 +84,102 @@ class TemperatureDetailedCard extends StatelessWidget {
   // دالة صغيرة لبناء شريط الألوان
   Widget _buildTemperatureBar(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final textDirection = Directionality.of(context);
+
+    const double minTemp = 36.0;
+    const double maxTemp = 41.0;
+
+    // التأكد إذا كان في قراءة حقيقية ولا لسه (0.0)
+    bool hasReading = temperature > 0.0;
+    double percent = 0.0;
+
+    if (hasReading) {
+      percent = (temperature - minTemp) / (maxTemp - minTemp);
+      percent = percent.clamp(0.0, 1.0);
+    }
 
     return Column(
       children: [
         SizedBox(
           height: 20.h,
-          child: Stack(
-            children: [
-              Align(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              double maxWidth = constraints.maxWidth;
+              // حساب مكان المؤشر (بنطرح عرض المؤشر عشان ميطلعش بره الشاشة)
+              double indicatorPosition = percent * (maxWidth - 4.w);
+
+              return Stack(
                 alignment: Alignment.center,
-                child: Container(
-                  height: 12.h,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6.r),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF51A2FF), // أزرق
-                        Color(0xFF05DF72), // أخضر
-                        Color(0xFFFF6467), // أحمر
-                      ],
+                children: [
+                  // 1. شريط الألوان
+                  Container(
+                    height: 8.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.r),
+                      color: hasReading ? null : Colors.grey.shade300,
+                      gradient: hasReading
+                          ? const LinearGradient(
+                              begin: AlignmentDirectional.centerStart,
+                              end: AlignmentDirectional.centerEnd,
+                              colors: [
+                                Color(0xFF51A2FF), // أزرق
+                                Color(0xFF05DF72), // أخضر
+                                Color(0xFFFF6467), // أحمر
+                              ],
+                            )
+                          : null,
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                right: 120.w, // ثبتناها زي ما إنتي عاملاها
-                child: Container(
-                  width: 4.w,
-                  height: 20.h,
-                  decoration: BoxDecoration(
-                    color: isDarkMode ? Color(0XFFF5F5F5) : Color(0xFF2D3319),
-                    borderRadius: BorderRadius.circular(2.r),
-                  ),
-                ),
-              ),
-            ],
+
+                  // 2. إبرة المؤشر (تظهر فقط لو في قراءة)
+                  if (hasReading)
+                    Positioned.directional(
+                      textDirection: textDirection,
+                      start: indicatorPosition,
+                      child: Container(
+                        width: 4.w,
+                        height: 18.h,
+                        decoration: BoxDecoration(
+                          color: isDarkMode ? Colors.white : Colors.black87,
+                          borderRadius: BorderRadius.circular(2.r),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black26,
+                              blurRadius: 2,
+                              offset: Offset(0, 1),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ),
-        SizedBox(height: 8.h),
-        // الأرقام تحت الشريط
+        SizedBox(height: 6.h),
+
+        // 3. مسطرة التدرج (Ticks & Scale)
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("39°", style: Theme.of(context).textTheme.labelSmall),
-            Text("38°", style: Theme.of(context).textTheme.labelSmall),
-            Text("37°", style: Theme.of(context).textTheme.labelSmall),
-          ],
+          // List.generate بتعملنا 6 أرقام (من 36 لـ 41) بينهم مسافات متساوية
+          children: List.generate(6, (index) {
+            int val = 36 + index;
+            return Column(
+              children: [
+                // علامة المسطرة (الشرطة الصغيرة)
+                Container(
+                  width: 1.5.w,
+                  height: 4.h,
+                  color: Theme.of(context).colorScheme.onTertiary,
+                ),
+                SizedBox(height: 2.h),
+                // الرقم
+                Text("$val°", style: Theme.of(context).textTheme.labelSmall),
+              ],
+            );
+          }),
         ),
       ],
     );

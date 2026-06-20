@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/helper/date_helper.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
+import 'package:rafiq/core/widgets/smart_image_display.dart';
 
 class CollarDetailHeader extends StatelessWidget {
   final Map<String, dynamic> collarData;
@@ -17,6 +18,15 @@ class CollarDetailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    final String rawLastSync = collarData['lastSync']?.toString() ?? '';
+    String displayLastSync = rawLastSync;
+    if (rawLastSync.isNotEmpty) {
+      final parsedDate = DateTime.tryParse(rawLastSync);
+      if (parsedDate != null) {
+        displayLastSync = DateHelper.timeAgo(parsedDate, context);
+      }
+    }
 
     return Container(
       width: double.infinity,
@@ -71,83 +81,62 @@ class CollarDetailHeader extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: AppDimensions.paddingM),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 32.r,
-                      backgroundColor: Colors.white.withValues(alpha: 0.2),
-                      backgroundImage: AssetImage(collarData['petImage']),
+                Container(
+                  padding: EdgeInsets.all(2.r),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onPrimary.withValues(alpha: 0.5),
+                      width: 2.w,
                     ),
-                    SizedBox(width: 12.w),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          collarData['petName'],
-                          style: Theme.of(context).textTheme.headlineSmall
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          collarData['model'],
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimary.withValues(alpha: 0.9),
-                              ),
-                        ),
-                        SizedBox(height: 4.h),
-                        Text(
-                          collarData['id'],
-                          style: Theme.of(context).textTheme.labelSmall
-                              ?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onPrimary.withValues(alpha: 0.8),
-                              ),
-                        ),
-                      ],
+                  ),
+                  child: SmartImageDisplay(
+                    path:
+                        (collarData['petImage'] != null &&
+                            collarData['petImage'].toString().trim().isNotEmpty)
+                        ? collarData['petImage']
+                        : "assets/images/pet_placeholder.png",
+                    width: 64.r,
+                    height: 64.r,
+                    radius: 64.r,
+                    iconSize: 24.r,
+                  ),
+                ),
+                SizedBox(width: 12.w),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      collarData['petName'],
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      collarData['id'],
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary.withValues(alpha: 0.9),
+                      ),
+                    ),
+
+                    SizedBox(height: 4.h),
+                    Text(
+                      "${context.l10n.lastSync} $displayLastSync",
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary.withValues(alpha: 0.9),
+                      ),
                     ),
                   ],
-                ),
-
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 12.w,
-                    vertical: 6.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(20.r),
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        "assets/icons/bluetooth.svg",
-                        height: 16.h,
-                        width: 16.h,
-                      ),
-                      SizedBox(width: 4.w),
-                      Padding(
-                        padding: EdgeInsets.only(top: 2.h),
-                        child: Text(
-                          collarData['isConnected']
-                              ? context.l10n.connected
-                              : context.l10n.disconnected,
-                          style: Theme.of(context).textTheme.bodyMedium
-                              ?.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),

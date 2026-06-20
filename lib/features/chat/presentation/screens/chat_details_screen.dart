@@ -69,6 +69,48 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
     }
   }
 
+  // دالة لمقارنة إذا كان التاريخين في نفس اليوم
+  bool _isSameDay(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
+  }
+
+  // دالة لرسم فاصل التاريخ (اليوم، أمس، أو التاريخ كامل)
+  Widget _buildDateSeparator(DateTime date, BuildContext context) {
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final messageDate = DateTime(date.year, date.month, date.day);
+    final difference = today.difference(messageDate).inDays;
+
+    String dateText;
+    if (difference == 0) {
+      dateText = context.l10n.today;
+    } else if (difference == 1) {
+      dateText = context.l10n.yesterday;
+    } else {
+      // صيغة التاريخ العادية لباقي الأيام
+      dateText =
+          "${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}";
+    }
+
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12.r),
+      ),
+      child: Text(
+        dateText,
+        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+          fontWeight: FontWeight.w500,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,6 +154,11 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
                 child: CircleAvatar(
                   radius: 25.r,
                   backgroundColor: Colors.grey[100],
+                  onBackgroundImageError: (exception, stackTrace) {
+                    debugPrint(
+                      "⚠️ فشل تحميل الصورة، تم استخدام الصورة البديلة.",
+                    );
+                  },
                   backgroundImage:
                       widget.otherUserPhotoUrl != null &&
                           widget.otherUserPhotoUrl!.isNotEmpty
@@ -197,19 +244,48 @@ class _ChatDetailsScreenState extends State<ChatDetailsScreen> {
 
                 if (state is ChatMessagesLoaded) {
                   final messages = state.messages;
+                  final reversedMessages = messages.reversed.toList();
+
                   return ListView.builder(
                     reverse: true,
                     controller: _scrollController,
                     padding: EdgeInsets.all(AppDimensions.padding),
-                    itemCount: messages.length,
+                    itemCount: reversedMessages.length,
                     itemBuilder: (context, index) {
-                      final message = messages.reversed.toList()[index];
-                      return ChatBubble(
-                        message: message.content,
-                        time: TimeOfDay.fromDateTime(
-                          message.sentAt.toLocal(),
-                        ).format(context),
-                        isMe: message.senderId != widget.otherUserId,
+                      final message = reversedMessages[index];
+                      final currentMessageDate = message.sentAt.toLocal();
+
+                      bool showDateSeparator = false;
+
+                      if (index == reversedMessages.length - 1) {
+                        showDateSeparator = true;
+                      } else {
+                        final previousMessageInTime =
+                            reversedMessages[index + 1];
+                        final previousMessageDate = previousMessageInTime.sentAt
+                            .toLocal();
+
+                        if (!_isSameDay(
+                          currentMessageDate,
+                          previousMessageDate,
+                        )) {
+                          showDateSeparator = true;
+                        }
+                      }
+
+                      return Column(
+                        children: [
+                          if (showDateSeparator)
+                            _buildDateSeparator(currentMessageDate, context),
+
+                          ChatBubble(
+                            message: message.content,
+                            time: TimeOfDay.fromDateTime(
+                              currentMessageDate,
+                            ).format(context),
+                            isMe: message.senderId != widget.otherUserId,
+                          ),
+                        ],
                       );
                     },
                   );

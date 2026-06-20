@@ -102,8 +102,8 @@ class PostUserHeader extends StatelessWidget {
         user.photoUrl!.startsWith('http')) {
       return CachedNetworkImage(
         imageUrl: user.photoUrl!,
-        useOldImageOnUrlChange: true, 
-        fadeInDuration: Duration.zero, 
+        useOldImageOnUrlChange: true,
+        fadeInDuration: Duration.zero,
         fadeOutDuration: Duration.zero,
         imageBuilder: (context, imageProvider) => CircleAvatar(
           radius: 20.r,

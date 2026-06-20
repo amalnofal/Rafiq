@@ -68,40 +68,63 @@ class _PostVideoPlayerState extends State<PostVideoPlayer> {
   late VideoPlayerController _controller;
   bool _isInitialized = false;
   bool _isMuted = false;
+  bool _hasError = false;
 
   @override
   void initState() {
     super.initState();
 
-    // 🚨 التعديل السحري: بنجيب الكنترولر من الكاش بدل ما نعمله من الصفر
     _controller = VideoCacheManager.getController(
       widget.videoUrl,
       widget.isLocal,
     );
 
+    _controller.addListener(_videoErrorListener);
+
     if (_controller.value.isInitialized) {
-      // لو متحمل قبل كده، نعرضه فوراً
       _isInitialized = true;
       if (widget.isPreview) _controller.setVolume(0);
     } else {
-      // لو أول مرة، نحمله
-      _controller.initialize().then((_) {
-        if (mounted) {
-          setState(() {
-            _isInitialized = true;
+      _controller
+          .initialize()
+          .then((_) {
+            if (mounted) {
+              setState(() {
+                _isInitialized = true;
+              });
+              if (widget.isPreview) {
+                _controller.setVolume(0);
+              }
+            }
+          })
+          .catchError((error) {
+            if (mounted) {
+              setState(() {
+                _hasError = true;
+              });
+              debugPrint("Video Load Error: $error");
+            }
           });
-          if (widget.isPreview) {
-            _controller.setVolume(0);
-          }
-        }
-      });
+    }
+  }
+
+  // دالة لمراقبة أي خطأ يحصل أثناء تشغيل الفيديو
+  void _videoErrorListener() {
+    if (_controller.value.hasError && !_hasError) {
+      if (mounted) {
+        setState(() {
+          _hasError = true;
+        });
+        debugPrint(
+          "Video Playback Error: ${_controller.value.errorDescription}",
+        );
+      }
     }
   }
 
   @override
   void dispose() {
-    // 🚨 شيلنا _controller.dispose() من هنا عشان يفضل عايش في الذاكرة!
-    // الكاش مانجر هو اللي هيمسحه لو العدد زاد عن 15
+    _controller.removeListener(_videoErrorListener);
     super.dispose();
   }
 
@@ -114,6 +137,19 @@ class _PostVideoPlayerState extends State<PostVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    if (_hasError) {
+      return Container(
+        color: Colors.grey.shade900,
+        child: Center(
+          child: Icon(
+            Icons.broken_image_outlined,
+            color: Colors.white54,
+            size: widget.isPreview ? 30.sp : 50.sp,
+          ),
+        ),
+      );
+    }
+
     if (!_isInitialized) {
       return Container(
         color: Colors.black,

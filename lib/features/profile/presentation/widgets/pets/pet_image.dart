@@ -12,26 +12,49 @@ class PetImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double finalSize = size ?? 55.r;
+    final String safeUrl = imageUrl?.trim() ?? '';
 
-    ImageProvider imageProvider;
-
-    // تحديد نوع الصورة (رابط، ملف محلي، أو Asset)
-    if (imageUrl != null && imageUrl!.isNotEmpty) {
-      if (imageUrl!.startsWith('http') || imageUrl!.startsWith('https')) {
-        imageProvider = CachedNetworkImageProvider(
-          imageUrl!,
-          cacheKey: imageUrl!.contains('?')
-              ? imageUrl!.split('?').first
-              : imageUrl!,
+    Widget buildImage() {
+      if (safeUrl.isEmpty) {
+        return Image.asset(
+          'assets/images/pet_placeholder.png',
+          fit: BoxFit.cover,
         );
-      } else if (imageUrl!.startsWith('assets')) {
-        imageProvider = AssetImage(imageUrl!);
-      } else {
-        imageProvider = FileImage(File(imageUrl!));
       }
-    } else {
-      // الـ Placeholder الافتراضي لو مفيش صورة خالص
-      imageProvider = const AssetImage('assets/images/pet_placeholder.png');
+
+      if (safeUrl.startsWith('http') || safeUrl.startsWith('https')) {
+        return CachedNetworkImage(
+          imageUrl: safeUrl,
+          cacheKey: safeUrl.contains('?') ? safeUrl.split('?').first : safeUrl,
+          fit: BoxFit.cover,
+          placeholder: (context, url) => Container(color: Colors.grey[200]),
+          errorWidget: (context, url, error) => Image.asset(
+            'assets/images/pet_placeholder.png',
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+
+      if (safeUrl.startsWith('assets')) {
+        return Image.asset(safeUrl, fit: BoxFit.cover);
+      }
+
+      final file = File(safeUrl);
+      if (file.existsSync()) {
+        return Image.file(
+          file,
+          fit: BoxFit.cover,
+          errorBuilder: (_, _, _) => Image.asset(
+            'assets/images/pet_placeholder.png',
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+
+      return Image.asset(
+        'assets/images/pet_placeholder.png',
+        fit: BoxFit.cover,
+      );
     }
 
     return Container(
@@ -39,9 +62,9 @@ class PetImage extends StatelessWidget {
       height: finalSize,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.grey[200], 
-        image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+        color: Colors.grey[200],
       ),
+      child: ClipOval(child: buildImage()),
     );
   }
 }

@@ -7,13 +7,16 @@ import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/home/presentation/widgets/dashboard/detailed_statistics/segmented_circular_indicator.dart';
 
 class HeartRateDetailedCard extends StatelessWidget {
-  const HeartRateDetailedCard({super.key});
+  final int heartRate;
+  const HeartRateDetailedCard({super.key, required this.heartRate});
 
   final List<double> _barHeights = const [39, 38, 39, 41, 37, 40, 36, 33, 31];
 
   @override
   Widget build(BuildContext context) {
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final double progress = (heartRate / 140).clamp(0.0, 1.0);
+
     return CustomContainer(
       margin: EdgeInsets.all(AppDimensions.paddingS),
       child: Column(
@@ -46,7 +49,7 @@ class HeartRateDetailedCard extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "82",
+                            "$heartRate",
                             style: Theme.of(
                               context,
                             ).textTheme.bodyLarge!.copyWith(fontSize: 20.sp),
@@ -66,21 +69,11 @@ class HeartRateDetailedCard extends StatelessWidget {
               Stack(
                 alignment: Alignment.center,
                 children: [
-                  // SizedBox(
-                  //   width: 50.w,
-                  //   height: 50.w,
-                  //   child: CircularProgressIndicator(
-                  //     value: 0.6,
-                  //     strokeWidth: 6,
-                  //     color: isDarkMode ? Color(0xFFE63946) : Color(0xFFEF4444),
-                  //     backgroundColor: Colors.grey.withValues(alpha: 0.2),
-                  //     strokeCap: StrokeCap.round,
-                  //   ),
-                  // ),
-                  const SegmentedCircularIndicator(
-                    progress: 0.6, // نسبة 60%
+                  SegmentedCircularIndicator(progress: progress),
+                  Text(
+                    "${(progress * 100).toInt()}%",
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  Text("68%", style: Theme.of(context).textTheme.bodySmall),
                 ],
               ),
             ],
@@ -102,8 +95,8 @@ class HeartRateDetailedCard extends StatelessWidget {
                     return Expanded(
                       child: Container(
                         height: (_barHeights[index] * value).h,
-                        margin: EdgeInsets.only(
-                          right: index == _barHeights.length - 1 ? 0 : 4.w,
+                        margin: EdgeInsetsDirectional.only(
+                          end: index == _barHeights.length - 1 ? 0 : 4.w,
                         ),
                         decoration: BoxDecoration(
                           color: isDarkMode

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
-import 'package:rafiq/core/helper/date_helper.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
+import 'package:rafiq/core/widgets/circle_icon_button.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/change_password_sheet.dart';
-import 'package:rafiq/features/settings/presentation/Widgets/setting_choice_tile.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class PasswordSection extends StatelessWidget {
@@ -20,27 +22,30 @@ class PasswordSection extends StatelessWidget {
             AppLocalizations.of(context)!.password,
             style: Theme.of(context).textTheme.labelMedium,
           ),
-          // SizedBox(height: AppDimensions.paddingM),
           CustomContainer(
-            padding: EdgeInsets.all(0),
-            child: SettingChoiceTile(
-              icon: "assets/icons/security.svg",
-              title: AppLocalizations.of(context)!.change_password,
-              subtitle: AppLocalizations.of(context)!.password_last_update(
-                DateHelper.timeAgo(
-                  DateTime.now().subtract(
-                    Duration(days: 65),
-                  ), // مثال: قبل شهرين و5 أيام
-                  context,
-                ),
+            padding: EdgeInsets.zero,
+            child: ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: AppDimensions.padding,
+                vertical: 8.h,
+              ),
+              leading: CircleIconButton("assets/icons/security.svg"),
+              title: Text(
+                context.l10n.change_password,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              trailing: Icon(
+                Icons.arrow_forward_ios,
+                color: AppColors.kContentSecondary,
+                size: AppDimensions.iconXS,
               ),
             ),
+
             onTap: () {
               showModalBottomSheet(
                 context: context,
-                isScrollControlled:
-                    true, // مهم جداً عشان الشاشة تطلع كاملة والكيبورد ميغطيش عليها
-                backgroundColor: Colors.transparent, // عشان الكيرف يبان
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
                 builder: (context) => const ChangePasswordSheet(),
               );
             },

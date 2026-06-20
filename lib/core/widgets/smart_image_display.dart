@@ -30,6 +30,8 @@ class SmartImageDisplay extends StatelessWidget {
   bool get _isNetwork =>
       path.startsWith('http://') || path.startsWith('https://');
 
+  bool get _isAsset => path.startsWith('assets/');
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -42,7 +44,7 @@ class SmartImageDisplay extends StatelessWidget {
     );
   }
 
-  // صورة حقيقية: network أو local file
+  // صورة حقيقية: network أو local file أو asset
   Widget _buildImage() {
     if (_isNetwork) {
       return CachedNetworkImage(
@@ -59,10 +61,18 @@ class SmartImageDisplay extends StatelessWidget {
             ? const Center(child: CircularProgressIndicator.adaptive())
             : const SizedBox.shrink(),
 
-        fadeInCurve: Curves.easeIn,
-        fadeInDuration: const Duration(milliseconds: 300),
+        fadeInDuration: Duration.zero,
+        fadeOutDuration: Duration.zero,
 
         errorWidget: (context, url, error) => _buildError(),
+      );
+    }
+
+    if (_isAsset) {
+      return Image.asset(
+        path,
+        fit: fit,
+        errorBuilder: (_, _, _) => _buildError(),
       );
     }
 
@@ -72,7 +82,7 @@ class SmartImageDisplay extends StatelessWidget {
     return Image.file(file, fit: fit, errorBuilder: (_, _, _) => _buildError());
   }
 
-  // حالة الخطأ = صورة مكسورة خلفيتها رمادي (هتظهر في إيرور 403 أو 404)
+  // حالة الخطأ = صورة مكسورة خلفيتها رمادي
   Widget _buildError() {
     return Container(
       color: Colors.grey.shade200,
@@ -85,11 +95,6 @@ class SmartImageDisplay extends StatelessWidget {
             Icons.image_not_supported_outlined,
             color: Colors.grey.shade400,
             size: iconSize.r,
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            "غير متاحة",
-            style: TextStyle(color: Colors.grey.shade500, fontSize: 10.sp),
           ),
         ],
       ),

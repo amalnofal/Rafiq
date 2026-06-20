@@ -528,8 +528,8 @@
   "manageAppointmentsBtn": "Manage Appointments",
   "@manageAppointmentsBtn": {},
 
-  "addAppointment": "Add Appointment",
-  "@addAppointment": {
+  "addPrivateAppointment": "Add Private Appointment",
+  "@addPrivateAppointment": {
     "description": "Button or title to add a new appointment"
   },
 
@@ -769,7 +769,10 @@
     "description": "Title for the vet's clinics section in profile"
   },
 
-  "noPetsAdded": "No pets added.",
+  "petsHidden": "No pets to display",
+  "@petsHidden": {},
+
+  "noPetsAdded": "No pets added yet.",
   "@noPetsAdded": {},
   "noClinicsAdded": "No clinics added.",
   "@noClinicsAdded": {},
@@ -1543,6 +1546,100 @@
   "battery": "Battery",
   "@battery": {},
 
+  "collectingDataForAnalysis": "Collecting sufficient data for analysis...",
+  "@collectingDataForAnalysis": {},
+  "modelRequiresMinimumReadings": "The model requires a minimum of 100 readings",
+  "@modelRequiresMinimumReadings": {},
+
+  "aiDiagnosis": "AI Diagnosis",
+  "@aiDiagnosis": {},
+  "motionStatusLabel": "Motion Status",
+  "@motionStatusLabel": {},
+  "vitalStatusLabel": "Vital Status",
+  "@vitalStatusLabel": {},
+  "finalStatusLabel": "Final Status",
+  "@finalStatusLabel": {},
+  "alertLevelLabel": "Alert Level",
+  "@alertLevelLabel": {},
+  "severityScoreLabel": "Severity Score",
+  "@severityScoreLabel": {},
+  "motionLabel": "Motion",
+  "@motionLabel": {},
+  "vitalsLabel": "Vitals",
+  "@vitalsLabel": {},
+  "summaryLabel": "Summary",
+  "@summaryLabel": {},
+  "noDataLabel": "No data",
+  "@noDataLabel": {},
+
+  "statusHealthy": "Healthy",
+  "@statusHealthy": {},
+  "statusWarning": "Warning",
+  "@statusWarning": {},
+  "statusCritical": "Critical",
+  "@statusCritical": {},
+  "statusLow": "Low",
+  "@statusLow": {},
+  "statusMedium": "Medium",
+  "@statusMedium": {},
+  "statusHigh": "High",
+  "@statusHigh": {},
+
+  "invalidCollarIdError": "Invalid serial number, please try again.",
+  "@invalidCollarIdError": {},
+  "selectPetFirstError": "Please select a pet first.",
+  "@selectPetFirstError": {},
+  "linkSmartCollarTitle": "Link Smart Collar",
+  "@linkSmartCollarTitle": {},
+  "collarSerialNumberLabel": "Collar Serial Number (ID)",
+  "@collarSerialNumberLabel": {},
+  "enterCollarNumberHint": "Enter collar number...",
+  "@enterCollarNumberHint": {},
+  "linkCollarBtn": "Link Collar",
+  "@linkCollarBtn": {},
+
+  "collarIdLabel": "Collar ID",
+  "@collarIdLabel": {},
+  "linkedToLabel": "Linked to",
+  "@linkedToLabel": {},
+
+  "aiModelResults": "AI Model Results",
+  "@aiModelResults": {},
+  "noSmartCollarLinked": "No smart collar linked",
+  "@noSmartCollarLinked": {},
+  "getSmartCollarDesc": "Get a smart collar to monitor your pet's health in real time.",
+  "@getSmartCollarDesc": {},
+
+  "noConnectedCollarsMessage": "No connected collars currently\nTap (+) to link a new collar",
+  "@noConnectedCollarsMessage": {},
+
+  "unlinkCollar": "Unlink Collar",
+  "@unlinkCollar": {},
+
+  "unlinkCollarConfirmTitle": "Unlink Collar?",
+  "@unlinkCollarConfirmTitle": {},
+  "unlinkCollarConfirmDesc": "You will lose health and location tracking for your pet after unlinking.",
+  "@unlinkCollarConfirmDesc": {},
+  "unlinkBtn": "Unlink",
+  "@unlinkBtn": {},
+
+  "locating": "Locating...",
+  "@locating": {},
+  "locationUnavailable": "Location currently unavailable",
+  "@locationUnavailable": {},
+  "unknownLocation": "Unknown location",
+  "@unknownLocation": {},
+  
+  "low": "Low",
+  "@low": {},
+  "high": "High",
+  "@high": {},
+
+  "today": "Today",
+  "@today": {},
+  "yesterday": "Yesterday",
+  "@yesterday": {},
+
   "conversationsTitle": "Conversations",
   "@conversationsTitle": {},
   "noConversationsYet": "No conversations yet",
@@ -1567,20 +1664,114 @@
     }
   },
 
-  "orderSmartCollarDescription": "Order a smart collar to track your pet's health.",
-  "@orderSmartCollarDescription": {
-    "description": "Promotional text to order a smart collar"
-  },
-
   "wrongPassword": "Wrong password, please check and try again",
   "@wrongPassword": {
     "description": "Error message shown when the user enters an incorrect password"
   },
 
+  "passwordChangedSuccessfully": "Password changed successfully",
+  "@passwordChangedSuccessfully": {},
+
+
+  "productAddedToCart": "Product added to cart successfully!",
+  "@productAddedToCart": {},
+
+  "orderSmartCollarDescription": "Order a smart collar to track your pet's health.",
+  "@orderSmartCollarDescription": {
+    "description": "Promotional text to order a smart collar"
+  },
+  
   "orderNow": "Order Now",
   "@orderNow": {
     "description": "Button label to order a product"
   },
+
+  "ordersTitle": "Orders",
+  "@ordersTitle": {},
+
+  "noOrdersToDisplay": "No orders to display",
+  "@noOrdersToDisplay": {},
+
+  "orderNumber": "Order #{id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+
+  "cartIsEmpty": "Shopping cart is empty",
+  "@cartIsEmpty": {},
+  "addProductsToCart": "Add some products to the cart to start shopping",
+  "@addProductsToCart": {},
+  "shoppingCart": "Shopping Cart",
+  "@shoppingCart": {},
+  "emptyCart": "Empty Cart",
+  "@emptyCart": {},
+
+  "confirmEmptyCartMessage": "Are you sure you want to remove all products from the cart?",
+  "@confirmEmptyCartMessage": {},
+  "cartClearedSuccessfully": "Cart cleared successfully",
+  "@cartClearedSuccessfully": {},
+  "productRemovedFromCart": "Product removed from cart",
+  "@productRemovedFromCart": {},
+  
+  "totalAmountLabel": "Total",
+  "@totalAmountLabel": {},
+
+  "otherProductsCount": "+ {count} other products",
+  "@otherProductsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completeOrderBtn": "Complete Order",
+  "@completeOrderBtn": {},
+
+  "deliveryInfo": "Delivery Information",
+  "@deliveryInfo": {},
+
+  "deliveryAddress": "Delivery Address",
+  "@deliveryAddress": {},
+
+  "deliveryAddressHint": "Write your address in detail...",
+  "@deliveryAddressHint": {},
+
+  "paymentMethod": "Payment Method",
+  "@paymentMethod": {},
+
+  "cashOnDelivery": "Cash on Delivery",
+  "@cashOnDelivery": {},
+
+  "confirmOrder": "Confirm Order",
+  "@confirmOrder": {},
+  
+  "orderPlacedSuccessfully": "Order Placed Successfully!",
+  "@orderPlacedSuccessfully": {},
+
+  "orderAcceptedSuccessfully": "Order accepted successfully",
+  "@orderAcceptedSuccessfully": {},
+
+  "requestedQuantityNotAvailable": "The requested quantity is not available in stock ⚠️",
+  "@requestedQuantityNotAvailable": {},
+
+  "cancelOrderBtn": "Cancel Order",
+  "@cancelOrderBtn": {},
+  "orderCanceledSuccessfully": "Order canceled successfully",
+  "@orderCanceledSuccessfully": {},
+  
+  "orderSuccessMessage": "We will contact you shortly to confirm the order and delivery.",
+  "@orderSuccessMessage": {},
+
+  "viewMyOrders": "View My Orders",
+  "@viewMyOrders": {},
+
+  "continueShopping": "Continue Shopping",
+  "@continueShopping": {},
 
   "sessionExpiredTitle": "Session Expired",
   "@sessionExpiredTitle": {},

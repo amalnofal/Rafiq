@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
+import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/cancel_button.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/features/auth/presentation/widgets/password_field.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/password_rules.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
 class ChangePasswordSheet extends StatefulWidget {
   const ChangePasswordSheet({super.key});
@@ -22,6 +25,8 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _isLoading = false;
+
   @override
   void dispose() {
     _currentController.dispose();
@@ -31,10 +36,38 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
   }
 
   // دالة الحفظ
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState!.validate()) {
-      // هنا كود الـ API لتغيير الباسورد
-      Navigator.pop(context);
+      setState(() => _isLoading = true);
+
+      try {
+        await context.read<UserProvider>().changePassword(
+          currentPassword: _currentController.text,
+          newPassword: _newController.text,
+          confirmPassword: _confirmController.text,
+        );
+
+        if (!mounted) return;
+        Navigator.pop(context);
+
+        showSnackBar(context, context.l10n.passwordChangedSuccessfully);
+      } catch (e) {
+        if (!mounted) return;
+        setState(() => _isLoading = false);
+
+        final errorStr = e.toString();
+
+        if (errorStr.contains("connectionError")) return;
+
+        String errorMsg = context.l10n.unexpectedError;
+        if (errorStr.contains("wrongPassword")) {
+          errorMsg = context.l10n.wrongPassword;
+        } else if (errorStr.contains("serverError")) {
+          errorMsg = context.l10n.unexpectedError;
+        }
+
+        showSnackBar(context, errorMsg, isError: true);
+      }
     }
   }
 
@@ -67,7 +100,7 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.change_password,
+                    context.l10n.changePassword,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   IconButton(
@@ -87,14 +120,14 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
               // كلمة المرور الحالية
               PasswordField(
                 controller: _currentController,
-                labelText: AppLocalizations.of(context)!.currentPassword,
+                labelText: context.l10n.currentPassword,
                 textInputAction: TextInputAction.next,
               ),
 
               // كلمة المرور الجديدة
               PasswordField(
                 controller: _newController,
-                labelText: AppLocalizations.of(context)!.newPassword,
+                labelText: context.l10n.newPassword,
                 textInputAction: TextInputAction.next,
                 validator: (val) =>
                     ValidationHelper.validateStrongPassword(val, context),
@@ -103,7 +136,7 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
               // ج) تأكيد كلمة المرور
               PasswordField(
                 controller: _confirmController,
-                labelText: AppLocalizations.of(context)!.confirmPassword,
+                labelText: context.l10n.confirmPassword,
                 textInputAction: TextInputAction.done,
                 validator: (val) => ValidationHelper.validateMatch(
                   val,
@@ -117,21 +150,23 @@ class _ChangePasswordSheetState extends State<ChangePasswordSheet> {
               // --- Buttons ---
               Padding(
                 padding: EdgeInsets.symmetric(vertical: AppDimensions.padding),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        title: AppLocalizations.of(context)!.save,
-                        fontWeight: FontWeight.w500,
-                        height: AppDimensions.buttonHeightS,
-                        elevation: 0,
-                        onPressed: _submit,
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : Row(
+                        children: [
+                          Expanded(
+                            child: CustomButton(
+                              title: context.l10n.save,
+                              fontWeight: FontWeight.w500,
+                              height: AppDimensions.buttonHeightS,
+                              elevation: 0,
+                              onPressed: _submit,
+                            ),
+                          ),
+                          SizedBox(width: AppDimensions.paddingM),
+                          Expanded(child: CancelButton()),
+                        ],
                       ),
-                    ),
-                    SizedBox(width: AppDimensions.paddingM),
-                    Expanded(child: CancelButton()),
-                  ],
-                ),
               ),
             ],
           ),

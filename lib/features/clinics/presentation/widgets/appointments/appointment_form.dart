@@ -203,11 +203,21 @@ class _AppointmentFormState extends State<AppointmentForm> {
                   color: Colors.transparent,
                   child: InkWell(
                     onTap: () async {
+                      DateTime now = DateTime.now();
+                      DateTime today = DateTime(now.year, now.month, now.day);
+                      DateTime lastYear = DateTime(
+                        now.year - 1,
+                        now.month,
+                        now.day,
+                      );
+
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
-                        initialDate: _selectedDate ?? DateTime.now(),
-                        firstDate: DateTime.now(),
-                        lastDate: DateTime.now().add(const Duration(days: 30)),
+                        initialDate: _selectedDate ?? now,
+
+                        firstDate: widget.isClinicBooking ? today : lastYear,
+
+                        lastDate: now.add(const Duration(days: 365)),
                       );
 
                       if (!mounted) return;

@@ -26,7 +26,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   void _handleConfirm() {
     if (_formKey.currentState!.validate()) {
       widget.onConfirm(_passwordController.text);
-      Navigator.pop(context);
     }
   }
 

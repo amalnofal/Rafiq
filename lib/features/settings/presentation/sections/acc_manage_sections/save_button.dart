@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
+import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
 class SaveButton extends StatelessWidget {
-  // ✅ استبدلنا nameController بالكنترولرز المنفصلة
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
   final TextEditingController emailController;
@@ -25,36 +25,63 @@ class SaveButton extends StatelessWidget {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     return CustomButton(
-      title: AppLocalizations.of(context)!.save_changes,
+      title: context.l10n.save_changes,
       fontWeight: FontWeight.w500,
-      onPressed: () {
-        // 1. التحقق من الحقول الإجبارية (الاسم الأول والأخير)
-        if (firstNameController.text.trim().isEmpty || 
-            lastNameController.text.trim().isEmpty) {
+      onPressed: () async {
+        final fNameError = ValidationHelper.validateName(
+          firstNameController.text,
+          context,
+        );
+        final lNameError = ValidationHelper.validateName(
+          lastNameController.text,
+          context,
+        );
+        final emailError = ValidationHelper.validateEmail(
+          emailController.text,
+          context,
+        );
+
+        final phoneText = phoneController.text.trim();
+        final phoneError = phoneText.isEmpty
+            ? null
+            : ValidationHelper.validatePhone(
+                phoneText,
+                context,
+                isOptional: true,
+              );
+
+        if (fNameError != null ||
+            lNameError != null ||
+            emailError != null ||
+            phoneError != null) {
           showSnackBar(
             context,
-            "الاسم الأول والأخير مطلوبان", // يفضل إضافة ترجمة هنا
+            fNameError ??
+                lNameError ??
+                emailError ??
+                phoneError ??
+                context.l10n.unexpectedError,
             isError: true,
           );
           return;
         }
 
-        // 2. تحديث البيانات (مباشرة بدون دمج)
-        userProvider.updateUserProfile(
-          firstName: firstNameController.text.trim(),
-          lastName: lastNameController.text.trim(),
-          email: emailController.text.trim(),
-          // معالجة الهاتف الاختياري: لو فاضي ابعت null
-          phone: phoneController.text.trim().isEmpty 
-              ? null 
-              : phoneController.text.trim(),
-        );
+        try {
+          await userProvider.saveInfoChanges(
+            firstName: firstNameController.text.trim(),
+            lastName: lastNameController.text.trim(),
+            email: emailController.text.trim(),
+            phone: phoneText.isEmpty ? null : phoneText,
+          );
 
-        showSnackBar(
-          context,
-          AppLocalizations.of(context)!.changes_saved,
-          isError: false,
-        );
+          if (context.mounted) {
+            showSnackBar(context, context.l10n.changes_saved, isError: false);
+          }
+        } catch (e) {
+          if (context.mounted) {
+            showSnackBar(context, context.l10n.unexpectedError, isError: true);
+          }
+        }
       },
     );
   }

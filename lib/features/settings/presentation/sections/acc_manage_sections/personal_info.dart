@@ -6,7 +6,6 @@ import 'package:rafiq/features/settings/presentation/Widgets/edit_field.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class PersonalInfo extends StatelessWidget {
-  // 1. استقبال الكنترولرز الجديدة
   final TextEditingController firstNameController;
   final TextEditingController lastNameController;
   final TextEditingController emailController;

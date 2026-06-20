@@ -9,7 +9,7 @@ import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/features/clinics/data/models/appointment_model.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/appointments/appointment_form.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/appointments/dialog_header.dart';
-import 'package:rafiq/features/profile/presentation/widgets/pets/pet_image.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/appointments/pet_selector_widget.dart';
 
 class AddPetAppointmentDialog extends StatefulWidget {
   final AppointmentModel? appointment;
@@ -143,66 +143,6 @@ class _AddPetAppointmentDialogState extends State<AddPetAppointmentDialog> {
     }
   }
 
-  Widget _buildPetSelector() {
-    final pets = context.watch<PetProvider>().pets;
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final fieldBgColor = Theme.of(context).cardTheme.color;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.l10n.selectPetLabel,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        SizedBox(height: 4.h),
-        SizedBox(
-          height: 90.h,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: pets.length,
-            separatorBuilder: (context, index) => SizedBox(width: 12.w),
-            itemBuilder: (context, index) {
-              final pet = pets[index];
-              final isSelected = _selectedPetId == pet.id;
-              return GestureDetector(
-                onTap: () => setState(() => _selectedPetId = pet.id),
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 95.w,
-                  decoration: BoxDecoration(
-                    color: fieldBgColor,
-                    border: Border.all(
-                      color: isSelected ? primaryColor : Colors.transparent,
-                      width: 1.5,
-                    ),
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PetImage(imageUrl: pet.imageUrl, size: 45.r),
-                      SizedBox(height: 8.h),
-                      Text(
-                        pet.name,
-                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: isSelected ? primaryColor : null,
-                          fontWeight: isSelected
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -219,7 +159,7 @@ class _AddPetAppointmentDialogState extends State<AddPetAppointmentDialog> {
           children: [
             DialogHeader(
               title: widget.appointment == null
-                  ? context.l10n.addAppointment
+                  ? context.l10n.addPrivateAppointment
                   : context.l10n.editAppointment,
             ),
             Flexible(
@@ -232,7 +172,23 @@ class _AddPetAppointmentDialogState extends State<AddPetAppointmentDialog> {
                       formKey: _formKey,
                       appointment: widget.appointment,
                       selectedId: _selectedPetId,
-                      selectorWidget: _buildPetSelector(),
+                      selectorWidget: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.l10n.selectPetLabel,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(height: 4.h),
+                          PetSelectorWidget(
+                            pets: context.watch<PetProvider>().pets,
+                            selectedPetId: _selectedPetId,
+                            onPetSelected: (id) {
+                              setState(() => _selectedPetId = id);
+                            },
+                          ),
+                        ],
+                      ),
                       idKey: "PetId",
                       onDataReady: (data) => _formData = data,
                     ),

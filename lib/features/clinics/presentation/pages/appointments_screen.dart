@@ -413,7 +413,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   if (filteredAppointments.isEmpty)
                     SliverFillRemaining(
                       hasScrollBody:
-                          false, // لضمان إن المساحة الفاضية تتسحب عادي
+                          false, 
                       child: Center(
                         child: Padding(
                           padding: EdgeInsets.all(30.h),

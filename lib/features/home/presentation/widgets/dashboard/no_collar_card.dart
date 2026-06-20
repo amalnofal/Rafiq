@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/app_controller.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
@@ -22,7 +23,7 @@ class NoCollarCard extends StatelessWidget {
         : [AppColors.kBrandPrimary, AppColors.kPrimaryLight];
 
     return Container(
-      margin: EdgeInsets.all(AppDimensions.padding),
+      margin: EdgeInsets.all(AppDimensions.paddingS),
       padding: EdgeInsets.all(AppDimensions.padding),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -55,14 +56,14 @@ class NoCollarCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  AppLocalizations.of(context)!.noSmartCollarTitle,
+                  context.l10n.noSmartCollarLinked,
                   style: Theme.of(
                     context,
                   ).textTheme.titleLarge?.copyWith(color: Colors.white),
                 ),
                 SizedBox(height: 8.h),
                 Text(
-                  AppLocalizations.of(context)!.orderSmartCollarDescription,
+                  context.l10n.getSmartCollarDesc,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Colors.white.withValues(alpha: 0.9),
                   ),

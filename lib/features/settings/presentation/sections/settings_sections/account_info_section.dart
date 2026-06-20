@@ -3,12 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/helper/date_helper.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/account_info_row.dart';
-import 'package:rafiq/l10n/app_localizations.dart';
 
-class AccountInfoSection extends StatelessWidget {
+class AccountInfoSection extends StatefulWidget {
   const AccountInfoSection({super.key});
+
+  @override
+  State<AccountInfoSection> createState() => _AccountInfoSectionState();
+}
+
+class _AccountInfoSectionState extends State<AccountInfoSection> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserProvider>().refreshBasicInfo();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,50 +29,52 @@ class AccountInfoSection extends StatelessWidget {
       builder: (context, userProvider, _) {
         final user = userProvider.user;
 
-        // 1. حماية: لو اليوزر مش موجود (لسه بيحمل أو حصل خطأ)، نعرض لودينج أو لا شيء
         if (user == null) {
-          return const SizedBox();
+          return const SizedBox(
+            height: 200,
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
+
+        final firstName = user.firstName;
+        final lastName = user.lastName;
+        final email = user.email;
+        final phone = user.phone ?? "";
+        DateTime joinedDate = user.joinedAt ?? DateTime.now();
 
         return CustomContainer(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                AppLocalizations.of(context)!.account_information,
+                context.l10n.account_information,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               SizedBox(height: AppDimensions.paddingM),
 
-              // 2. الاسم
+              // الاسم
               AccountInfoRow(
-                label: AppLocalizations.of(context)!.name,
-                value: "${user.firstName} ${user.lastName}",
+                label: context.l10n.name,
+                value: "$firstName $lastName",
               ),
               const Divider(),
 
-              // 3. الإيميل
-              AccountInfoRow(
-                label: AppLocalizations.of(context)!.email,
-                value: user.email,
-              ),
+              // الإيميل
+              AccountInfoRow(label: context.l10n.email, value: email),
               const Divider(),
 
-              // 4. رقم الهاتف
+              // رقم الهاتف
               AccountInfoRow(
-                label: AppLocalizations.of(context)!.phone_number,
-                value: user.phone ?? "",
+                label: context.l10n.phone_number,
+                value: phone.isEmpty ? "-" : phone,
                 direction: TextDirection.ltr,
               ),
               const Divider(),
 
-              // 5. تاريخ الانضمام
+              // تاريخ الانضمام
               AccountInfoRow(
-                label: AppLocalizations.of(context)!.join_date,
-                value: DateHelper.formatYearMonth(
-                  user.joinedAt ?? DateTime.now(),
-                  context,
-                ),
+                label: context.l10n.join_date,
+                value: DateHelper.formatYearMonth(joinedDate, context),
               ),
             ],
           ),

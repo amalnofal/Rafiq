@@ -22,6 +22,7 @@ class CustomButton extends StatelessWidget {
     this.elevation = 4,
     this.hasBorder = false,
     this.radius,
+    this.borderColor,
   });
 
   final String title;
@@ -39,6 +40,7 @@ class CustomButton extends StatelessWidget {
   final bool preserveIconColors;
   final bool hasBorder;
   final double? radius;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +90,10 @@ class CustomButton extends StatelessWidget {
 
           side: hasBorder
               ? WidgetStateProperty.all(
-                  BorderSide(color: Theme.of(context).dividerColor, width: 1),
+                  BorderSide(
+                    color: borderColor ?? Theme.of(context).dividerColor,
+                    width: 1,
+                  ),
                 )
               : null,
 

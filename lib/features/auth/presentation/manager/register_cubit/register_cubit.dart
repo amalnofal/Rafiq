@@ -43,7 +43,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     File? frontId,
     File? backId,
     File? unionCard,
-    File? profilePic, // 👈 تم استخدامه الآن في نداء السيرفيس
+    File? profilePic, 
   }) async {
     emit(RegisterLoading());
 

@@ -88,7 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           });
         }
       } else {
-        // لو fetched طلعت null (يعني فشل في الجلب)
         if (mounted) {
           setState(() {
             _isLoadingOtherUser = false;

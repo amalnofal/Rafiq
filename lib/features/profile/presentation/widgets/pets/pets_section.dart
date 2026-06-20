@@ -77,8 +77,14 @@ class _PetsSectionState extends State<PetsSection> {
         ),
         SizedBox(height: 12.h),
 
+        // 1. لو اليوزر خافي حيواناته أو القائمة فاضية
         if (petsList.isEmpty)
-          EmptyStateCard(message: AppLocalizations.of(context)!.noPetsAdded)
+          EmptyStateCard(
+            message: widget.isMe
+                ? AppLocalizations.of(context)!.noPetsAdded
+                : AppLocalizations.of(context)!.petsHidden,
+          )
+        // 2. عرض الحيوانات لو مفيش أي موانع
         else
           AnimatedSize(
             duration: const Duration(milliseconds: 300),

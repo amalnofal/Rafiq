@@ -12,7 +12,7 @@ import 'package:rafiq/features/clinics/data/models/appointment_model.dart';
 import 'package:rafiq/features/clinics/data/models/clinic_model.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/appointments/appointment_form.dart';
 import 'package:rafiq/features/clinics/presentation/widgets/appointments/dialog_header.dart';
-import 'package:rafiq/features/profile/presentation/widgets/pets/pet_image.dart';
+import 'package:rafiq/features/clinics/presentation/widgets/appointments/pet_selector_widget.dart';
 
 class BookClinicAppointmentDialog extends StatefulWidget {
   final ClinicModel clinic;
@@ -62,11 +62,10 @@ class _BookClinicAppointmentDialogState
     }
 
     // ==========================================
-    // 🚨 فحص تعارض المواعيد (مع حساب مدة الجلسة 30 دقيقة) 🚨
+    // فحص تعارض المواعيد
     // ==========================================
     final appointments = context.read<AppointmentProvider>().appointments;
     final hasConflict = appointments.any((app) {
-      // تجاهل الموعد الحالي لو في وضع التعديل
       if (widget.appointment != null && app.id == widget.appointment!.id) {
         return false;
       }
@@ -75,14 +74,12 @@ class _BookClinicAppointmentDialogState
       final formDate = _formData["Date"] ?? "";
       final isSameDate = appDate == formDate;
 
-      // لو مش نفس اليوم، يبقى مفيش تعارض
       if (!isSameDate) return false;
 
       final isFinished =
           app.status.toLowerCase() == 'completed' ||
           app.status.toLowerCase() == 'cancelled';
 
-      // لو الموعد القديم خلصان أو ملغي، يبقى مفيش تعارض
       if (isFinished) return false;
 
       final appTimeStr = app.time;
@@ -90,7 +87,6 @@ class _BookClinicAppointmentDialogState
 
       if (appTimeStr.isEmpty || formTimeStr.isEmpty) return false;
 
-      // دالة داخلية لتحويل الوقت (ساعات ودقائق) إلى إجمالي الدقائق
       int timeToMinutes(String t) {
         final parts = t.split(':');
         if (parts.length >= 2) {
@@ -103,7 +99,6 @@ class _BookClinicAppointmentDialogState
       final appMinutes = timeToMinutes(appTimeStr);
       final formMinutes = timeToMinutes(formTimeStr);
 
-      // الجلسة مدتها 30 دقيقة، لو الفرق الزمني أقل من 30، إذن هناك تداخل (Conflict)!
       final isTimeConflict = (appMinutes - formMinutes).abs() < 30;
 
       return isTimeConflict;
@@ -156,71 +151,6 @@ class _BookClinicAppointmentDialogState
     }
   }
 
-  Widget _buildPetSelector() {
-    final pets = context.watch<PetProvider>().pets;
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final fieldBgColor = Theme.of(context).cardTheme.color;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          context.l10n.selectPetLabel,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        SizedBox(height: 8.h),
-        SizedBox(
-          height: 95.h,
-          child: pets.isEmpty
-              ? Center(child: Text(context.l10n.noPetsFoundTitle))
-              : ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: pets.length,
-                  separatorBuilder: (context, index) => SizedBox(width: 12.w),
-                  itemBuilder: (context, index) {
-                    final pet = pets[index];
-                    final isSelected = _selectedPetId == pet.id;
-                    return GestureDetector(
-                      onTap: () => setState(() => _selectedPetId = pet.id),
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 200),
-                        width: 95.w,
-                        decoration: BoxDecoration(
-                          color: fieldBgColor,
-                          border: Border.all(
-                            color: isSelected
-                                ? primaryColor
-                                : Colors.transparent,
-                            width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(16.r),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            PetImage(imageUrl: pet.imageUrl, size: 45.r),
-                            SizedBox(height: 8.h),
-                            Text(
-                              pet.name,
-                              style: Theme.of(context).textTheme.bodySmall!
-                                  .copyWith(
-                                    color: isSelected ? primaryColor : null,
-                                    fontWeight: isSelected
-                                        ? FontWeight.w600
-                                        : FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -252,7 +182,41 @@ class _BookClinicAppointmentDialogState
                       appointment: widget.appointment,
                       selectedId: _selectedPetId,
                       clinicId: widget.clinic.id,
-                      selectorWidget: _buildPetSelector(),
+
+                      selectorWidget: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            context.l10n.selectPetLabel,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          SizedBox(height: 8.h),
+                          Builder(
+                            builder: (context) {
+                              final pets = context.watch<PetProvider>().pets;
+
+                              // هندلة حالة لو مفيش حيوانات
+                              if (pets.isEmpty) {
+                                return SizedBox(
+                                  height: 90.h,
+                                  child: Center(
+                                    child: Text(context.l10n.noPetsFoundTitle),
+                                  ),
+                                );
+                              }
+
+                              return PetSelectorWidget(
+                                pets: pets,
+                                selectedPetId: _selectedPetId,
+                                onPetSelected: (id) =>
+                                    setState(() => _selectedPetId = id),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+
+                      // ====================================
                       idKey: "PetId",
                       onDataReady: (data) => _formData = data,
                       middleContent: Column(

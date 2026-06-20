@@ -1,5 +1,3 @@
-import 'package:rafiq/features/collar/data/models/collar_model.dart';
-
 class PetModel {
   final String id;
   final String name;
@@ -10,7 +8,7 @@ class PetModel {
   final String color;
   final DateTime dob;
   final String? imageUrl;
-  final CollarModel? collar;
+  final String? collarId;
 
   // حقول إضافية للمواعيد والتذكيرات
   final String lastVaccine;
@@ -30,7 +28,7 @@ class PetModel {
     required this.color,
     required this.dob,
     this.imageUrl,
-    this.collar,
+    this.collarId,
     this.lastVaccine = "",
     this.lastVaccineDate = "",
     this.nextAppointment = "",
@@ -92,9 +90,9 @@ class PetModel {
           json['imageUrl'] ??
           json['PhotoUrl'],
 
-      collar: json['collar'] != null
-          ? CollarModel.fromJson(json['collar'])
-          : null,
+      collarId: json['collar'] != null
+          ? json['collar']['id']?.toString()
+          : json['collarId']?.toString(),
     );
   }
 
@@ -121,6 +119,7 @@ class PetModel {
     String? color,
     DateTime? dob,
     String? imageUrl,
+    String? collarId,
   }) {
     return PetModel(
       id: id ?? this.id,
@@ -132,7 +131,7 @@ class PetModel {
       color: color ?? this.color,
       dob: dob ?? this.dob,
       imageUrl: imageUrl ?? this.imageUrl,
-      collar: collar,
+      collarId: collarId ?? this.collarId,
     );
   }
 }

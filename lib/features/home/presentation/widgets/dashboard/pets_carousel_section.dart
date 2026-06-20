@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/models/pet_model.dart';
-import 'package:rafiq/features/home/presentation/widgets/dashboard/animal_card.dart';
+import 'package:rafiq/features/home/presentation/widgets/dashboard/pet_carousel_card.dart'; // 🚀 غيرنا الاستدعاء هنا
 
 class PetsCarouselSection extends StatefulWidget {
   final List<PetModel> pets;
@@ -61,7 +61,7 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeOut,
-      height: 393.h,
+      height: 220.h,
       width: double.infinity,
       child: Stack(
         alignment: Alignment.topCenter,
@@ -73,16 +73,17 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
               setState(() {
                 _currentIndex = index;
               });
-
               widget.onPageChanged(index);
             },
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                child: AnimalCard(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppDimensions.paddingS,
+                ),
+                child: PetCarouselCard(
                   pet: widget.pets[index],
-                  index: index,
-                  totalCount: widget.pets.length,
+                  currentIndex: index,
+                  totalPets: widget.pets.length,
                 ),
               );
             },
@@ -91,8 +92,8 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
           if (widget.pets.length > 1) ...[
             Positioned.directional(
               textDirection: textDirection,
-              end: 10.w,
-              top: 180.h,
+              end: 8.w,
+              top: 90.h,
               child: _ArrowButton(
                 icon: Icons.arrow_forward_ios_rounded,
                 onTap: _nextPage,
@@ -101,8 +102,8 @@ class _PetsCarouselSectionState extends State<PetsCarouselSection> {
             ),
             Positioned.directional(
               textDirection: textDirection,
-              start: 10.w,
-              top: 180.h,
+              start: 8.w,
+              top: 90.h,
               child: _ArrowButton(
                 icon: Icons.arrow_back_ios_rounded,
                 onTap: _prevPage,
@@ -130,13 +131,13 @@ class _ArrowButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: isEnabled ? 1.0 : 0.3,
+      opacity: isEnabled ? 1.0 : 0.0, // إخفاء السهم لو مفيش حيوان بعده
       duration: const Duration(milliseconds: 200),
       child: Container(
-        width: 40.w,
-        height: 40.h,
+        width: 36.w,
+        height: 36.w,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: Theme.of(context).colorScheme.surface.withValues(alpha: 0.9),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
@@ -150,12 +151,8 @@ class _ArrowButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           icon: Icon(
             icon,
-            size: AppDimensions.iconM,
-            color: isEnabled
-                ? Theme.of(context).colorScheme.primary
-                : Theme.of(
-                    context,
-                  ).colorScheme.onSurface.withValues(alpha: 0.5),
+            size: 16.sp,
+            color: Theme.of(context).colorScheme.onSurface,
             textDirection: Directionality.of(context),
           ),
           onPressed: isEnabled ? onTap : null,

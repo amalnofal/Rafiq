@@ -41,6 +41,9 @@ class UserModel {
 
   final List<PostModel>? posts;
 
+  final bool publicPetView;
+  final bool receiveChatFromOtherUsers;
+
   UserModel({
     this.id = '',
     required this.firstName,
@@ -67,6 +70,8 @@ class UserModel {
     this.petOwnerDetails,
     this.doctorDetails,
     this.posts,
+    this.publicPetView = true,
+    this.receiveChatFromOtherUsers = true,
   });
 
   String get fullName => "$firstName $lastName";
@@ -104,14 +109,12 @@ class UserModel {
         data['IsUpbringingAndParenting'] == true)
       loadedInterests.add(PostCategory.activities);
 
-    // 🚨 1. استخراج الـ ID الذكي (عشان السيرش والبروفايل)
     final String parsedId =
         data['id']?.toString() ??
         data['userId']?.toString() ??
         data['UserId']?.toString() ??
         '';
 
-    // 🚨 2. استخراج الاسم بذكاء (عشان السيرش بيبعت fullName)
     String fName = data['firstName'] ?? data['FirstName'] ?? '';
     String lName = data['lastName'] ?? data['LastName'] ?? '';
 
@@ -121,7 +124,6 @@ class UserModel {
       lName = parts.length > 1 ? parts.sublist(1).join(' ') : '';
     }
 
-    // 🚨 3. استخراج الصورة بذكاء بأي مسمى
     final String parsedPhoto =
         data['photoUrl']?.toString() ??
         data['profilePhotoUrl']?.toString() ??
@@ -155,7 +157,7 @@ class UserModel {
 
     final docDetails = data['doctorDetails'] ?? {};
 
-    //  4. بناء الموديل مع تمرير المتغيرات المستخرجة الجديدة بذكاء
+    // بناء الموديل مع تمرير المتغيرات المستخرجة الجديدة بذكاء
     final parsedUser = UserModel(
       id: parsedId,
       firstName: fName,
@@ -220,6 +222,13 @@ class UserModel {
       petOwnerDetails: data['petOwnerDetails'],
       doctorDetails: data['doctorDetails'],
       posts: const [],
+
+      publicPetView: data['publicPetView'] ?? data['PublicPetView'] ?? true,
+      receiveChatFromOtherUsers:
+          data['reciveChatFromOtherUsers'] ??
+          data['recivechatfromotherusers'] ??
+          data['Recivechatfromotherusers'] ??
+          true,
     );
 
     // بنقرأ البوستات ونديها بيانات اليوزر ده
@@ -233,6 +242,8 @@ class UserModel {
     // نرجع اليوزر كامل ببوستاته
     return parsedUser.copyWith(posts: parsedPosts);
   }
+
+
 
   // ==========================================================
   // toJson
@@ -272,6 +283,19 @@ class UserModel {
       'petOwnerDetails': petOwnerDetails,
       'doctorDetails': doctorDetails,
       'posts': posts?.map((p) => p.toMap()).toList(),
+      'publicPetView': publicPetView,
+      'recivechatfromotherusers': receiveChatFromOtherUsers,
+    };
+  }
+
+  Map<String, dynamic> toSettingsJson({String langCode = "ar"}) {
+    return {
+      "userId": int.tryParse(id) ?? 0,
+      "preferredLanguage": langCode,
+      "publicPetView": publicPetView,
+      "publicProfileView": true,
+      "showPhoneNumber": true,
+      "recivechatfromotherusers": receiveChatFromOtherUsers,
     };
   }
 
@@ -304,6 +328,8 @@ class UserModel {
     Map<String, dynamic>? petOwnerDetails,
     Map<String, dynamic>? doctorDetails,
     List<PostModel>? posts,
+    bool? publicPetView,
+    bool? receiveChatFromOtherUsers,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -331,6 +357,9 @@ class UserModel {
       petOwnerDetails: petOwnerDetails ?? this.petOwnerDetails,
       doctorDetails: doctorDetails ?? this.doctorDetails,
       posts: posts ?? this.posts,
+      publicPetView: publicPetView ?? this.publicPetView,
+      receiveChatFromOtherUsers:
+          receiveChatFromOtherUsers ?? this.receiveChatFromOtherUsers,
     );
   }
 }

@@ -104,7 +104,7 @@ class PostPreviewItem extends StatelessWidget {
                     height: 14.h,
                     width: 14.w,
                     colorFilter: ColorFilter.mode(
-                      post.isLiked ? Colors.red : interactionColor,
+                      interactionColor,
                       BlendMode.srcIn,
                     ),
                   ),

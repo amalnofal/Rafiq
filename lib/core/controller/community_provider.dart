@@ -16,10 +16,6 @@ class CommunityProvider extends ChangeNotifier {
 
   CommunityProvider(this._communityService);
 
-  // ==========================================
-  // المتغيرات الأساسية
-  // ==========================================
-
   final List<PostModel> _posts = [];
   List<PostModel> get posts => _posts;
 
@@ -43,7 +39,6 @@ class CommunityProvider extends ChangeNotifier {
 
   // 1. دالة حفظ البوستات في الكاش
   Future<void> _savePostsToCache(List<PostModel> posts) async {
-    // بنستخدم .toMap() اللي موجودة جاهزة في الموديل
     final encoded = jsonEncode(posts.map((p) => p.toMap()).toList());
     await CacheHelper.saveData(key: 'cached_posts', value: encoded);
   }
@@ -54,7 +49,6 @@ class CommunityProvider extends ChangeNotifier {
     if (cachedData != null) {
       try {
         final List decoded = jsonDecode(cachedData);
-        // بنستخدم .fromMap() اللي موجودة جاهزة في الموديل
         _posts.addAll(decoded.map((e) => PostModel.fromMap(e)).toList());
         notifyListeners();
       } catch (e) {
@@ -131,7 +125,7 @@ class CommunityProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      _currentPage++; // نزود رقم الصفحة
+      _currentPage++;
 
       final response = await _communityService.getFeed(
         pageNumber: _currentPage,
@@ -303,50 +297,62 @@ class CommunityProvider extends ChangeNotifier {
     required List<File> mediaFiles,
     required Map<String, bool> categories,
   }) async {
-    // 1. إضافة البوست الوهمي للواجهة فوراً (لو مش موجود)
+    // 1. إضافة البوست الوهمي للـ Feed فقط (عشان يظهر في الرئيسية)
     if (!_posts.any((p) => p.id == tempPost.id)) {
       _posts.insert(0, tempPost);
     }
     notifyListeners();
 
     try {
-      // 3. رفع البوست للسيرفر
       final response = await _communityService.createPost(
         contentText: contentText,
         mediaFiles: mediaFiles.isNotEmpty ? mediaFiles : null,
         categoriesBooleans: categories,
       );
 
-      // 4. تحديث حالة البوست لو نجح
       final index = _posts.indexWhere((p) => p.id == tempPost.id);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        if (index != -1) {
-          final rawData = response.data['data'] ?? response.data;
+        final rawData = response.data['data'] ?? response.data;
 
-          if (rawData is Map<String, dynamic>) {
-            final realPost = PostModel.fromMap(rawData);
-            _posts[index] = realPost;
+        if (rawData is Map<String, dynamic>) {
+          // ====== حالة الرد المثالي من السيرفر ======
+          final realPost = PostModel.fromMap(rawData);
 
-            getIt<UserProvider>().updatePostLocally(realPost);
-          } else {
-            _posts[index] = _posts[index].copyWith(isUploading: false);
-            fetchPosts();
+          // نفس الكمين السابق لاصطياد فشل سيرفر الصور
+          if (mediaFiles.isNotEmpty && realPost.media.isEmpty) {
+            await _communityService.deletePost(realPost.id);
+            throw Exception("Server saved post without media.");
           }
+
+          if (index != -1) {
+            _posts[index] = realPost;
+          } else {
+            _posts.insert(0, realPost);
+          }
+
+          getIt<UserProvider>().addPostLocally(realPost);
           notifyListeners();
+        } else {
+          log("⚠️ Backend returned text instead of post object: $rawData");
+
+          // 1. نمسح البوست الوهمي من الشاشة عشان منسيبوش متعلق
+          if (index != -1) {
+            _posts.removeAt(index);
+          }
+
+          // 2. نجلب البوستات من السيرفر عشان يظهر البوست الحقيقي بالـ ID بتاعه
+          fetchPosts();
+
+          // 3. نحدث بيانات المستخدم عشان يظهر في بروفايله
+          getIt<UserProvider>().loadUserData();
         }
       } else {
-        // لو فشل
-        if (index != -1) {
-          _posts[index] = _posts[index].copyWith(
-            isUploading: false,
-            isUploadFailed: true,
-          );
-          notifyListeners();
-        }
+        throw Exception("Server returned ${response.statusCode}");
       }
     } catch (e) {
       log("❌ Background Upload Failed - $e");
+
       final index = _posts.indexWhere((p) => p.id == tempPost.id);
       if (index != -1) {
         _posts[index] = _posts[index].copyWith(

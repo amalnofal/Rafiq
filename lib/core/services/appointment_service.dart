@@ -56,9 +56,17 @@ class AppointmentService {
 
   // 4. إنهاء الموعد (تحديد كمكتمل)
   Future<Response> completeAppointment(int appointmentId) async {
+    log("👉 Trying to complete appointment with ID: $appointmentId");
     try {
-      final response = await _dio.post('/Appointment/$appointmentId/complete');
+      final response = await _dio.post(
+        '/Appointment/$appointmentId/complete',
+        data: {},
+      );
       return response;
+    } on DioException catch (e) {
+      // هذا السطر سيكشف لك بالضبط لماذا رفض السيرفر الطلب (400)
+      log("❌ Backend Complete Error Data: ${e.response?.data}");
+      rethrow;
     } catch (e) {
       log("[AppointmentService]: Error completing appointment - $e");
       rethrow;

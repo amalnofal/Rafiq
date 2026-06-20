@@ -72,7 +72,7 @@ class _TopSnackBarState extends State<_TopSnackBar>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 200),
     );
 
     _slide = Tween<Offset>(

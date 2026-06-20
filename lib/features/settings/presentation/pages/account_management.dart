@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
+import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/core/widgets/rafiq_scaffold.dart';
 import 'package:rafiq/features/settings/presentation/sections/acc_manage_sections/danger_zone.dart';
 import 'package:rafiq/features/settings/presentation/sections/acc_manage_sections/personal_info.dart';
@@ -21,21 +22,52 @@ class _AccountManagementState extends State<AccountManagement> {
   late TextEditingController emailController;
   late TextEditingController phoneController;
 
+  bool _isLoading = true;
+
   @override
   void initState() {
     super.initState();
-    final user = Provider.of<UserProvider>(context, listen: false).user;
+    firstNameController = TextEditingController();
+    lastNameController = TextEditingController();
+    emailController = TextEditingController();
+    phoneController = TextEditingController();
 
-    if (user != null) {
-      firstNameController = TextEditingController(text: user.firstName);
-      lastNameController = TextEditingController(text: user.lastName);
-      emailController = TextEditingController(text: user.email);
-      phoneController = TextEditingController(text: user.phone ?? '');
-    } else {
-      firstNameController = TextEditingController();
-      lastNameController = TextEditingController();
-      emailController = TextEditingController();
-      phoneController = TextEditingController();
+    _fetchFreshData();
+  }
+
+  Future<void> _fetchFreshData() async {
+    try {
+      final data = await context.read<UserProvider>().fetchProfileForEdit();
+      if (mounted) {
+        setState(() {
+          firstNameController.text =
+              data['firstName'] ?? data['FirstName'] ?? '';
+          lastNameController.text = data['lastName'] ?? data['LastName'] ?? '';
+
+          emailController.text =
+              data['newEmail'] ?? data['email'] ?? data['Email'] ?? '';
+          phoneController.text =
+              data['newPhoneNumber'] ??
+              data['phoneNumber'] ??
+              data['PhoneNumber'] ??
+              '';
+
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        final user = context.read<UserProvider>().user;
+        setState(() {
+          if (user != null) {
+            firstNameController.text = user.firstName;
+            lastNameController.text = user.lastName;
+            emailController.text = user.email;
+            phoneController.text = user.phone ?? '';
+          }
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -54,29 +86,39 @@ class _AccountManagementState extends State<AccountManagement> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.account_management),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            PersonalInfo(
-              firstNameController: firstNameController,
-              lastNameController: lastNameController,
-              emailController: emailController,
-              phoneController: phoneController,
-            ),
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          return Stack(
+            children: [
+              _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          PersonalInfo(
+                            firstNameController: firstNameController,
+                            lastNameController: lastNameController,
+                            emailController: emailController,
+                            phoneController: phoneController,
+                          ),
+                          SaveButton(
+                            firstNameController: firstNameController,
+                            lastNameController: lastNameController,
+                            emailController: emailController,
+                            phoneController: phoneController,
+                          ),
+                          SizedBox(height: AppDimensions.paddingXL),
+                          const DangerZone(),
+                        ],
+                      ),
+                    ),
 
-            const DangerZone(),
-
-            SizedBox(height: AppDimensions.paddingM),
-
-            SaveButton(
-              firstNameController: firstNameController,
-              lastNameController: lastNameController,
-              emailController: emailController,
-              phoneController: phoneController,
-            ),
-          ],
-        ),
+              if (userProvider.isLoading) const LoadingOverlay(),
+            ],
+          );
+        },
       ),
     );
   }
+
 }

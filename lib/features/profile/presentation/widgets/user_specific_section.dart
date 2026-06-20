@@ -19,7 +19,7 @@ class UserSpecificSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (user.role != UserType.petOwner) ...[
+        if (user.role == UserType.vet) ...[
           CustomContainer(
             padding: EdgeInsets.all(AppDimensions.paddingXL),
             child: ClinicsSection(isMe: isMe, user: user),

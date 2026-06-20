@@ -1,10 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:rafiq/core/controller/store_provider.dart';
+import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/helper/menu_utils.dart';
 import 'package:rafiq/core/widgets/circle_icon_button.dart';
 import 'package:rafiq/core/widgets/custom_container.dart';
+import 'package:rafiq/core/widgets/smart_image_display.dart';
 import 'package:rafiq/features/store/data/product_model.dart';
 
 class ProductCardItem extends StatelessWidget {
@@ -27,6 +30,9 @@ class ProductCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 💡 1. التحقق من حالة المخزون
+    final bool isOutOfStock = product.stockQuantity <= 0;
+
     return GestureDetector(
       onTap: onTap,
       child: CustomContainer(
@@ -37,34 +43,53 @@ class ProductCardItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // صورة المنتج
+                // 💡 2. صورة المنتج مع تأثير نفاذ الكمية
                 Expanded(
                   flex: 5,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(16.r),
-                    ),
-                    child: CachedNetworkImage(
-                      imageUrl: product.imageUrl,
-                      cacheKey: product.imageUrl.split('?').first,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: Colors.grey[200],
-                        child: const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      SmartImageDisplay(
+                        path: product.imageUrl,
+                        width: double.infinity,
+                        customBorderRadius: BorderRadius.vertical(
+                          top: Radius.circular(16.r),
                         ),
                       ),
-                      errorWidget: (context, url, error) => Container(
-                        color: Colors.grey[200],
-                        child: const Icon(
-                          Icons.broken_image,
-                          color: Colors.grey,
+
+                      // نفذت الكمية
+                      if (isOutOfStock)
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(16.r),
+                            ),
+                          ),
+                          alignment: Alignment.center,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 12.w,
+                              vertical: 6.h,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.9),
+                              borderRadius: BorderRadius.circular(20.r),
+                            ),
+                            child: Text(
+                              context.l10n.outOfStock,
+                              style: Theme.of(context).textTheme.bodyMedium!
+                                  .copyWith(
+                                    color: Color(0XFF2D3319),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
+
                 // تفاصيل المنتج
                 Expanded(
                   flex: 4,
@@ -86,7 +111,7 @@ class ProductCardItem extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "${product.price.toInt()} ${context.l10n.currencyEGP}",
+                              "${product.price} ${context.l10n.currencyEGP}",
                               style: Theme.of(context).textTheme.labelMedium!
                                   .copyWith(
                                     fontWeight: FontWeight.w500,
@@ -96,13 +121,41 @@ class ProductCardItem extends StatelessWidget {
                                   ),
                             ),
 
+                            // أيقونة السلة
                             CircleIconButton(
                               "assets/icons/cart.svg",
                               size: 28.r,
                               iconSize: 16.r,
-                              onTap: onCartTap,
-                              bgColor: Theme.of(context).colorScheme.primary,
-                              color: Colors.white,
+                              onTap: isOutOfStock
+                                  ? () {}
+                                  : () async {
+                                      final provider = context
+                                          .read<StoreProvider>();
+
+                                      final success = await provider.addToCart(
+                                        product.id,
+                                        1,
+                                      );
+
+                                      if (!context.mounted) return;
+
+                                      if (success) {
+                                        showSnackBar(
+                                          context,
+                                          context.l10n.productAddedToCart,
+                                        );
+                                      } else {
+                                        showSnackBar(
+                                          context,
+                                          context.l10n.unexpectedError,
+                                          isError: true,
+                                        );
+                                      }
+                                    },
+                              bgColor: isOutOfStock
+                                  ? null
+                                  : Theme.of(context).colorScheme.primary,
+                              color: isOutOfStock ? null : Colors.white,
                             ),
                           ],
                         ),

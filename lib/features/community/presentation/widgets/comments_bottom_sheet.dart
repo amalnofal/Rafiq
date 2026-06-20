@@ -303,7 +303,11 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
                                       const CommentShimmerItem(),
                                 ),
                               if (!_isLoading && _comments.isEmpty)
-                                const EmptyCommentsView(),
+                                SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
+                                  child: const EmptyCommentsView(),
+                                ),
                             ],
                           );
                         }
@@ -340,7 +344,6 @@ class _CommentsBottomSheetState extends State<CommentsBottomSheet> {
             alignment: Alignment.bottomCenter,
             child: Container(
               color: Theme.of(context).cardColor,
-              // نضع padding سفلي فقط للأجهزة التي بها SafeArea (مثل الآيفون)
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).padding.bottom,
               ),

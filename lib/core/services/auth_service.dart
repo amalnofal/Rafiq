@@ -44,7 +44,7 @@ class AuthService {
         "Password": password,
         "ConfirmPassword": confirmPassword,
         "Gender": gender,
-        "Role": role, 
+        "Role": role,
         "DateOfBirth": dateOfBirth.toIso8601String().split('T')[0],
         "IsHealthAndCare": isHealthAndCare,
         "IsNutritionAndFood": isNutritionAndFood,
@@ -205,14 +205,35 @@ class AuthService {
   }
 
   // ==========================================
+  // تغيير كلمة المرور من الإعدادات
+  // ==========================================
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      await _dio.put(
+        '/User/change-password',
+        data: {
+          'currentPassword': currentPassword,
+          'newPassword': newPassword,
+          'confirmPassword': confirmPassword,
+        },
+      );
+      log("[AuthService]: تم تغيير كلمة المرور بنجاح.");
+    } catch (e) {
+      log("[AuthService]: فشل تغيير كلمة المرور: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
   // حذف الحساب
   // ==========================================
   Future<void> deleteAccount({required String password}) async {
     try {
-      await _dio.delete(
-        '/User/delete-account', 
-        data: {'password': password},
-      );
+      await _dio.delete('/User/delete-account', data: {'password': password});
       log("[AuthService]: تم حذف الحساب بنجاح.");
     } catch (e) {
       log("[AuthService]: فشل حذف الحساب: $e");

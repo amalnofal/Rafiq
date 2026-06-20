@@ -187,10 +187,16 @@ class _CommunitySearchScreenState extends State<CommunitySearchScreen> {
             ),
           ),
           onTap: () {
+            final currentUserId = context.read<UserProvider>().user?.id;
+
+            final isMyProfile =
+                currentUserId != null && currentUserId == user.id;
+
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ProfileScreen(user: user, isMe: false),
+                builder: (context) =>
+                    ProfileScreen(user: user, isMe: isMyProfile),
               ),
             );
           },

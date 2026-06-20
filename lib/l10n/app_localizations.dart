@@ -1034,8 +1034,8 @@ abstract class AppLocalizations {
   /// Button or title to add a new appointment
   ///
   /// In en, this message translates to:
-  /// **'Add Appointment'**
-  String get addAppointment;
+  /// **'Add Private Appointment'**
+  String get addPrivateAppointment;
 
   /// No description provided for @editAppointment.
   ///
@@ -1451,10 +1451,16 @@ abstract class AppLocalizations {
   /// **'My Clinics'**
   String get myClinicsTitle;
 
+  /// No description provided for @petsHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'No pets to display'**
+  String get petsHidden;
+
   /// No description provided for @noPetsAdded.
   ///
   /// In en, this message translates to:
-  /// **'No pets added.'**
+  /// **'No pets added yet.'**
   String get noPetsAdded;
 
   /// No description provided for @noClinicsAdded.
@@ -2669,6 +2675,252 @@ abstract class AppLocalizations {
   /// **'Battery'**
   String get battery;
 
+  /// No description provided for @collectingDataForAnalysis.
+  ///
+  /// In en, this message translates to:
+  /// **'Collecting sufficient data for analysis...'**
+  String get collectingDataForAnalysis;
+
+  /// No description provided for @modelRequiresMinimumReadings.
+  ///
+  /// In en, this message translates to:
+  /// **'The model requires a minimum of 100 readings'**
+  String get modelRequiresMinimumReadings;
+
+  /// No description provided for @aiDiagnosis.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Diagnosis'**
+  String get aiDiagnosis;
+
+  /// No description provided for @motionStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Motion Status'**
+  String get motionStatusLabel;
+
+  /// No description provided for @vitalStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vital Status'**
+  String get vitalStatusLabel;
+
+  /// No description provided for @finalStatusLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Final Status'**
+  String get finalStatusLabel;
+
+  /// No description provided for @alertLevelLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert Level'**
+  String get alertLevelLabel;
+
+  /// No description provided for @severityScoreLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Severity Score'**
+  String get severityScoreLabel;
+
+  /// No description provided for @motionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Motion'**
+  String get motionLabel;
+
+  /// No description provided for @vitalsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Vitals'**
+  String get vitalsLabel;
+
+  /// No description provided for @summaryLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summaryLabel;
+
+  /// No description provided for @noDataLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'No data'**
+  String get noDataLabel;
+
+  /// No description provided for @statusHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get statusHealthy;
+
+  /// No description provided for @statusWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get statusWarning;
+
+  /// No description provided for @statusCritical.
+  ///
+  /// In en, this message translates to:
+  /// **'Critical'**
+  String get statusCritical;
+
+  /// No description provided for @statusLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get statusLow;
+
+  /// No description provided for @statusMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get statusMedium;
+
+  /// No description provided for @statusHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get statusHigh;
+
+  /// No description provided for @invalidCollarIdError.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid serial number, please try again.'**
+  String get invalidCollarIdError;
+
+  /// No description provided for @selectPetFirstError.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a pet first.'**
+  String get selectPetFirstError;
+
+  /// No description provided for @linkSmartCollarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Link Smart Collar'**
+  String get linkSmartCollarTitle;
+
+  /// No description provided for @collarSerialNumberLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Collar Serial Number (ID)'**
+  String get collarSerialNumberLabel;
+
+  /// No description provided for @enterCollarNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter collar number...'**
+  String get enterCollarNumberHint;
+
+  /// No description provided for @linkCollarBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Link Collar'**
+  String get linkCollarBtn;
+
+  /// No description provided for @collarIdLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Collar ID'**
+  String get collarIdLabel;
+
+  /// No description provided for @linkedToLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Linked to'**
+  String get linkedToLabel;
+
+  /// No description provided for @aiModelResults.
+  ///
+  /// In en, this message translates to:
+  /// **'AI Model Results'**
+  String get aiModelResults;
+
+  /// No description provided for @noSmartCollarLinked.
+  ///
+  /// In en, this message translates to:
+  /// **'No smart collar linked'**
+  String get noSmartCollarLinked;
+
+  /// No description provided for @getSmartCollarDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Get a smart collar to monitor your pet\'s health in real time.'**
+  String get getSmartCollarDesc;
+
+  /// No description provided for @noConnectedCollarsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'No connected collars currently\nTap (+) to link a new collar'**
+  String get noConnectedCollarsMessage;
+
+  /// No description provided for @unlinkCollar.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink Collar'**
+  String get unlinkCollar;
+
+  /// No description provided for @unlinkCollarConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink Collar?'**
+  String get unlinkCollarConfirmTitle;
+
+  /// No description provided for @unlinkCollarConfirmDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'You will lose health and location tracking for your pet after unlinking.'**
+  String get unlinkCollarConfirmDesc;
+
+  /// No description provided for @unlinkBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlink'**
+  String get unlinkBtn;
+
+  /// No description provided for @locating.
+  ///
+  /// In en, this message translates to:
+  /// **'Locating...'**
+  String get locating;
+
+  /// No description provided for @locationUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Location currently unavailable'**
+  String get locationUnavailable;
+
+  /// No description provided for @unknownLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown location'**
+  String get unknownLocation;
+
+  /// No description provided for @low.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get low;
+
+  /// No description provided for @high.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get high;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
   /// No description provided for @conversationsTitle.
   ///
   /// In en, this message translates to:
@@ -2711,23 +2963,197 @@ abstract class AppLocalizations {
   /// **'Start a conversation with {userName}...'**
   String startConversationWith(String userName);
 
-  /// Promotional text to order a smart collar
-  ///
-  /// In en, this message translates to:
-  /// **'Order a smart collar to track your pet\'s health.'**
-  String get orderSmartCollarDescription;
-
   /// Error message shown when the user enters an incorrect password
   ///
   /// In en, this message translates to:
   /// **'Wrong password, please check and try again'**
   String get wrongPassword;
 
+  /// No description provided for @passwordChangedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed successfully'**
+  String get passwordChangedSuccessfully;
+
+  /// No description provided for @productAddedToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Product added to cart successfully!'**
+  String get productAddedToCart;
+
+  /// Promotional text to order a smart collar
+  ///
+  /// In en, this message translates to:
+  /// **'Order a smart collar to track your pet\'s health.'**
+  String get orderSmartCollarDescription;
+
   /// Button label to order a product
   ///
   /// In en, this message translates to:
   /// **'Order Now'**
   String get orderNow;
+
+  /// No description provided for @ordersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get ordersTitle;
+
+  /// No description provided for @noOrdersToDisplay.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders to display'**
+  String get noOrdersToDisplay;
+
+  /// No description provided for @orderNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Order #{id}'**
+  String orderNumber(String id);
+
+  /// No description provided for @cartIsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping cart is empty'**
+  String get cartIsEmpty;
+
+  /// No description provided for @addProductsToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Add some products to the cart to start shopping'**
+  String get addProductsToCart;
+
+  /// No description provided for @shoppingCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping Cart'**
+  String get shoppingCart;
+
+  /// No description provided for @emptyCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty Cart'**
+  String get emptyCart;
+
+  /// No description provided for @confirmEmptyCartMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove all products from the cart?'**
+  String get confirmEmptyCartMessage;
+
+  /// No description provided for @cartClearedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart cleared successfully'**
+  String get cartClearedSuccessfully;
+
+  /// No description provided for @productRemovedFromCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Product removed from cart'**
+  String get productRemovedFromCart;
+
+  /// No description provided for @totalAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get totalAmountLabel;
+
+  /// No description provided for @otherProductsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'+ {count} other products'**
+  String otherProductsCount(int count);
+
+  /// No description provided for @completeOrderBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete Order'**
+  String get completeOrderBtn;
+
+  /// No description provided for @deliveryInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Information'**
+  String get deliveryInfo;
+
+  /// No description provided for @deliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery Address'**
+  String get deliveryAddress;
+
+  /// No description provided for @deliveryAddressHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your address in detail...'**
+  String get deliveryAddressHint;
+
+  /// No description provided for @paymentMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment Method'**
+  String get paymentMethod;
+
+  /// No description provided for @cashOnDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on Delivery'**
+  String get cashOnDelivery;
+
+  /// No description provided for @confirmOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Order'**
+  String get confirmOrder;
+
+  /// No description provided for @orderPlacedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Order Placed Successfully!'**
+  String get orderPlacedSuccessfully;
+
+  /// No description provided for @orderAcceptedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Order accepted successfully'**
+  String get orderAcceptedSuccessfully;
+
+  /// No description provided for @requestedQuantityNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'The requested quantity is not available in stock ⚠️'**
+  String get requestedQuantityNotAvailable;
+
+  /// No description provided for @cancelOrderBtn.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel Order'**
+  String get cancelOrderBtn;
+
+  /// No description provided for @orderCanceledSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Order canceled successfully'**
+  String get orderCanceledSuccessfully;
+
+  /// No description provided for @orderSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'We will contact you shortly to confirm the order and delivery.'**
+  String get orderSuccessMessage;
+
+  /// No description provided for @viewMyOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'View My Orders'**
+  String get viewMyOrders;
+
+  /// No description provided for @continueShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue Shopping'**
+  String get continueShopping;
 
   /// No description provided for @sessionExpiredTitle.
   ///

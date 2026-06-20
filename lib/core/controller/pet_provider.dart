@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
+import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/models/pet_model.dart';
 import 'package:rafiq/core/services/pet_service.dart';
 
@@ -25,6 +27,7 @@ class PetProvider extends ChangeNotifier {
       _currentPetProfile?['upcomingAppointments'] ?? [];
   List<dynamic> get medicalRecords =>
       _currentPetProfile?['medicalRecord'] ?? [];
+
   // ==========================================
   // 1. استقبال وتحديث لستة الحيوانات
   // ==========================================
@@ -53,6 +56,9 @@ class PetProvider extends ChangeNotifier {
         _pets.add(PetModel.fromJson(petJson));
       }
       log("[PetProvider]: Successfully loaded ${_pets.length} pets.");
+
+      // 🚀 السطر ده هيخلي الأطواق تظهر في الداشبورد فوراً أول ما الابلكيشن يفتح
+      syncLocalCollars();
     } else {
       _pets.clear();
       log("[PetProvider]: Warning - No pets list found in response.");
@@ -214,8 +220,6 @@ class PetProvider extends ChangeNotifier {
 
       _pets.removeWhere((p) => p.id == petId);
       notifyListeners();
-
-      // log("[PetProvider]: تم حذف الحيوان من السيرفر بنجاح.");
     } catch (e) {
       log("[PetProvider]: فشل الحذف: $e");
       throw Exception("failed_to_delete");
@@ -239,15 +243,61 @@ class PetProvider extends ChangeNotifier {
     try {
       final response = await getIt<PetService>().getPetProfile(petId);
 
-      // بنحفظ الداتا اللي راجعة
       _currentPetProfile = response.data['data'] ?? response.data;
       log("[PetProvider]: تم جلب بروفايل الحيوان الشامل بنجاح.");
-      log("[PetProvider]: الداتا الراجعة: $_currentPetProfile");
     } catch (e) {
       log("[PetProvider]: فشل جلب بروفايل الحيوان: $e");
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  // ==========================================
+  // 8. محاكاة ربط الطوق محلياً (عشان يسمع في الداشبورد)
+  // ==========================================
+
+  // 🚀 خلينا الـ petId يقبل dynamic ووحدنا المقارنة بـ toString عشان نتفادى إيرور الـ int والـ String
+  void linkCollarLocally(dynamic petId, String collarId) {
+    final index = _pets.indexWhere((p) => p.id.toString() == petId.toString());
+    if (index != -1) {
+      _pets[index] = _pets[index].copyWith(collarId: collarId);
+      notifyListeners();
+    }
+  }
+
+  // 🚀 نفس التعديل هنا لفك الربط
+  void unlinkCollarLocally(dynamic petId) {
+    final index = _pets.indexWhere((p) => p.id.toString() == petId.toString());
+    if (index != -1) {
+      _pets[index] = _pets[index].copyWith(collarId: '');
+      notifyListeners();
+    }
+  }
+
+  // 🚀 دالة المزامنة الجديدة اللي بتسحب الأطواق من الكاش وتوزعها على الحيوانات
+  void syncLocalCollars() {
+    try {
+      final savedData = CacheHelper.getData(key: 'connected_collars');
+      if (savedData != null) {
+        final List<dynamic> decoded = jsonDecode(savedData);
+        for (var collar in decoded) {
+          final cPetId = collar['petId'];
+          final cId = collar['id'];
+          if (cPetId != null && cId != null) {
+            // بندور على الحيوان ونديله الطوق بتاعه
+            final index = _pets.indexWhere(
+              (p) => p.id.toString() == cPetId.toString(),
+            );
+            if (index != -1) {
+              _pets[index] = _pets[index].copyWith(collarId: cId.toString());
+            }
+          }
+        }
+        notifyListeners();
+      }
+    } catch (e) {
+      log("[PetProvider]: خطأ أثناء مزامنة الأطواق المحلية: $e");
     }
   }
 }

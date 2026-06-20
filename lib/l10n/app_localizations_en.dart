@@ -483,7 +483,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get manageAppointmentsBtn => 'Manage Appointments';
 
   @override
-  String get addAppointment => 'Add Appointment';
+  String get addPrivateAppointment => 'Add Private Appointment';
 
   @override
   String get editAppointment => 'Edit Appointment';
@@ -713,7 +713,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myClinicsTitle => 'My Clinics';
 
   @override
-  String get noPetsAdded => 'No pets added.';
+  String get petsHidden => 'No pets to display';
+
+  @override
+  String get noPetsAdded => 'No pets added yet.';
 
   @override
   String get noClinicsAdded => 'No clinics added.';
@@ -1357,6 +1360,129 @@ class AppLocalizationsEn extends AppLocalizations {
   String get battery => 'Battery';
 
   @override
+  String get collectingDataForAnalysis => 'Collecting sufficient data for analysis...';
+
+  @override
+  String get modelRequiresMinimumReadings => 'The model requires a minimum of 100 readings';
+
+  @override
+  String get aiDiagnosis => 'AI Diagnosis';
+
+  @override
+  String get motionStatusLabel => 'Motion Status';
+
+  @override
+  String get vitalStatusLabel => 'Vital Status';
+
+  @override
+  String get finalStatusLabel => 'Final Status';
+
+  @override
+  String get alertLevelLabel => 'Alert Level';
+
+  @override
+  String get severityScoreLabel => 'Severity Score';
+
+  @override
+  String get motionLabel => 'Motion';
+
+  @override
+  String get vitalsLabel => 'Vitals';
+
+  @override
+  String get summaryLabel => 'Summary';
+
+  @override
+  String get noDataLabel => 'No data';
+
+  @override
+  String get statusHealthy => 'Healthy';
+
+  @override
+  String get statusWarning => 'Warning';
+
+  @override
+  String get statusCritical => 'Critical';
+
+  @override
+  String get statusLow => 'Low';
+
+  @override
+  String get statusMedium => 'Medium';
+
+  @override
+  String get statusHigh => 'High';
+
+  @override
+  String get invalidCollarIdError => 'Invalid serial number, please try again.';
+
+  @override
+  String get selectPetFirstError => 'Please select a pet first.';
+
+  @override
+  String get linkSmartCollarTitle => 'Link Smart Collar';
+
+  @override
+  String get collarSerialNumberLabel => 'Collar Serial Number (ID)';
+
+  @override
+  String get enterCollarNumberHint => 'Enter collar number...';
+
+  @override
+  String get linkCollarBtn => 'Link Collar';
+
+  @override
+  String get collarIdLabel => 'Collar ID';
+
+  @override
+  String get linkedToLabel => 'Linked to';
+
+  @override
+  String get aiModelResults => 'AI Model Results';
+
+  @override
+  String get noSmartCollarLinked => 'No smart collar linked';
+
+  @override
+  String get getSmartCollarDesc => 'Get a smart collar to monitor your pet\'s health in real time.';
+
+  @override
+  String get noConnectedCollarsMessage => 'No connected collars currently\nTap (+) to link a new collar';
+
+  @override
+  String get unlinkCollar => 'Unlink Collar';
+
+  @override
+  String get unlinkCollarConfirmTitle => 'Unlink Collar?';
+
+  @override
+  String get unlinkCollarConfirmDesc => 'You will lose health and location tracking for your pet after unlinking.';
+
+  @override
+  String get unlinkBtn => 'Unlink';
+
+  @override
+  String get locating => 'Locating...';
+
+  @override
+  String get locationUnavailable => 'Location currently unavailable';
+
+  @override
+  String get unknownLocation => 'Unknown location';
+
+  @override
+  String get low => 'Low';
+
+  @override
+  String get high => 'High';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
   String get conversationsTitle => 'Conversations';
 
   @override
@@ -1380,13 +1506,104 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get orderSmartCollarDescription => 'Order a smart collar to track your pet\'s health.';
-
-  @override
   String get wrongPassword => 'Wrong password, please check and try again';
 
   @override
+  String get passwordChangedSuccessfully => 'Password changed successfully';
+
+  @override
+  String get productAddedToCart => 'Product added to cart successfully!';
+
+  @override
+  String get orderSmartCollarDescription => 'Order a smart collar to track your pet\'s health.';
+
+  @override
   String get orderNow => 'Order Now';
+
+  @override
+  String get ordersTitle => 'Orders';
+
+  @override
+  String get noOrdersToDisplay => 'No orders to display';
+
+  @override
+  String orderNumber(String id) {
+    return 'Order #$id';
+  }
+
+  @override
+  String get cartIsEmpty => 'Shopping cart is empty';
+
+  @override
+  String get addProductsToCart => 'Add some products to the cart to start shopping';
+
+  @override
+  String get shoppingCart => 'Shopping Cart';
+
+  @override
+  String get emptyCart => 'Empty Cart';
+
+  @override
+  String get confirmEmptyCartMessage => 'Are you sure you want to remove all products from the cart?';
+
+  @override
+  String get cartClearedSuccessfully => 'Cart cleared successfully';
+
+  @override
+  String get productRemovedFromCart => 'Product removed from cart';
+
+  @override
+  String get totalAmountLabel => 'Total';
+
+  @override
+  String otherProductsCount(int count) {
+    return '+ $count other products';
+  }
+
+  @override
+  String get completeOrderBtn => 'Complete Order';
+
+  @override
+  String get deliveryInfo => 'Delivery Information';
+
+  @override
+  String get deliveryAddress => 'Delivery Address';
+
+  @override
+  String get deliveryAddressHint => 'Write your address in detail...';
+
+  @override
+  String get paymentMethod => 'Payment Method';
+
+  @override
+  String get cashOnDelivery => 'Cash on Delivery';
+
+  @override
+  String get confirmOrder => 'Confirm Order';
+
+  @override
+  String get orderPlacedSuccessfully => 'Order Placed Successfully!';
+
+  @override
+  String get orderAcceptedSuccessfully => 'Order accepted successfully';
+
+  @override
+  String get requestedQuantityNotAvailable => 'The requested quantity is not available in stock ⚠️';
+
+  @override
+  String get cancelOrderBtn => 'Cancel Order';
+
+  @override
+  String get orderCanceledSuccessfully => 'Order canceled successfully';
+
+  @override
+  String get orderSuccessMessage => 'We will contact you shortly to confirm the order and delivery.';
+
+  @override
+  String get viewMyOrders => 'View My Orders';
+
+  @override
+  String get continueShopping => 'Continue Shopping';
 
   @override
   String get sessionExpiredTitle => 'Session Expired';

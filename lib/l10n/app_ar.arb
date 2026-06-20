@@ -531,8 +531,8 @@
   "manageAppointmentsBtn": "إدارة مواعيدي",
   "@manageAppointmentsBtn": {},
 
-  "addAppointment": "إضافة موعد",
-  "@addAppointment": {},
+  "addPrivateAppointment": "إضافة موعد خاص",
+  "@addPrivateAppointment": {},
 
   "editAppointment": "تعديل الموعد",
   "@editAppointment": {},
@@ -748,8 +748,12 @@
   "myClinicsTitle": "عياداتي",
   "@myClinicsTitle": {},
 
-  "noPetsAdded": "لا توجد حيوانات أليفة.",
+  "petsHidden": "لا توجد حيوانات لعرضها",
+  "@petsHidden": {},
+
+  "noPetsAdded": "لا توجد حيوانات مضافة",
   "@noPetsAdded": {},
+
   "noClinicsAdded": "لا توجد عيادات مضافة.",
   "@noClinicsAdded": {},
 
@@ -1516,6 +1520,100 @@
   "battery": "البطارية",
   "@battery": {},
 
+  "collectingDataForAnalysis": "جاري تجميع بيانات كافية لعمل التحليل...",
+  "@collectingDataForAnalysis": {},
+  "modelRequiresMinimumReadings": "الموديل يحتاج 100 قراءة كحد أدنى",
+  "@modelRequiresMinimumReadings": {},
+
+  "aiDiagnosis": "تحليل الذكاء الاصطناعي",
+  "@aiDiagnosis": {},
+  "motionStatusLabel": "حالة الحركة",
+  "@motionStatusLabel": {},
+  "vitalStatusLabel": "المؤشرات الحيوية",
+  "@vitalStatusLabel": {},
+  "finalStatusLabel": "الحالة العامة",
+  "@finalStatusLabel": {},
+  "alertLevelLabel": "مستوى التنبيه",
+  "@alertLevelLabel": {},
+  "severityScoreLabel": "معدل الخطورة",
+  "@severityScoreLabel": {},
+  "motionLabel": "الحركة",
+  "@motionLabel": {},
+  "vitalsLabel": "المؤشرات",
+  "@vitalsLabel": {},
+  "summaryLabel": "الملخص",
+  "@summaryLabel": {},
+  "noDataLabel": "لا توجد بيانات",
+  "@noDataLabel": {},
+
+  "statusHealthy": "طبيعي",
+  "@statusHealthy": {},
+  "statusWarning": "تحذير",
+  "@statusWarning": {},
+  "statusCritical": "حرج",
+  "@statusCritical": {},
+  "statusLow": "منخفض",
+  "@statusLow": {},
+  "statusMedium": "متوسط",
+  "@statusMedium": {},
+  "statusHigh": "مرتفع",
+  "@statusHigh": {},
+
+  "invalidCollarIdError": "الرقم التسلسلي غير صحيح، حاول مرة أخرى.",
+  "@invalidCollarIdError": {},
+  "selectPetFirstError": "برجاء اختيار الحيوان الأليف أولاً.",
+  "@selectPetFirstError": {},
+  "linkSmartCollarTitle": "ربط الطوق الذكي",
+  "@linkSmartCollarTitle": {},
+  "collarSerialNumberLabel": "الرقم التسلسلي للطوق (ID)",
+  "@collarSerialNumberLabel": {},
+  "enterCollarNumberHint": "أدخل رقم الطوق...",
+  "@enterCollarNumberHint": {},
+  "linkCollarBtn": "ربط الطوق",
+  "@linkCollarBtn": {},
+
+  "collarIdLabel": "رقم الطوق",
+  "@collarIdLabel": {},
+  "linkedToLabel": "مرتبط بـ",
+  "@linkedToLabel": {},
+
+  "aiModelResults": "نتائج نموذج الذكاء الاصطناعي",
+  "@aiModelResults": {},
+  "noSmartCollarLinked": "لا يوجد طوق ذكي مربوط",
+  "@noSmartCollarLinked": {},
+  "getSmartCollarDesc": "احصل على طوق ذكي لمراقبة صحة أليفك في الوقت الفعلي.",
+  "@getSmartCollarDesc": {},
+
+  "noConnectedCollarsMessage": "لا يوجد أطواق متصلة حالياً\nاضغط على (+) لربط طوق جديد",
+  "@noConnectedCollarsMessage": {},
+
+  "unlinkCollar": "إلغاء ربط الطوق",
+  "@unlinkCollar": {},
+
+  "unlinkCollarConfirmTitle": "فك ربط الطوق؟",
+  "@unlinkCollarConfirmTitle": {},
+  "unlinkCollarConfirmDesc": "ستفقد تتبع الحالة الصحية والموقع الخاص بأليفك بعد فك الربط.",
+  "@unlinkCollarConfirmDesc": {},
+  "unlinkBtn": "فك الربط",
+  "@unlinkBtn": {},
+
+  "locating": "جاري تحديد الموقع...",
+  "@locating": {},
+  "locationUnavailable": "الموقع غير متاح حالياً",
+  "@locationUnavailable": {},
+  "unknownLocation": "موقع غير معروف",
+  "@unknownLocation": {},
+
+  "low": "منخفض",
+  "@low": {},
+  "high": "مرتفع",
+  "@high": {},
+  
+  "today": "اليوم",
+  "@today": {},
+  "yesterday": "أمس",
+  "@yesterday": {},
+
   "conversationsTitle": "المحادثات",
   "@conversationsTitle": {},
   "noConversationsYet": "لا توجد محادثات حتى الآن",
@@ -1542,12 +1640,98 @@
 
   "wrongPassword": "كلمة المرور خاطئة، يرجى التأكد والمحاولة مرة أخرى",
   "@wrongPassword": {},
-  
+
+  "passwordChangedSuccessfully": "تم تغيير كلمة المرور بنجاح",
+  "@passwordChangedSuccessfully": {},
+
+  "productAddedToCart": "تمت إضافة المنتج للسلة بنجاح!",
+  "@productAddedToCart": {},
+
   "orderSmartCollarDescription": "اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!",
   "@orderSmartCollarDescription": {},
   
   "orderNow": "اطلب الآن",
   "@orderNow": {},
+
+  "ordersTitle": "الطلبات",
+  "@ordersTitle": {},
+
+  "noOrdersToDisplay": "لا توجد طلبات لعرضها",
+  "@noOrdersToDisplay": {},
+
+  "orderNumber": "طلب #{id}",
+  "@orderNumber": {
+    "placeholders": {
+      "id": {
+        "type": "String"
+      }
+    }
+  },
+
+  "cartIsEmpty": "سلة التسوق فارغة",
+  "@cartIsEmpty": {},
+  "addProductsToCart": "أضف بعض المنتجات للسلة للبدء في التسوق",
+  "@addProductsToCart": {},
+  "shoppingCart": "سلة التسوق",
+  "@shoppingCart": {},
+  "emptyCart": "إفراغ السلة",
+  "@emptyCart": {},
+
+  "confirmEmptyCartMessage": "أنت متأكد من رغبتك في حذف جميع المنتجات من السلة؟",
+  "@confirmEmptyCartMessage": {},
+  "cartClearedSuccessfully": "تم إفراغ السلة بنجاح",
+  "@cartClearedSuccessfully": {},
+
+  "productRemovedFromCart": "تمت إزالة المنتج من السلة",
+  "@productRemovedFromCart": {},
+
+  "totalAmountLabel": "الإجمالي",
+  "@totalAmountLabel": {},
+
+  "otherProductsCount": "+ {count} منتجات أخرى",
+  "@otherProductsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+
+  "completeOrderBtn": "إتمام الطلب",
+  "@completeOrderBtn": {},
+
+  "deliveryInfo": "معلومات التوصيل",
+  "@deliveryInfo": {},
+  "deliveryAddress": "عنوان التوصيل",
+  "@deliveryAddress": {},
+  "deliveryAddressHint": "...اكتب عنوانك بالتفصيل",
+  "@deliveryAddressHint": {},
+  "paymentMethod": "طريقة الدفع",
+  "@paymentMethod": {},
+  "cashOnDelivery": "الدفع عند الاستلام",
+  "@cashOnDelivery": {},
+  "confirmOrder": "تأكيد الطلب",
+  "@confirmOrder": {},
+  "orderPlacedSuccessfully": "تم الطلب بنجاح!",
+  "@orderPlacedSuccessfully": {},
+  "orderSuccessMessage": "سيتم التواصل معك قريباً لتأكيد الطلب والتوصيل",
+  "@orderSuccessMessage": {},
+
+  "orderAcceptedSuccessfully": "تم قبول الطلب بنجاح",
+  "@orderAcceptedSuccessfully": {},
+
+  "cancelOrderBtn": "إلغاء الطلب",
+  "@cancelOrderBtn": {},
+  "orderCanceledSuccessfully": "تم إلغاء الطلب بنجاح",
+  "@orderCanceledSuccessfully": {},
+
+  "requestedQuantityNotAvailable": "الكمية المطلوبة غير متوفرة في المخزون ⚠️",
+  "@requestedQuantityNotAvailable": {},
+
+  "viewMyOrders": "عرض طلباتي",
+  "@viewMyOrders": {},
+  "continueShopping": "متابعة التسوق",
+  "@continueShopping": {},
 
   "sessionExpiredTitle": "انتهت الجلسة",
   "@sessionExpiredTitle": {},

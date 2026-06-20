@@ -94,16 +94,20 @@ class _PostItemState extends State<PostItem> {
               description: context.l10n.deleteDialogMessage,
               confirmBtnText: context.l10n.deleteAction,
               mainColor: Colors.red,
-              onConfirm: () async {
+             onConfirm: () async {
                 final successMsg = context.l10n.postDeletedSuccessfully;
                 final provider = context.read<CommunityProvider>();
 
-                Navigator.pop(dialogContext);
+                Navigator.pop(dialogContext); 
 
                 bool deleted = await provider.deletePost(widget.post);
 
                 if (deleted && context.mounted) {
                   showSnackBar(context, successMsg, isError: false);
+                  
+                  if (widget.onDelete != null) {
+                    widget.onDelete!();
+                  }
                 }
               },
             );

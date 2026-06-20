@@ -483,7 +483,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get manageAppointmentsBtn => 'إدارة مواعيدي';
 
   @override
-  String get addAppointment => 'إضافة موعد';
+  String get addPrivateAppointment => 'إضافة موعد خاص';
 
   @override
   String get editAppointment => 'تعديل الموعد';
@@ -719,7 +719,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get myClinicsTitle => 'عياداتي';
 
   @override
-  String get noPetsAdded => 'لا توجد حيوانات أليفة.';
+  String get petsHidden => 'لا توجد حيوانات لعرضها';
+
+  @override
+  String get noPetsAdded => 'لا توجد حيوانات مضافة';
 
   @override
   String get noClinicsAdded => 'لا توجد عيادات مضافة.';
@@ -1369,6 +1372,129 @@ class AppLocalizationsAr extends AppLocalizations {
   String get battery => 'البطارية';
 
   @override
+  String get collectingDataForAnalysis => 'جاري تجميع بيانات كافية لعمل التحليل...';
+
+  @override
+  String get modelRequiresMinimumReadings => 'الموديل يحتاج 100 قراءة كحد أدنى';
+
+  @override
+  String get aiDiagnosis => 'تحليل الذكاء الاصطناعي';
+
+  @override
+  String get motionStatusLabel => 'حالة الحركة';
+
+  @override
+  String get vitalStatusLabel => 'المؤشرات الحيوية';
+
+  @override
+  String get finalStatusLabel => 'الحالة العامة';
+
+  @override
+  String get alertLevelLabel => 'مستوى التنبيه';
+
+  @override
+  String get severityScoreLabel => 'معدل الخطورة';
+
+  @override
+  String get motionLabel => 'الحركة';
+
+  @override
+  String get vitalsLabel => 'المؤشرات';
+
+  @override
+  String get summaryLabel => 'الملخص';
+
+  @override
+  String get noDataLabel => 'لا توجد بيانات';
+
+  @override
+  String get statusHealthy => 'طبيعي';
+
+  @override
+  String get statusWarning => 'تحذير';
+
+  @override
+  String get statusCritical => 'حرج';
+
+  @override
+  String get statusLow => 'منخفض';
+
+  @override
+  String get statusMedium => 'متوسط';
+
+  @override
+  String get statusHigh => 'مرتفع';
+
+  @override
+  String get invalidCollarIdError => 'الرقم التسلسلي غير صحيح، حاول مرة أخرى.';
+
+  @override
+  String get selectPetFirstError => 'برجاء اختيار الحيوان الأليف أولاً.';
+
+  @override
+  String get linkSmartCollarTitle => 'ربط الطوق الذكي';
+
+  @override
+  String get collarSerialNumberLabel => 'الرقم التسلسلي للطوق (ID)';
+
+  @override
+  String get enterCollarNumberHint => 'أدخل رقم الطوق...';
+
+  @override
+  String get linkCollarBtn => 'ربط الطوق';
+
+  @override
+  String get collarIdLabel => 'رقم الطوق';
+
+  @override
+  String get linkedToLabel => 'مرتبط بـ';
+
+  @override
+  String get aiModelResults => 'نتائج نموذج الذكاء الاصطناعي';
+
+  @override
+  String get noSmartCollarLinked => 'لا يوجد طوق ذكي مربوط';
+
+  @override
+  String get getSmartCollarDesc => 'احصل على طوق ذكي لمراقبة صحة أليفك في الوقت الفعلي.';
+
+  @override
+  String get noConnectedCollarsMessage => 'لا يوجد أطواق متصلة حالياً\nاضغط على (+) لربط طوق جديد';
+
+  @override
+  String get unlinkCollar => 'إلغاء ربط الطوق';
+
+  @override
+  String get unlinkCollarConfirmTitle => 'فك ربط الطوق؟';
+
+  @override
+  String get unlinkCollarConfirmDesc => 'ستفقد تتبع الحالة الصحية والموقع الخاص بأليفك بعد فك الربط.';
+
+  @override
+  String get unlinkBtn => 'فك الربط';
+
+  @override
+  String get locating => 'جاري تحديد الموقع...';
+
+  @override
+  String get locationUnavailable => 'الموقع غير متاح حالياً';
+
+  @override
+  String get unknownLocation => 'موقع غير معروف';
+
+  @override
+  String get low => 'منخفض';
+
+  @override
+  String get high => 'مرتفع';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get yesterday => 'أمس';
+
+  @override
   String get conversationsTitle => 'المحادثات';
 
   @override
@@ -1392,13 +1518,104 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
-  String get orderSmartCollarDescription => 'اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!';
-
-  @override
   String get wrongPassword => 'كلمة المرور خاطئة، يرجى التأكد والمحاولة مرة أخرى';
 
   @override
+  String get passwordChangedSuccessfully => 'تم تغيير كلمة المرور بنجاح';
+
+  @override
+  String get productAddedToCart => 'تمت إضافة المنتج للسلة بنجاح!';
+
+  @override
+  String get orderSmartCollarDescription => 'اطلب طوقاً ذكياً الآن للحصول على مراقبة شاملة لصحة حيوانك!';
+
+  @override
   String get orderNow => 'اطلب الآن';
+
+  @override
+  String get ordersTitle => 'الطلبات';
+
+  @override
+  String get noOrdersToDisplay => 'لا توجد طلبات لعرضها';
+
+  @override
+  String orderNumber(String id) {
+    return 'طلب #$id';
+  }
+
+  @override
+  String get cartIsEmpty => 'سلة التسوق فارغة';
+
+  @override
+  String get addProductsToCart => 'أضف بعض المنتجات للسلة للبدء في التسوق';
+
+  @override
+  String get shoppingCart => 'سلة التسوق';
+
+  @override
+  String get emptyCart => 'إفراغ السلة';
+
+  @override
+  String get confirmEmptyCartMessage => 'أنت متأكد من رغبتك في حذف جميع المنتجات من السلة؟';
+
+  @override
+  String get cartClearedSuccessfully => 'تم إفراغ السلة بنجاح';
+
+  @override
+  String get productRemovedFromCart => 'تمت إزالة المنتج من السلة';
+
+  @override
+  String get totalAmountLabel => 'الإجمالي';
+
+  @override
+  String otherProductsCount(int count) {
+    return '+ $count منتجات أخرى';
+  }
+
+  @override
+  String get completeOrderBtn => 'إتمام الطلب';
+
+  @override
+  String get deliveryInfo => 'معلومات التوصيل';
+
+  @override
+  String get deliveryAddress => 'عنوان التوصيل';
+
+  @override
+  String get deliveryAddressHint => '...اكتب عنوانك بالتفصيل';
+
+  @override
+  String get paymentMethod => 'طريقة الدفع';
+
+  @override
+  String get cashOnDelivery => 'الدفع عند الاستلام';
+
+  @override
+  String get confirmOrder => 'تأكيد الطلب';
+
+  @override
+  String get orderPlacedSuccessfully => 'تم الطلب بنجاح!';
+
+  @override
+  String get orderAcceptedSuccessfully => 'تم قبول الطلب بنجاح';
+
+  @override
+  String get requestedQuantityNotAvailable => 'الكمية المطلوبة غير متوفرة في المخزون ⚠️';
+
+  @override
+  String get cancelOrderBtn => 'إلغاء الطلب';
+
+  @override
+  String get orderCanceledSuccessfully => 'تم إلغاء الطلب بنجاح';
+
+  @override
+  String get orderSuccessMessage => 'سيتم التواصل معك قريباً لتأكيد الطلب والتوصيل';
+
+  @override
+  String get viewMyOrders => 'عرض طلباتي';
+
+  @override
+  String get continueShopping => 'متابعة التسوق';
 
   @override
   String get sessionExpiredTitle => 'انتهت الجلسة';

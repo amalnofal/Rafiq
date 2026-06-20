@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_state.dart';
 
@@ -33,6 +34,9 @@ class LoginCubit extends Cubit<LoginState> {
         value: authModel.refreshToken,
       );
       await CacheHelper.saveData(key: 'userEmail', value: email);
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('userData');
 
       emit(LoginSuccess());
     } on DioException catch (e) {

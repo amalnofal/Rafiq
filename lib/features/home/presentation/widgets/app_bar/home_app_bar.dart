@@ -8,10 +8,12 @@ import 'package:rafiq/features/home/presentation/widgets/app_bar/settings_icon.d
 import 'package:rafiq/features/home/presentation/widgets/app_bar/user_greeting.dart';
 import 'package:rafiq/features/home/presentation/widgets/app_bar/badged_icon_button.dart';
 
-AppBar homeAppBar({
-  required int notificationsCount,
-  required int unreadMessagesCount,
-}) {
+AppBar homeAppBar(
+  // {
+  // required int notificationsCount,
+  // required int unreadMessagesCount,
+  // }
+) {
   return AppBar(
     title: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,15 +39,15 @@ AppBar homeAppBar({
             ),
             SizedBox(width: AppDimensions.paddingM),
 
-            // 2. أيقونة الإشعارات
-            BadgedIconButton(
-              iconPath: "assets/icons/notifications.svg",
-              // badgeCount: notificationsCount,
-              onTap: (context) {
-                Navigator.pushNamed(context, '/notifications');
-              },
-            ),
-            SizedBox(width: AppDimensions.paddingM),
+            // // 2. أيقونة الإشعارات
+            // BadgedIconButton(
+            //   iconPath: "assets/icons/notifications.svg",
+            //   // badgeCount: notificationsCount,
+            //   onTap: (context) {
+            //     Navigator.pushNamed(context, '/notifications');
+            //   },
+            // ),
+            // SizedBox(width: AppDimensions.paddingM),
 
             // 3. أيقونة الإعدادات
             SettingsIcon(),

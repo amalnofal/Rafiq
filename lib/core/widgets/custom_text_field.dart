@@ -36,6 +36,7 @@ class CustomTextField extends StatefulWidget {
   final int? maxLines;
   final int? minLines;
   final TextAlign? textAlign;
+  final TextCapitalization textCapitalization;
 
   const CustomTextField({
     super.key,
@@ -68,6 +69,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLines = 1, // الافتراضي سطر واحد
     this.minLines,
     this.textAlign,
+    this.textCapitalization = TextCapitalization.none,
   });
 
   @override
@@ -142,6 +144,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           widget.padding ??
           EdgeInsets.symmetric(vertical: AppDimensions.paddingS),
       child: TextFormField(
+        textCapitalization: widget.textCapitalization,
         validator:
             widget.validator ??
             (data) {

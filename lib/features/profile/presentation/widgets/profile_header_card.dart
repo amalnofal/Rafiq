@@ -328,32 +328,32 @@ class _ProfileHeaderCardState extends State<ProfileHeaderCard> {
                 ),
 
                 // chat button
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.w),
-                  child: CircleIconButton(
-                    "assets/icons/chat.svg",
-                    bgColor: Theme.of(context).colorScheme.primary,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    size: 45.h,
-                    iconSize: 19.h,
-                    onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => getIt<ChatCubit>(),
-                            child: ChatDetailsScreen(
-                              otherUserId: widget.user.id.toString(),
-                              otherUserName: widget.user.fullName,
-                              otherUserPhotoUrl: widget.user.photoUrl,
+                if (currentUser.receiveChatFromOtherUsers)
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: CircleIconButton(
+                      "assets/icons/chat.svg",
+                      bgColor: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      size: 45.h,
+                      iconSize: 19.h,
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) => getIt<ChatCubit>(),
+                              child: ChatDetailsScreen(
+                                otherUserId: widget.user.id.toString(),
+                                otherUserName: widget.user.fullName,
+                                otherUserPhotoUrl: widget.user.photoUrl,
+                              ),
                             ),
                           ),
-                        ),
-                        ModalRoute.withName('/home'),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
               ],
             ),
           ],

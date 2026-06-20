@@ -11,6 +11,7 @@ class CustomContainer extends StatelessWidget {
   final double borderWidth;
   final Color? color;
   final double? width;
+  final Clip clipBehavior;
 
   const CustomContainer({
     super.key,
@@ -22,6 +23,7 @@ class CustomContainer extends StatelessWidget {
     this.borderWidth = 2,
     this.color,
     this.width,
+    this.clipBehavior = Clip.none,
   });
 
   @override
@@ -35,6 +37,7 @@ class CustomContainer extends StatelessWidget {
         margin:
             margin ?? EdgeInsets.symmetric(vertical: AppDimensions.paddingS),
         padding: padding ?? EdgeInsets.all(AppDimensions.paddingL),
+        clipBehavior: clipBehavior,
         decoration: BoxDecoration(
           color: color ?? Theme.of(context).colorScheme.secondary,
 

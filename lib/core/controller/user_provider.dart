@@ -38,7 +38,6 @@ class UserProvider extends ChangeNotifier {
   UserProvider() {
     loadDataFromCache();
   }
-
   Future<void> loadDataFromCache() async {
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -47,8 +46,12 @@ class UserProvider extends ChangeNotifier {
       if (userDataString != null) {
         final Map<String, dynamic> extractedData = json.decode(userDataString);
         _user = UserModel.fromJson(extractedData);
+
+        getIt<PetProvider>().setPetsFromProfile(extractedData);
+        getIt<ClinicProvider>().setClinicsFromProfile(extractedData);
+
         notifyListeners();
-        log("[UserProvider]: تم تحميل البيانات من الكاش بنجاح.");
+        log("[UserProvider]: تم تحميل البيانات (والحيوانات) من الكاش بنجاح.");
       }
     } catch (e) {
       log("[UserProvider]: خطأ في قراءة الكاش: $e");
@@ -79,6 +82,7 @@ class UserProvider extends ChangeNotifier {
       getIt<PetProvider>().setPetsFromProfile(rawData);
       getIt<ClinicProvider>().setClinicsFromProfile(rawData);
 
+      await fetchUserSettings();
       _hasError = false;
     } catch (e) {
       if (_user == null) {
@@ -333,6 +337,208 @@ class UserProvider extends ChangeNotifier {
     } catch (e) {
       log("❌ [UserProvider]: فشل البحث عن مستخدمين: $e");
       throw Exception('ConnectionError');
+    }
+  }
+
+  // ==========================================================
+  // جلب البيانات الأساسية للتعديل (الاسم، الإيميل، الهاتف)
+  // ==========================================================
+  Future<Map<String, dynamic>> fetchProfileForEdit() async {
+    try {
+      final userService = getIt<UserService>();
+      final response = await userService.getProfileForEdit();
+
+      log("📝 داتا التعديل: ${response.data}");
+
+      final data = response.data['data'] ?? response.data;
+      return data as Map<String, dynamic>;
+    } catch (e) {
+      log("❌ [UserProvider]: فشل جلب بيانات التعديل: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================================
+  // تحديث البيانات الأساسية فقط (لشاشة الإعدادات)
+  // ==========================================================
+  Future<void> refreshBasicInfo() async {
+    try {
+      final data = await fetchProfileForEdit();
+
+      if (_user != null) {
+        _user = _user!.copyWith(
+          firstName: data['firstName'] ?? _user!.firstName,
+          lastName: data['lastName'] ?? _user!.lastName,
+          email: data['newEmail'] ?? data['email'] ?? _user!.email,
+          phone:
+              data['newPhoneNumber'] ??
+              data['phoneNumber'] ??
+              data['phone'] ??
+              '',
+        );
+        notifyListeners();
+        await _saveDataToPrefs();
+        log("✅ تم تحديث بيانات المستخدم في الموديل بنجاح.");
+      }
+    } catch (e) {
+      log("❌ [UserProvider]: فشل تحديث البيانات الأساسية: $e");
+    }
+  }
+
+  Future<void> saveInfoChanges({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final userService = getIt<UserService>();
+      final currentUser = _user;
+
+      // 1. تحديث الاسم
+      if (firstName != currentUser?.firstName ||
+          lastName != currentUser?.lastName) {
+        await userService.updateName(
+          firstName: firstName ?? currentUser?.firstName ?? '',
+          lastName: lastName ?? currentUser?.lastName ?? '',
+        );
+      }
+
+      // 2. تحديث الإيميل
+      if (email != null && email.isNotEmpty && email != currentUser?.email) {
+        await userService.updateEmail(newEmail: email);
+      }
+
+      // 3. تحديث رقم الهاتف (الحل الإجباري)
+      final String newPhone = phone?.trim() ?? '';
+
+      if (newPhone.isEmpty) {
+        log("🚀 جاري مسح الرقم (إجباري)...");
+        await userService.deletePhone();
+        _user = _user?.copyWith(phone: '');
+        notifyListeners();
+      } else if (newPhone != (currentUser?.phone ?? '')) {
+        log("🚀 جاري تحديث الرقم...");
+        await userService.updatePhone(newPhoneNumber: newPhone);
+        _user = _user?.copyWith(phone: newPhone);
+        notifyListeners();
+      }
+
+      // ندي فرصة للداتابيز في السيرفر تتحدث (ثانية واحدة)
+      await Future.delayed(const Duration(seconds: 1));
+
+      // 4. الخطوة الأهم: نسحب الداتا المحدثة من السيرفر عشان نتأكد إن الـ UI مطابق للـ Backend
+      await refreshBasicInfo();
+    } catch (e) {
+      log("❌ [UserProvider]: خطأ أثناء الحفظ: $e");
+      throw Exception("failedToSave");
+    } finally {
+      // 🚀 ده الجزء اللي كان ناقصك عشان اللودينج يختفي ويشتغل الزرار تاني
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // ==========================================================
+  // اعدادات الخصوصية (اظهار/إخفاء الحيوانات، استقبال الرسائل)
+  // ==========================================================
+  // جلب الإعدادات من السيرفر
+  Future<void> fetchUserSettings() async {
+    try {
+      final userService = getIt<UserService>();
+      final response = await userService.getUserSettings();
+
+      final data = response.data['data'] ?? response.data;
+
+      if (_user != null) {
+        _user = _user!.copyWith(
+          publicPetView: data['publicPetView'] ?? true,
+          receiveChatFromOtherUsers:
+              data['reciveChatFromOtherUsers'] ??
+              data['recivechatfromotherusers'] ??
+              true,
+        );
+        notifyListeners();
+        await _saveDataToPrefs();
+      }
+    } catch (e) {
+      log("❌ [UserProvider]: فشل جلب الإعدادات: $e");
+    }
+  }
+
+  Future<void> togglePrivacySetting({
+    bool? newPetView,
+    bool? newReceiveChat,
+  }) async {
+    final oldUser = _user;
+    if (_user == null) return;
+
+    _user = _user!.copyWith(
+      publicPetView: newPetView ?? _user!.publicPetView,
+      receiveChatFromOtherUsers:
+          newReceiveChat ?? _user!.receiveChatFromOtherUsers,
+    );
+    notifyListeners();
+
+    try {
+      final userService = getIt<UserService>();
+
+      final prefs = await SharedPreferences.getInstance();
+      final String currentLang = prefs.getString('language') ?? 'ar';
+
+      await userService.updateUserSettings(
+        _user!.toSettingsJson(langCode: currentLang),
+      );
+
+      await _saveDataToPrefs();
+      log("✅ تم تحديث الخصوصية بنجاح.");
+    } catch (e) {
+      _user = oldUser;
+      notifyListeners();
+      log("❌ فشل تحديث الخصوصية: $e");
+    }
+  }
+
+  // ==========================================
+  // تغيير كلمة المرور
+  // ==========================================
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmPassword,
+  }) async {
+    try {
+      final authService = getIt<AuthService>();
+      await authService.changePassword(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        confirmPassword: confirmPassword,
+      );
+    } catch (e) {
+      log("❌ [UserProvider]: فشل تغيير كلمة المرور: $e");
+
+      if (e is DioException) {
+        if (e.type == DioExceptionType.connectionError ||
+            e.type == DioExceptionType.connectionTimeout ||
+            e.type == DioExceptionType.receiveTimeout) {
+          throw Exception("connectionError");
+        }
+
+        if (e.response != null) {
+          final statusCode = e.response!.statusCode;
+          // الباك إند عادة بيرجع 400 لو الباسورد القديم غلط
+          if (statusCode == 400 || statusCode == 401) {
+            throw Exception("wrongPassword");
+          }
+          if (statusCode! >= 500) {
+            throw Exception("serverError");
+          }
+        }
+      }
+      throw Exception("unexpectedError");
     }
   }
 

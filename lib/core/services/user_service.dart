@@ -125,4 +125,74 @@ class UserService {
       rethrow;
     }
   }
+
+  // ==========================================
+  // جلب بيانات الحساب الأساسية للتعديل
+  // ==========================================
+  Future<Response> getProfileForEdit() async {
+    try {
+      final response = await _dio.get('/User/profile-phone-email-name');
+      log("[UserService]: تم جلب بيانات التعديل بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل جلب بيانات التعديل: $e");
+      rethrow;
+    }
+  }
+
+  Future<void> updateName({
+    required String firstName,
+    required String lastName,
+  }) async {
+    await _dio.put(
+      '/User/update-name',
+      data: {"firstName": firstName, "lastName": lastName},
+    );
+  }
+
+  Future<void> updateEmail({required String newEmail}) async {
+    await _dio.put('/User/update-email', data: {"newEmail": newEmail});
+  }
+
+  Future<void> updatePhone({required String newPhoneNumber}) async {
+    await _dio.put(
+      '/User/change-phone-number',
+      data: {"newPhoneNumber": newPhoneNumber},
+    );
+  }
+
+  Future<Response> deletePhone() async {
+    return await _dio.delete('/User/delete-phone-number');
+  }
+
+  // ==========================================
+  // جلب إعدادات الخصوصية
+  // ==========================================
+  Future<Response> getUserSettings() async {
+    try {
+      final response = await _dio.get('/User/settings');
+      log("[UserService]: تم جلب الإعدادات بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل جلب الإعدادات: $e");
+      rethrow;
+    }
+  }
+
+  // ==========================================
+  // تحديث إعدادات الخصوصية
+  // ==========================================
+  Future<Response> updateUserSettings(Map<String, dynamic> settingsData) async {
+    try {
+      final response = await _dio.patch(
+        '/User/update-settings',
+        data: settingsData,
+      );
+      log("[UserService]: تم تحديث الإعدادات بنجاح.");
+      return response;
+    } catch (e) {
+      log("[UserService]: فشل تحديث الإعدادات: $e");
+      rethrow;
+    }
+  }
 }

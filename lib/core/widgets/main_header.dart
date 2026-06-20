@@ -12,6 +12,9 @@ class MainHeader extends StatelessWidget {
   final double? iconSize;
   final VoidCallback? onIconTap;
 
+  final String? secondIcon;
+  final VoidCallback? onSecondIconTap;
+
   final String? searchHintText;
   final ValueChanged<String>? onSearchChanged;
 
@@ -30,6 +33,8 @@ class MainHeader extends StatelessWidget {
     this.height,
     this.iconSize,
     this.onIconTap,
+    this.secondIcon,
+    this.onSecondIconTap,
     this.searchHintText,
     this.onSearchChanged,
     this.onSearchTap,
@@ -91,7 +96,7 @@ class MainHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 1. العنوان والأيقونة
+          // 1. العنوان والأيقونات
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -119,6 +124,31 @@ class MainHeader extends StatelessWidget {
               ),
               const Spacer(),
 
+              // الأيقونة التانية
+              if (secondIcon != null) ...[
+                GestureDetector(
+                  onTap: onSecondIconTap ?? () {},
+                  child: Container(
+                    padding: EdgeInsets.all(10.w),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white.withValues(alpha: 0.2),
+                    ),
+                    child: SvgPicture.asset(
+                      secondIcon!,
+                      width: iconSize ?? 20.w,
+                      height: iconSize ?? 20.h,
+                      colorFilter: ColorFilter.mode(
+                        Theme.of(context).colorScheme.onPrimary,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8.w),
+              ],
+
+              // الأيقونة الأساسية
               GestureDetector(
                 onTap: onIconTap ?? () {},
                 child: Container(

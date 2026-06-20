@@ -286,7 +286,7 @@ class _AddClinicApppointmentDialogState
         children: [
           Text(
             widget.appointment == null
-                ? context.l10n.addAppointment
+                ? context.l10n.addPrivateAppointment
                 : context.l10n.editAppointment,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
               color: Theme.of(context).colorScheme.onPrimary,

@@ -6,7 +6,6 @@ class CommunityService {
 
   CommunityService(this._dio);
 
-  // 0. جلب البوستات (الـ Feed)
   Future<Response> getFeed({int pageNumber = 1, int pageSize = 50}) async {
     return await _dio.get(
       '/Post/feed',
@@ -14,7 +13,7 @@ class CommunityService {
     );
   }
 
-  // 1. إنشاء بوست جديد
+  // إنشاء بوست جديد
   Future<Response> createPost({
     required String contentText,
     List<File>? mediaFiles,
@@ -29,7 +28,6 @@ class CommunityService {
 
     FormData formData = FormData.fromMap(dataMap);
 
-    // اللوب اللي بيرفع كل الملفات
     if (mediaFiles != null && mediaFiles.isNotEmpty) {
       for (var file in mediaFiles) {
         formData.files.add(
@@ -47,12 +45,12 @@ class CommunityService {
     return await _dio.post('/Post/create', data: formData);
   }
 
-  // 2. حذف بوست
+  // حذف بوست
   Future<Response> deletePost(String postId) async {
     return await _dio.delete('/Post/delete/$postId');
   }
 
-  // 3. تعديل بوست
+  // تعديل بوست
   Future<Response> updatePost({
     required String postId,
     required String contentText,
@@ -72,7 +70,6 @@ class CommunityService {
       }
     }
 
-    // اللوب اللي بيرفع كل الملفات الجديدة
     if (newMediaFiles != null && newMediaFiles.isNotEmpty) {
       for (var file in newMediaFiles) {
         formData.files.add(
@@ -90,30 +87,22 @@ class CommunityService {
     return await _dio.put('/Post/update/$postId', data: formData);
   }
 
-  // ==========================================
-  // 4. تسجيل الإعجاب (Like)
-  // ==========================================
+  // like post
   Future<Response> likePost(String postId) async {
     return await _dio.post('/Post/$postId/like');
   }
 
-  // ==========================================
-  // 5. إلغاء الإعجاب (Unlike)
-  // ==========================================
+  // unlike post
   Future<Response> unlikePost(String postId) async {
     return await _dio.delete('/Post/$postId/like');
   }
-
-  // ==========================================
-  // 🚀 باقي الـ Endpoints (جاهزة للاستخدام لاحقاً)
-  // ==========================================
 
   // جلب تفاصيل بوست معين
   Future<Response> getPostDetails(String postId) async {
     return await _dio.get('/Post/$postId');
   }
 
-  // جلب تعليقات بوست (Pagination)
+  // جلب تعليقات بوست 
   Future<Response> getPostComments(
     String postId, {
     int pageNumber = 1,
