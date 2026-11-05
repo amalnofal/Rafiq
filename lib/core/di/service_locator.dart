@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:dio/io.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
@@ -85,13 +83,6 @@ Future<void> setupServiceLocator() async {
         error: true,
       ),
     );
-
-    // Bypassing SSL Certificate validation
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      final client = HttpClient();
-      client.badCertificateCallback = (cert, host, port) => true;
-      return client;
-    };
 
     // 🚀 الرادار الموحد (Unified Interceptor)
     dio.interceptors.add(
