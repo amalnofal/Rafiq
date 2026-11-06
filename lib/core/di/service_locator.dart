@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +13,7 @@ import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
+import 'package:rafiq/core/network/auth_interceptor.dart';
 import 'package:rafiq/core/services/appointment_service.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/chat_service.dart';
@@ -34,9 +34,6 @@ final getIt = GetIt.instance;
 const String _baseUrl = 'https://rafiq-app.runasp.net/api';
 
 DateTime? _lastErrorTime;
-
-// Shared in-flight refresh, so parallel 401s trigger only one refresh call.
-Future<String?>? _refreshFuture;
 
 // Prevents showing the session-expired dialog more than once.
 bool _sessionExpiring = false;
@@ -93,106 +90,24 @@ Dio _createDio() {
   );
 
   dio.interceptors.add(
-    InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        // Fail fast when offline.
-        final connectivity = await Connectivity().checkConnectivity();
-        if (connectivity.contains(ConnectivityResult.none)) {
-          return handler.reject(
-            DioException(
-              requestOptions: options,
-              type: DioExceptionType.connectionError,
-              error: 'No Internet Connection',
-            ),
-          );
-        }
-
-        final token = CacheHelper.getData(key: 'accessToken');
-        if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
-        }
-        return handler.next(options);
-      },
-      onError: (error, handler) async {
-        // Network problems: notify (throttled) and pass the error on.
-        if (_isNetworkError(error)) {
-          _showNetworkErrorThrottled();
-          return handler.next(error);
-        }
-
-        final is401 = error.response?.statusCode == 401;
-        final alreadyRetried = error.requestOptions.extra['retried'] == true;
-        final isLogin = error.requestOptions.path.contains('/Account/Login');
-
-        if (!is401 || alreadyRetried || isLogin) {
-          return handler.next(error);
-        }
-
-        // Get a fresh access token.
-        String? token;
-        final cachedToken = CacheHelper.getData(key: 'accessToken');
-        final sentToken = error.requestOptions.headers['Authorization']
-            ?.toString()
-            .replaceAll('Bearer ', '');
-
-        if (cachedToken != null && cachedToken != sentToken) {
-          // Another request already refreshed the token.
-          token = cachedToken as String;
-        } else {
-          if (CacheHelper.getData(key: 'refreshToken') == null) {
-            return handler.next(error);
-          }
-          try {
-            token = await _refreshAccessToken();
-          } on DioException catch (e) {
-            final status = e.response?.statusCode;
-            // Only a rejected refresh token means the session is really over.
-            if (status == 400 || status == 401) {
-              await _expireSession();
-            }
-            return handler.next(error);
-          } catch (e) {
-            log('[DioInterceptor]: Refresh failed: $e');
-            return handler.next(error);
-          }
-        }
-
-        if (token == null) return handler.next(error);
-
-        // Retry the original request (outside the refresh try/catch).
-        final options = error.requestOptions
-          ..headers['Authorization'] = 'Bearer $token'
-          ..extra['retried'] = true;
-
-        if (options.data is FormData) {
-          options.data = (options.data as FormData).clone();
-        }
-
-        try {
-          final response = await dio.fetch(options);
-          return handler.resolve(response);
-        } on DioException catch (e) {
-          return handler.next(e);
-        }
-      },
+    AuthInterceptor(
+      dio: dio,
+      baseUrl: _baseUrl,
+      onSessionExpired: _expireSession,
+      onNetworkError: _showNetworkErrorThrottled,
     ),
   );
 
   return dio;
 }
 
-bool _isNetworkError(DioException e) =>
-    e.type == DioExceptionType.connectionTimeout ||
-    e.type == DioExceptionType.receiveTimeout ||
-    e.type == DioExceptionType.connectionError ||
-    e.type == DioExceptionType.unknown;
-
 void _showNetworkErrorThrottled() {
   final context = navigatorKey.currentContext;
   if (context == null) return;
 
   final now = DateTime.now();
-  if (_lastErrorTime != null && now.difference(_lastErrorTime!).inSeconds <= 3) {
+  if (_lastErrorTime != null &&
+      now.difference(_lastErrorTime!).inSeconds <= 3) {
     return;
   }
   _lastErrorTime = now;
@@ -200,36 +115,6 @@ void _showNetworkErrorThrottled() {
   try {
     showSnackBar(context, context.l10n.connectionError, isError: true);
   } catch (_) {}
-}
-
-Future<String?> _refreshAccessToken() {
-  return _refreshFuture ??= _doRefresh().whenComplete(() {
-    _refreshFuture = null;
-  });
-}
-
-Future<String?> _doRefresh() async {
-  log('[DioInterceptor]: Refreshing access token...');
-
-  // Separate Dio instance: no interceptors, no loop.
-  final response = await Dio(BaseOptions(baseUrl: _baseUrl)).post(
-    '/Account/RefreshToken',
-    data: {
-      'accessToken': CacheHelper.getData(key: 'accessToken'),
-      'refreshToken': CacheHelper.getData(key: 'refreshToken'),
-    },
-  );
-
-  final body = response.data;
-  final data = (body is Map && body['data'] != null) ? body['data'] : body;
-
-  final newAccess = data['AccessToken'] ?? data['accessToken'];
-  final newRefresh = data['RefreshToken'] ?? data['refreshToken'];
-  if (newAccess == null || newRefresh == null) return null;
-
-  await CacheHelper.saveData(key: 'accessToken', value: newAccess);
-  await CacheHelper.saveData(key: 'refreshToken', value: newRefresh);
-  return newAccess as String;
 }
 
 Future<void> _expireSession() async {
