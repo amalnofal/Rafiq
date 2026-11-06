@@ -108,7 +108,7 @@ class ClinicService {
   // ==========================================
   // جلب كل العيادات للزوار
   // ==========================================
-  Future<Response> getAllClinics({int skip = 0, int take = 10}) async {
+  Future<Response> getAllClinics({int skip = 1, int take = 10}) async {
     try {
       final response = await _dio.get(
         '/Clinic/all',
@@ -186,6 +186,4 @@ class ClinicService {
       rethrow;
     }
   }
-
-  
 }

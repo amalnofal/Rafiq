@@ -13,7 +13,7 @@ class StoreService {
       log("🔄 جاري جلب المنتجات للصفحة $page...", name: "StoreService");
       final response = await _dio.get(
         '/Product',
-        queryParameters: {'page': page, 'pageSize': 20},
+        queryParameters: {'page': page},
       );
       log("✅ تم جلب المنتجات بنجاح", name: "StoreService");
       return response;

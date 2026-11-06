@@ -13,7 +13,6 @@ import 'package:rafiq/core/controller/store_provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
-import 'package:rafiq/core/services/store_service.dart';
 import 'package:rafiq/core/theme/app_theme.dart';
 import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
@@ -76,9 +75,7 @@ void main() async {
           ChangeNotifierProvider(create: (_) => getIt<CommunityProvider>()),
           ChangeNotifierProvider(create: (_) => getIt<AppointmentProvider>()),
           ChangeNotifierProvider(create: (_) => getIt<CollarProvider>()),
-          ChangeNotifierProvider(
-            create: (_) => StoreProvider(getIt<StoreService>()),
-          ),
+          ChangeNotifierProvider(create: (_) => getIt<StoreProvider>()),
         ],
         child: RafiqApp(initialRoute: startRoute),
       ),
