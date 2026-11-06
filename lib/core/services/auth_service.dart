@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -148,6 +149,15 @@ class AuthService {
       log("[AuthService]: فشل تسجيل الدخول: $e");
       rethrow;
     }
+  }
+
+  // Logout
+  Future<void> revokeToken(String refreshToken) async {
+    await _dio.post(
+      '/Account/RevokeToken',
+      data: jsonEncode(refreshToken),
+      options: Options(contentType: Headers.jsonContentType),
+    );
   }
 
   // ==========================================

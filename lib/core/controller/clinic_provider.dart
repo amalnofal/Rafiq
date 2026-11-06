@@ -295,7 +295,7 @@ class ClinicProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final response = await _clinicService.getAllClinics(skip: 0, take: 50);
+      final response = await _clinicService.getAllClinics(skip: 1, take: 50);
       final List data = response.data['data'] ?? response.data ?? [];
       _allClinics = data.map((json) => ClinicModel.fromJson(json)).toList();
 

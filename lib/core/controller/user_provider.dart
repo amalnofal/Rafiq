@@ -10,7 +10,6 @@ import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/user_service.dart';
-import 'package:rafiq/features/community/presentation/widgets/post_video_player.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
 
@@ -101,26 +100,39 @@ class UserProvider extends ChangeNotifier {
     await _saveDataToPrefs();
   }
 
-  Future<void> logout() async {
-    _user = null;
-    _localProfileImage = null;
-    _localCoverImage = null;
-    _hasError = false;
+  Future<void> logout({bool revoke = true}) async {
+    // Tell the server first (best effort, never block the logout).
+    final refreshToken = CacheHelper.getData(key: 'refreshToken')?.toString();
+    if (revoke && refreshToken != null && refreshToken.isNotEmpty) {
+      try {
+        await getIt<AuthService>()
+            .revokeToken(refreshToken)
+            .timeout(const Duration(seconds: 5));
+      } catch (e) {
+        log('[UserProvider]: revoke failed (ignored): $e');
+      }
+    }
 
-    getIt<PetProvider>().setPetsFromProfile(null);
-    getIt<ClinicProvider>().setClinicsFromProfile(null);
+    // // Clear in-memory state.
+    // _user = null;
+    // _localProfileImage = null;
+    // _localCoverImage = null;
+    // _hasError = false;
+    // _followCache.clear();
+    // _followersCountCache.clear();
 
-    await CacheHelper.removeData(key: 'accessToken');
-    await CacheHelper.removeData(key: 'refreshToken');
-    await CacheHelper.removeData(key: 'userEmail');
+    // getIt<PetProvider>().reset();
+    // getIt<ClinicProvider>().setClinicsFromProfile(null);
+    // getIt<AppointmentProvider>().reset();
+    // getIt<CommunityProvider>().reset();
+    // getIt<CollarProvider>().reset();
+    // getIt<StoreProvider>().reset();
+    // VideoCacheManager.clearAllCache();
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('userData');
-
-    VideoCacheManager.clearAllCache();
+    // Clear all local data except device preferences (whitelist).
+    await CacheHelper.clearSession();
 
     notifyListeners();
-    log("[UserProvider]: تم تسجيل الخروج ومسح بيانات المستخدم بنجاح.");
   }
 
   void updateUserProfile({
@@ -548,7 +560,7 @@ class UserProvider extends ChangeNotifier {
       final authService = getIt<AuthService>();
       await authService.deleteAccount(password: password);
 
-      await logout();
+      await logout(revoke: false);
     } catch (e) {
       log("❌ [UserProvider]: فشل حذف الحساب: $e");
 
