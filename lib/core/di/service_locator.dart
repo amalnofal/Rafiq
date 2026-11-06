@@ -23,6 +23,7 @@ import 'package:rafiq/core/services/community_service.dart';
 import 'package:rafiq/core/services/pet_service.dart';
 import 'package:rafiq/core/services/store_service.dart';
 import 'package:rafiq/core/services/user_service.dart';
+import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
 import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
@@ -54,12 +55,14 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(() => StoreProvider(getIt<StoreService>()));
   getIt.registerLazySingleton(() => CollarService(getIt<Dio>()));
   getIt.registerLazySingleton(() => CollarProvider(getIt<CollarService>()));
+  getIt.registerLazySingleton(() => TokenStorage());
 
   // ---------- Dio ----------
   getIt.registerLazySingleton<Dio>(
     () => createDio(
       onSessionExpired: _expireSession,
       onNetworkError: _showNetworkErrorThrottled,
+      tokenStorage: getIt<TokenStorage>(),
     ),
   );
 

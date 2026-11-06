@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:rafiq/core/helper/cache_helper.dart';
+import 'package:rafiq/core/storage/token_storage.dart';
 
 /// Adds the access token, refreshes it on 401, and retries the request once.
 class AuthInterceptor extends Interceptor {
@@ -10,12 +10,14 @@ class AuthInterceptor extends Interceptor {
     required this.baseUrl,
     required this.onSessionExpired,
     required this.onNetworkError,
+    required this.tokenStorage,
   });
 
   final Dio dio;
   final String baseUrl;
   final Future<void> Function() onSessionExpired;
   final void Function() onNetworkError;
+  final TokenStorage tokenStorage;
 
   // Shared in-flight refresh, so parallel 401s trigger only one refresh call.
   Future<String?>? _refreshFuture;
@@ -37,7 +39,7 @@ class AuthInterceptor extends Interceptor {
       );
     }
 
-    final token = CacheHelper.getData(key: 'accessToken');
+    final token = tokenStorage.accessToken;
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
@@ -62,16 +64,16 @@ class AuthInterceptor extends Interceptor {
 
     // Get a fresh access token.
     String? token;
-    final cachedToken = CacheHelper.getData(key: 'accessToken');
+    final cachedToken = tokenStorage.accessToken;
     final sentToken = err.requestOptions.headers['Authorization']
         ?.toString()
         .replaceAll('Bearer ', '');
 
     if (cachedToken != null && cachedToken != sentToken) {
       // Another request already refreshed the token.
-      token = cachedToken as String;
+      token = cachedToken;
     } else {
-      if (CacheHelper.getData(key: 'refreshToken') == null) {
+      if (tokenStorage.refreshToken == null) {
         return handler.next(err);
       }
       try {
@@ -127,8 +129,8 @@ class AuthInterceptor extends Interceptor {
     final response = await Dio(BaseOptions(baseUrl: baseUrl)).post(
       '/Account/RefreshToken',
       data: {
-        'accessToken': CacheHelper.getData(key: 'accessToken'),
-        'refreshToken': CacheHelper.getData(key: 'refreshToken'),
+        'accessToken': tokenStorage.accessToken,
+        'refreshToken': tokenStorage.refreshToken,
       },
     );
 
@@ -139,8 +141,11 @@ class AuthInterceptor extends Interceptor {
     final newRefresh = data['RefreshToken'] ?? data['refreshToken'];
     if (newAccess == null || newRefresh == null) return null;
 
-    await CacheHelper.saveData(key: 'accessToken', value: newAccess);
-    await CacheHelper.saveData(key: 'refreshToken', value: newRefresh);
-    return newAccess as String;
+    await tokenStorage.save(
+      access: newAccess as String,
+      refresh: newRefresh as String,
+    );
+
+    return newAccess;
   }
 }
