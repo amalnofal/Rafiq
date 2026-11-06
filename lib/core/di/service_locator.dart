@@ -13,7 +13,7 @@ import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/l10n_extension.dart';
-import 'package:rafiq/core/network/auth_interceptor.dart';
+import 'package:rafiq/core/network/dio_client.dart';
 import 'package:rafiq/core/services/appointment_service.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/chat_service.dart';
@@ -30,8 +30,6 @@ import 'package:rafiq/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:rafiq/main.dart';
 
 final getIt = GetIt.instance;
-
-const String _baseUrl = 'https://rafiq-app.runasp.net/api';
 
 DateTime? _lastErrorTime;
 
@@ -58,47 +56,18 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(() => CollarProvider(getIt<CollarService>()));
 
   // ---------- Dio ----------
-  getIt.registerLazySingleton<Dio>(_createDio);
+  getIt.registerLazySingleton<Dio>(
+    () => createDio(
+      onSessionExpired: _expireSession,
+      onNetworkError: _showNetworkErrorThrottled,
+    ),
+  );
 
   // ---------- Cubits ----------
   getIt.registerFactory(() => ForgetPasswordCubit(getIt()));
   getIt.registerFactory(() => LoginCubit(getIt()));
   getIt.registerFactory(() => RegisterCubit(getIt()));
   getIt.registerFactory(() => ChatCubit(getIt()));
-}
-
-// TODO(clean-arch): move to core/network/dio_client.dart + auth_interceptor.dart
-Dio _createDio() {
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: _baseUrl,
-      receiveDataWhenStatusError: true,
-      connectTimeout: const Duration(seconds: 60),
-      receiveTimeout: const Duration(seconds: 60),
-    ),
-  );
-
-  dio.interceptors.add(
-    LogInterceptor(
-      request: false,
-      requestHeader: false,
-      requestBody: false,
-      responseHeader: false,
-      responseBody: false,
-      error: true,
-    ),
-  );
-
-  dio.interceptors.add(
-    AuthInterceptor(
-      dio: dio,
-      baseUrl: _baseUrl,
-      onSessionExpired: _expireSession,
-      onNetworkError: _showNetworkErrorThrottled,
-    ),
-  );
-
-  return dio;
 }
 
 void _showNetworkErrorThrottled() {
