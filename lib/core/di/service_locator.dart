@@ -68,7 +68,7 @@ Future<void> setupServiceLocator() async {
 
   // ---------- Cubits ----------
   getIt.registerFactory(() => ForgetPasswordCubit(getIt()));
-  getIt.registerFactory(() => LoginCubit(getIt()));
+  getIt.registerFactory(() => LoginCubit(getIt(), getIt()));
   getIt.registerFactory(() => RegisterCubit(getIt()));
   getIt.registerFactory(() => ChatCubit(getIt()));
 }

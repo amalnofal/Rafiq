@@ -10,6 +10,7 @@ import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/user_service.dart';
+import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
 
@@ -101,8 +102,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> logout({bool revoke = true}) async {
-    // Tell the server first (best effort, never block the logout).
-    final refreshToken = CacheHelper.getData(key: 'refreshToken')?.toString();
+    final refreshToken = getIt<TokenStorage>().refreshToken;
     if (revoke && refreshToken != null && refreshToken.isNotEmpty) {
       try {
         await getIt<AuthService>()

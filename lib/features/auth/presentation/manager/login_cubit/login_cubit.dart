@@ -3,14 +3,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
+import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final AuthService _authService;
+  final TokenStorage _tokenStorage;
 
-  LoginCubit(this._authService) : super(LoginInitial());
+  LoginCubit(this._authService, this._tokenStorage) : super(LoginInitial());
 
   void userLogin({required String email, required String password}) async {
     emit(LoginLoading());
@@ -21,17 +23,9 @@ class LoginCubit extends Cubit<LoginState> {
         password: password,
       );
 
-      // log("🎉 Login Success!");
-      // log("🔑 Access Token: ${authModel.accessToken}");
-      // log("🔄 Refresh Token: ${authModel.refreshToken}");
-
-      await CacheHelper.saveData(
-        key: 'accessToken',
-        value: authModel.accessToken,
-      );
-      await CacheHelper.saveData(
-        key: 'refreshToken',
-        value: authModel.refreshToken,
+      await _tokenStorage.save(
+        access: authModel.accessToken,
+        refresh: authModel.refreshToken,
       );
       await CacheHelper.saveData(key: 'userEmail', value: email);
 
@@ -40,21 +34,16 @@ class LoginCubit extends Cubit<LoginState> {
 
       emit(LoginSuccess());
     } on DioException catch (e) {
-      // القيمة الافتراضية لأي خطأ مش متوقع (مشكلة سيرفر 500 مثلاً)
       String errorKey = "unexpectedError";
 
       if (e.response != null) {
         final statusCode = e.response!.statusCode;
 
-        // 1️⃣ دمجنا 400 و 401 عشان نقول "البيانات غلط" في الحالتين
         if (statusCode == 400 || statusCode == 401) {
           errorKey = "wrongCredentials";
-        }
-        // 2️⃣ لو السيرفر قال الحساب مش موجود صراحة
-        else if (statusCode == 404) {
+        } else if (statusCode == 404) {
           errorKey = "userNotFound";
         }
-        // أي كود تاني (زي 500) هيفضل unexpectedError زي ما هو
       }
 
       log("❌ Login Error Key: $errorKey");

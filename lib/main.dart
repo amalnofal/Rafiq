@@ -13,6 +13,7 @@ import 'package:rafiq/core/controller/store_provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
+import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:rafiq/core/theme/app_theme.dart';
 import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
@@ -53,7 +54,7 @@ void main() async {
 
   bool onBoardingSeen = CacheHelper.getData(key: 'onBoardingSeen') ?? false;
 
-  String? token = CacheHelper.getData(key: 'accessToken');
+  final token = getIt<TokenStorage>().accessToken;
   bool isAuth = token != null && token.isNotEmpty;
 
   String startRoute = '/onboarding';
