@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:rafiq/core/models/auth_response_model.dart';
 
 class AuthService {
   final Dio _dio;
@@ -126,27 +125,6 @@ class AuthService {
       return response.data['exists'];
     } catch (e) {
       log("[AuthService]: خطأ أثناء التحقق من الإيميل: $e");
-      rethrow;
-    }
-  }
-
-  // ==========================================
-  // تسجيل الدخول
-  // ==========================================
-  Future<AuthResponseModel> login({
-    required String email,
-    required String password,
-  }) async {
-    try {
-      final response = await _dio.post(
-        '/Account/Login',
-        data: {'email': email, 'password': password},
-      );
-
-      log("[AuthService]: تم تسجيل الدخول بنجاح.");
-      return AuthResponseModel.fromJson(response.data);
-    } catch (e) {
-      log("[AuthService]: فشل تسجيل الدخول: $e");
       rethrow;
     }
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rafiq/features/auth/controller/register_controller.dart';
-import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/presentation/controller/register_controller.dart';
+import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/interests_screen.dart';
 import 'package:rafiq/features/auth/presentation/pages/vet_verification.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_header.dart';

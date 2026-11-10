@@ -9,7 +9,7 @@ import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:rafiq/features/auth/presentation/widgets/email_field.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 

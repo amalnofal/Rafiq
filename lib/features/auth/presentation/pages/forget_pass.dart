@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/verification_screen.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_layout.dart';
 import 'package:rafiq/features/auth/presentation/widgets/email_field.dart';

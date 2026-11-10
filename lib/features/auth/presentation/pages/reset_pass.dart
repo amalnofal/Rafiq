@@ -7,7 +7,7 @@ import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_layout.dart';
 import 'package:rafiq/features/auth/presentation/widgets/password_field.dart';
@@ -43,7 +43,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   // دالة الحفظ
   void _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      // 👇 استدعاء دالة تغيير الباسورد من الكيوبت
       context.read<ForgetPasswordCubit>().resetNewPassword(
         email: widget.email,
         otp: widget.otp,
@@ -57,7 +56,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
-          // ✅ 1. نجاح: رسالة ورجوع لشاشة اللوجين
           log("تم تغيير كلمة المرور بنجاح");
 
           showSnackBar(

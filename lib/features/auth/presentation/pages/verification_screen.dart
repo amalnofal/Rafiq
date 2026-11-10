@@ -8,7 +8,7 @@ import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/text_styles.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/reset_pass.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_layout.dart';
 import 'package:rafiq/l10n/app_localizations.dart';

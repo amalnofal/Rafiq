@@ -24,9 +24,12 @@ import 'package:rafiq/core/services/pet_service.dart';
 import 'package:rafiq/core/services/store_service.dart';
 import 'package:rafiq/core/services/user_service.dart';
 import 'package:rafiq/core/storage/token_storage.dart';
-import 'package:rafiq/features/auth/presentation/manager/forget_password_cubit/forget_password_cubit.dart';
-import 'package:rafiq/features/auth/presentation/manager/login_cubit/login_cubit.dart';
-import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:rafiq/features/auth/data/repositories/auth_repository_impl.dart';
+import 'package:rafiq/features/auth/domain/repositories/auth_repository.dart';
+import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:rafiq/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:rafiq/main.dart';
 
@@ -57,6 +60,11 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(() => CollarProvider(getIt<CollarService>()));
   getIt.registerLazySingleton(() => TokenStorage());
 
+  getIt.registerLazySingleton(() => AuthRemoteDataSource(getIt()));
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(getIt(), getIt()),
+  );
+
   // ---------- Dio ----------
   getIt.registerLazySingleton<Dio>(
     () => createDio(
@@ -68,7 +76,7 @@ Future<void> setupServiceLocator() async {
 
   // ---------- Cubits ----------
   getIt.registerFactory(() => ForgetPasswordCubit(getIt()));
-  getIt.registerFactory(() => LoginCubit(getIt(), getIt()));
+  getIt.registerFactory(() => LoginCubit(getIt()));
   getIt.registerFactory(() => RegisterCubit(getIt()));
   getIt.registerFactory(() => ChatCubit(getIt()));
 }

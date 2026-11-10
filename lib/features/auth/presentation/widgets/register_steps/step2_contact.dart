@@ -5,7 +5,7 @@ import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_text_field.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
-import 'package:rafiq/features/auth/presentation/manager/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
 import 'package:rafiq/features/auth/presentation/widgets/email_field.dart';
 import 'package:rafiq/features/auth/presentation/widgets/next_button.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
@@ -31,7 +31,6 @@ class _Step2ContactState extends State<Step2Contact> {
 
   void _validateAndProceed() {
     if (_formKey.currentState!.validate()) {
-      // بنطلب من الكيوبت يفحص الإيميل في السيرفر
       context.read<RegisterCubit>().verifyEmail(widget.emailController.text);
     }
   }
