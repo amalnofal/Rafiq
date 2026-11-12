@@ -1,93 +1,76 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rafiq/core/services/auth_service.dart';
+import 'package:rafiq/core/error/failure.dart';
+import 'package:rafiq/features/auth/domain/repositories/auth_repository.dart';
 
 part 'forget_password_state.dart';
 
 class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
-  final AuthService _authService;
+  final AuthRepository _authRepository;
 
-  ForgetPasswordCubit(this._authService) : super(ForgetPasswordInitial());
-  DateTime? lastTimeSent;
-  // 1. خطوة إرسال الكود
+  ForgetPasswordCubit(this._authRepository) : super(ForgetPasswordInitial());
+
+  // 1. Send the reset code to the email.
   Future<void> sendCode({required String email}) async {
-    if (isClosed) return;
-    lastTimeSent = DateTime.now();
     emit(ForgetPasswordLoading());
     try {
-      await _authService.sendForgetPasswordCode(email: email);
-      if (isClosed) return;
+      await _authRepository.sendResetCode(email: email);
       emit(SendCodeSuccess());
-    } on DioException catch (e) {
-      String errorKey = "unexpectedError";
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 404) {
-        errorKey = "userNotFound"; // الإيميل مش مسجل
-      }
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: errorKey));
-    } catch (e) {
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: "unexpectedError"));
+    } on Failure catch (f) {
+      emit(ForgetPasswordFailure(errMessage: _sendCodeKey(f)));
+    } catch (_) {
+      emit(ForgetPasswordFailure(errMessage: 'unexpectedError'));
     }
   }
 
-  // 2. خطوة التحقق من الـ OTP
+  // 2. Check the OTP.
   Future<void> verifyOtp({required String email, required String otp}) async {
     emit(ForgetPasswordLoading());
     try {
-      await _authService.verifyOtp(email: email, otp: otp);
-      if (isClosed) return;
+      await _authRepository.verifyOtp(email: email, otp: otp);
       emit(VerifyOtpSuccess());
-    } on DioException catch (e) {
-      String errorKey = "unexpectedError";
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 401) {
-        errorKey = "invalidCode"; // الكود غلط أو انتهى
-      } else if (_isConnectionError(e)) {
-        errorKey = "connectionError";
-      }
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: errorKey));
-      return;
-    } catch (e) {
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: "unexpectedError"));
+    } on Failure catch (f) {
+      emit(ForgetPasswordFailure(errMessage: _codeKey(f)));
+    } catch (_) {
+      emit(ForgetPasswordFailure(errMessage: 'unexpectedError'));
     }
   }
 
-  // 3. خطوة تعيين كلمة مرور جديدة
+  // 3. Set the new password.
   Future<void> resetNewPassword({
     required String email,
     required String otp,
     required String newPassword,
   }) async {
-    if (isClosed) return;
     emit(ForgetPasswordLoading());
     try {
-      await _authService.resetPassword(
+      await _authRepository.resetPassword(
         email: email,
         otp: otp,
         newPassword: newPassword,
       );
-      if (isClosed) return;
       emit(ResetPasswordSuccess());
-    } on DioException catch (e) {
-      String errorKey = "unexpectedError";
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 401) {
-        errorKey = "invalidCode";
-      } else if (_isConnectionError(e)) {
-        errorKey = "connectionError";
-      }
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: errorKey));
-    } catch (e) {
-      if (isClosed) return;
-      emit(ForgetPasswordFailure(errMessage: "unexpectedError"));
+    } on Failure catch (f) {
+      emit(ForgetPasswordFailure(errMessage: _codeKey(f)));
+    } catch (_) {
+      emit(ForgetPasswordFailure(errMessage: 'unexpectedError'));
     }
   }
 
-  bool _isConnectionError(DioException e) {
-    return e.type == DioExceptionType.connectionError ||
-        e.type == DioExceptionType.connectionTimeout ||
-        e.type == DioExceptionType.receiveTimeout;
+  String _sendCodeKey(Failure f) => switch (f) {
+    BadRequestFailure() || NotFoundFailure() => 'userNotFound',
+    NetworkFailure() => 'connectionError',
+    _ => 'unexpectedError',
+  };
+
+  String _codeKey(Failure f) => switch (f) {
+    BadRequestFailure() || UnauthorizedFailure() => 'invalidCode',
+    NetworkFailure() => 'connectionError',
+    _ => 'unexpectedError',
+  };
+
+  // Ignore emits after the cubit is closed (screen left while a request runs).
+  @override
+  void emit(ForgetPasswordState state) {
+    if (!isClosed) super.emit(state);
   }
 }

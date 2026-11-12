@@ -139,60 +139,6 @@ class AuthService {
   }
 
   // ==========================================
-  // إرسال كود استعادة كلمة المرور
-  // ==========================================
-  Future<void> sendForgetPasswordCode({required String email}) async {
-    try {
-      await _dio.post('/Account/Forget-Password', data: {'email': email});
-      log("[AuthService]: تم إرسال كود استعادة كلمة المرور بنجاح.");
-    } catch (e) {
-      log("[AuthService]: فشل إرسال كود استعادة كلمة المرور: $e");
-      rethrow;
-    }
-  }
-
-  // ==========================================
-  // التحقق من الكود (OTP)
-  // ==========================================
-  Future<void> verifyOtp({required String email, required String otp}) async {
-    try {
-      await _dio.post(
-        '/Account/Verify-Otp',
-        data: {'email': email, 'otp': otp},
-      );
-      log("[AuthService]: تم التحقق من الكود بنجاح.");
-    } catch (e) {
-      log("[AuthService]: فشل التحقق من الكود: $e");
-      rethrow;
-    }
-  }
-
-  // ==========================================
-  // تعيين كلمة مرور جديدة
-  // ==========================================
-  Future<void> resetPassword({
-    required String email,
-    required String otp,
-    required String newPassword,
-  }) async {
-    try {
-      await _dio.post(
-        '/Account/Reset-Password',
-        data: {
-          'email': email,
-          'otp': otp,
-          'newPassword': newPassword,
-          'confirmNewPassword': newPassword,
-        },
-      );
-      log("[AuthService]: تم تغيير كلمة المرور بنجاح.");
-    } catch (e) {
-      log("[AuthService]: فشل تغيير كلمة المرور: $e");
-      rethrow;
-    }
-  }
-
-  // ==========================================
   // تغيير كلمة المرور من الإعدادات
   // ==========================================
   Future<void> changePassword({
