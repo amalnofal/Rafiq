@@ -50,7 +50,7 @@ class ChatService {
       final response = await _dio.get(
         '/Chat/$otherUserId/messages',
         queryParameters: {
-          if (beforeMessageId != null) 'beforeMessageId': beforeMessageId,
+          'beforeMessageId': ?beforeMessageId,
           'limit': limit,
         },
       );

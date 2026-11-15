@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:rafiq/features/collar/data/models/ai_diagnosis_model.dart';
 import 'package:rafiq/features/collar/data/models/collar_reading_model.dart';
 import '../services/collar_service.dart';

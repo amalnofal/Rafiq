@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
 import 'package:rafiq/core/enums/post_category.dart';
