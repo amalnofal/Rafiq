@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:rafiq/core/network/dio_client.dart';
 import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:rafiq/features/auth/data/datasources/auth_remote_data_source.dart';
+import 'package:rafiq/features/auth/domain/entities/register_params.dart';
 import 'package:rafiq/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -47,4 +48,12 @@ class AuthRepositoryImpl implements AuthRepository {
       throw e.toFailure();
     }
   }
+
+  @override
+  Future<bool> isEmailTaken(String email) =>
+      _guard(() => _remote.isEmailTaken(email));
+
+  @override
+  Future<void> register(RegisterParams params) =>
+      _guard(() => _remote.register(params));
 }

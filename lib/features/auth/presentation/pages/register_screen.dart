@@ -58,11 +58,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       fNameController: _controller.firstNameController,
                       lNameController: _controller.lastNameController,
                       onNext: _controller.nextPage,
-                      onSocialLogin: () {
-                        _controller.isSocialLogin = true;
-                        _controller.pageController.jumpToPage(4);
-                        _controller.updatePage(4);
-                      },
                     ),
 
                     Step2Contact(

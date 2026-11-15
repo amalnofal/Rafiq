@@ -1,3 +1,5 @@
+import 'package:rafiq/features/auth/domain/entities/register_params.dart';
+
 abstract class AuthRepository {
   /// Logs in and stores the session tokens. Throws a [Failure] on error.
   Future<void> login({required String email, required String password});
@@ -12,4 +14,10 @@ abstract class AuthRepository {
     required String otp,
     required String newPassword,
   });
+
+  /// Returns true when [email] is already registered.
+  Future<bool> isEmailTaken(String email);
+
+  /// Creates an account. Throws a [Failure] on error.
+  Future<void> register(RegisterParams params);
 }

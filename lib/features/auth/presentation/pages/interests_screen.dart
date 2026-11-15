@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
 import 'package:rafiq/core/enums/post_category.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/features/auth/presentation/controller/register_controller.dart';
-import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart' show RegisterState, RegisterCubit, RegisterSuccess, RegisterFailure, RegisterLoading;
+import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
+
 import 'package:rafiq/features/auth/presentation/widgets/auth_header.dart';
+import 'package:rafiq/features/auth/presentation/widgets/interest_card.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class InterestsScreen extends StatefulWidget {
@@ -40,60 +41,11 @@ class _InterestsScreenState extends State<InterestsScreen> {
 
   void _submit() {
     if (_selectedInterests.isEmpty) {
-      setState(() {
-        _showError = true;
-      });
+      setState(() => _showError = true);
       return;
     }
-
-    DateTime dob;
-    try {
-      dob = DateFormat(
-        'dd/MM/yyyy',
-      ).parse(widget.controller.dobController.text);
-    } catch (e) {
-      dob = DateTime.now();
-    }
-
-    // 2️⃣ إرسال البيانات للكيوبت (Mapping IDs to Booleans)
     context.read<RegisterCubit>().submitRegister(
-      // --- البيانات الشخصية ---
-      firstName: widget.controller.firstNameController.text,
-      lastName: widget.controller.lastNameController.text,
-      email: widget.controller.emailController.text,
-      password: widget.controller.passController.text,
-      confirmPassword: widget.controller.confirmPassController.text,
-      phone: widget.controller.phoneController.text,
-      gender: widget.controller.gender ?? 1,
-      role: widget.controller.accountType!,
-      dateOfBirth: dob,
-
-      // --- بيانات الدكتور (من الكنترولر) ---
-      specialization: widget.controller.specController.text,
-      subSpecialization: widget.controller.subSpecController.text,
-      frontId: widget.controller.frontIdImage,
-      backId: widget.controller.backIdImage,
-      unionCard: widget.controller.unionCardImage,
-
-      // --- الاهتمامات (Mapping with Enum) ---
-      isHealthAndCare: _selectedInterests.contains(PostCategory.health.id),
-      isNutritionAndFood: _selectedInterests.contains(PostCategory.food.id),
-      isTrainingAndBehavior: _selectedInterests.contains(
-        PostCategory.training.id,
-      ),
-      isGroomingAndAppearances: _selectedInterests.contains(
-        PostCategory.grooming.id,
-      ),
-      isTravelAndTransport: _selectedInterests.contains(PostCategory.travel.id),
-      isAdoptionAndRescue: _selectedInterests.contains(
-        PostCategory.adoption.id,
-      ),
-      isStoriesAndExperiences: _selectedInterests.contains(
-        PostCategory.stories.id,
-      ),
-      isUpbringingAndParenting: _selectedInterests.contains(
-        PostCategory.activities.id,
-      ),
+      widget.controller.toParams(_selectedInterests),
     );
   }
 
@@ -109,12 +61,11 @@ class _InterestsScreenState extends State<InterestsScreen> {
           Navigator.pushNamedAndRemoveUntil(
             context,
             '/login',
-            (route) => route.isFirst,
+            (route) => false,
           );
         } else if (state is RegisterFailure) {
           String displayMessage;
 
-          // نتحقق إذا كان الخطأ هو أحد المفاتيح التي حددناها في ARB
           if (state.errorMessage == "connectionError") {
             displayMessage = AppLocalizations.of(context)!.connectionError;
           } else if (state.errorMessage == "unexpectedError") {
@@ -122,7 +73,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
           } else if (state.errorMessage == "registrationFailed") {
             displayMessage = AppLocalizations.of(context)!.registrationFailed;
           } else {
-            // إذا كانت الرسالة نصية قادمة من السيرفر مباشرة (مثل رسالة خطأ بالبريد)
             displayMessage = state.errorMessage;
           }
 
@@ -144,7 +94,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
                   AuthHeader(
                     title: AppLocalizations.of(context)!.shareInterests,
                     subtitle: AppLocalizations.of(context)!.communityWaiting,
-                    // زر الرجوع
                     onBackTap: () => Navigator.pop(context),
                   ),
 
@@ -189,7 +138,12 @@ class _InterestsScreenState extends State<InterestsScreen> {
                       itemCount: PostCategory.values.length,
                       itemBuilder: (context, index) {
                         final category = PostCategory.values[index];
-                        return _buildInterestCard(category);
+                        return InterestCard(
+                          category: category,
+                          isSelected: _selectedInterests.contains(category.id),
+                          showError: _showError,
+                          onTap: () => _toggleSelection(category.id),
+                        );
                       },
                     ),
                   ),
@@ -230,67 +184,6 @@ class _InterestsScreenState extends State<InterestsScreen> {
           ],
         );
       },
-    );
-  }
-
-  Widget _buildInterestCard(PostCategory category) {
-    bool isSelected = _selectedInterests.contains(category.id);
-
-    Color borderColor;
-    if (isSelected) {
-      borderColor = Theme.of(context).colorScheme.primary;
-    } else if (_showError) {
-      borderColor = Colors.red;
-    } else {
-      borderColor = Theme.of(context).colorScheme.outline;
-    }
-
-    return InkWell(
-      onTap: () => _toggleSelection(category.id),
-      borderRadius: BorderRadius.circular(16.r),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 12.h),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          border: Border.all(
-            color: isSelected
-                ? borderColor
-                : Theme.of(context).colorScheme.outline,
-            width: 1.5.w,
-          ),
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Card(
-              child: Padding(
-                padding: EdgeInsets.all(AppDimensions.paddingM),
-                child: Text(category.icon, style: TextStyle(fontSize: 24.sp)),
-              ),
-            ),
-            SizedBox(height: 12.h),
-            Text(
-              category.getLabel(context),
-              textAlign: TextAlign.center,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyLarge!.copyWith(fontSize: 15.sp),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 6.h),
-            Text(
-              category.getSubtitle(context),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelMedium,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

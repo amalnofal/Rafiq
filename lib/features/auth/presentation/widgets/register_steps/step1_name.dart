@@ -9,14 +9,12 @@ class Step1Name extends StatefulWidget {
   final TextEditingController fNameController;
   final TextEditingController lNameController;
   final VoidCallback onNext;
-  final VoidCallback onSocialLogin;
 
   const Step1Name({
     super.key,
     required this.fNameController,
     required this.lNameController,
     required this.onNext,
-    required this.onSocialLogin,
   });
 
   @override

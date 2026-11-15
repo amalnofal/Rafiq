@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:rafiq/core/enums/post_category.dart';
+import 'package:rafiq/features/auth/domain/entities/register_params.dart';
 
 class RegisterController extends ChangeNotifier {
   final PageController pageController = PageController();
 
   int currentPage = 0;
-  bool isSocialLogin = false;
 
   int? gender;
   String? accountType; // "Doctor" or "PetOwner"
@@ -69,12 +71,7 @@ class RegisterController extends ChangeNotifier {
       Navigator.pop(context);
       return;
     }
-    if (currentPage == 4 && isSocialLogin) {
-      pageController.jumpToPage(0);
-      updatePage(0);
-      isSocialLogin = false;
-      return;
-    }
+   
     pageController.previousPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
@@ -94,5 +91,36 @@ class RegisterController extends ChangeNotifier {
   void setGender(int val) {
     gender = val;
     notifyListeners();
+  }
+
+  /// Builds the register request from the form and the chosen interests.
+  RegisterParams toParams(List<int> interests) {
+    bool has(PostCategory c) => interests.contains(c.id);
+    final isDoctor = accountType == 'Doctor';
+
+    return RegisterParams(
+      firstName: firstNameController.text.trim(),
+      lastName: lastNameController.text.trim(),
+      email: emailController.text.trim(),
+      phone: phoneController.text.trim(),
+      password: passController.text,
+      confirmPassword: confirmPassController.text,
+      gender: gender!,
+      role: accountType!,
+      dateOfBirth: DateFormat('dd/MM/yyyy').parse(dobController.text),
+      isHealthAndCare: has(PostCategory.health),
+      isNutritionAndFood: has(PostCategory.food),
+      isTrainingAndBehavior: has(PostCategory.training),
+      isGroomingAndAppearances: has(PostCategory.grooming),
+      isStoriesAndExperiences: has(PostCategory.stories),
+      isTravelAndTransport: has(PostCategory.travel),
+      isAdoptionAndRescue: has(PostCategory.adoption),
+      isUpbringingAndParenting: has(PostCategory.activities),
+      specialization: isDoctor ? specController.text.trim() : null,
+      subSpecialization: isDoctor ? subSpecController.text.trim() : null,
+      frontId: isDoctor ? frontIdImage : null,
+      backId: isDoctor ? backIdImage : null,
+      unionCard: isDoctor ? unionCardImage : null,
+    );
   }
 }

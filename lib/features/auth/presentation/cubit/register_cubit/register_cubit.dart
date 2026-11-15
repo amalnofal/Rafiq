@@ -1,147 +1,54 @@
-import 'dart:developer';
-import 'dart:io';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
-import 'package:rafiq/core/services/auth_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rafiq/core/error/failure.dart';
+import 'package:rafiq/features/auth/domain/entities/register_params.dart';
+import 'package:rafiq/features/auth/domain/repositories/auth_repository.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  final AuthService _authService;
+  final AuthRepository _authRepository;
 
-  RegisterCubit(this._authService) : super(RegisterInitial());
+  RegisterCubit(this._authRepository) : super(RegisterInitial());
 
-  // ==========================================================
-  // 1. دالة تسجيل حساب جديد
-  // ==========================================================
-  Future<void> submitRegister({
-    required String firstName,
-    required String lastName,
-    required String email,
-    String? phone,
-    required String password,
-    required String confirmPassword,
-    required int gender,
-    required String role,
-    required DateTime dateOfBirth,
-
-    bool isHealthAndCare = false,
-    bool isNutritionAndFood = false,
-    bool isTrainingAndBehavior = false,
-    bool isGroomingAndAppearances = false,
-    bool isTravelAndTransport = false,
-    bool isAdoptionAndRescue = false,
-    bool isStoriesAndExperiences = false,
-    bool isUpbringingAndParenting = false,
-
-    // بيانات الدكتور
-    String? specialization,
-    String? subSpecialization,
-
-    // ملفات وصور
-    File? frontId,
-    File? backId,
-    File? unionCard,
-    File? profilePic, 
-  }) async {
+  // 1. Create the account.
+  Future<void> submitRegister(RegisterParams params) async {
     emit(RegisterLoading());
-
     try {
-      final response = await _authService.register(
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        password: password,
-        confirmPassword: confirmPassword,
-        gender: gender,
-        role: role,
-        dateOfBirth: dateOfBirth,
-
-        isHealthAndCare: isHealthAndCare,
-        isNutritionAndFood: isNutritionAndFood,
-        isTrainingAndBehavior: isTrainingAndBehavior,
-        isGroomingAndAppearances: isGroomingAndAppearances,
-        isStoriesAndExperiences: isStoriesAndExperiences,
-        isTravelAndTransport: isTravelAndTransport,
-        isAdoptionAndRescue: isAdoptionAndRescue,
-        isUpbringingAndParenting: isUpbringingAndParenting,
-
-        specialization: specialization,
-        subSpecialization: subSpecialization,
-
-        frontNationalId: frontId,
-        backNationalId: backId,
-        unionMembershipCard: unionCard,
-      );
-
-      log("✅ Server Response: ${response.statusCode}");
-
-      // التحقق من نجاح العملية
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = response.data;
-        if (data is Map && data['isSuccess'] == false) {
-          final backendMsg =
-              data['message']?.toString() ?? "registrationFailed";
-          emit(RegisterFailure(errorMessage: backendMsg));
-        } else {
-          emit(const RegisterSuccess(message: "registrationSuccess"));
-        }
-      } else {
-        emit(const RegisterFailure(errorMessage: "registrationFailed"));
-      }
-    } on DioException catch (e) {
-      // 🚨 هنا بنحدد نوع الخطأ بدون ما نطلع SnackBar يدوية
-      String errorKey = "unexpectedError";
-
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.connectionError) {
-        errorKey =
-            "connectionError"; // السناك بار هتطلع من الـ Interceptor أوتوماتيك
-      } else if (e.response != null) {
-        final data = e.response?.data;
-        if (data is Map) {
-          // استخراج رسالة الخطأ المحددة من الباك إند (مثلاً: الإيميل موجود فعلاً)
-          errorKey = data['message'] ?? data['title'] ?? "registrationFailed";
-        } else {
-          errorKey = "serverError";
-        }
-      }
-
-      log("❌ Register Error Key: $errorKey");
-      emit(RegisterFailure(errorMessage: errorKey));
-    } catch (e) {
-      log("❌ General Register Error: $e");
-      emit(const RegisterFailure(errorMessage: "unexpectedError"));
+      await _authRepository.register(params);
+      emit(const RegisterSuccess(message: 'registrationSuccess'));
+    } on Failure catch (f) {
+      emit(RegisterFailure(errorMessage: _registerKey(f)));
+    } catch (_) {
+      emit(const RegisterFailure(errorMessage: 'unexpectedError'));
     }
   }
 
-  // ==========================================================
-  // 2. دالة التحقق من الإيميل
-  // ==========================================================
+  // 2. Check that the email is free.
   Future<void> verifyEmail(String email) async {
     emit(EmailCheckLoading());
-
     try {
-      final bool isExist = await _authService.checkEmail(email);
-
-      if (isExist) {
-        emit(const EmailTaken(message: "emailAlreadyExists"));
-      } else {
-        emit(EmailAvailable());
-      }
-    } on DioException catch (e) {
-      String errorKey = "unexpectedError";
-      if (e.type == DioExceptionType.connectionTimeout ||
-          e.type == DioExceptionType.receiveTimeout ||
-          e.type == DioExceptionType.connectionError) {
-        errorKey = "connectionError";
-      }
-      emit(RegisterFailure(errorMessage: errorKey));
-    } catch (e) {
-      emit(const RegisterFailure(errorMessage: "unexpectedError"));
+      final taken = await _authRepository.isEmailTaken(email);
+      emit(
+        taken
+            ? const EmailTaken(message: 'emailAlreadyExists')
+            : EmailAvailable(),
+      );
+    } on Failure catch (f) {
+      emit(RegisterFailure(errorMessage: _emailKey(f)));
+    } catch (_) {
+      emit(const RegisterFailure(errorMessage: 'unexpectedError'));
     }
   }
+
+  String _registerKey(Failure f) => switch (f) {
+    NetworkFailure() => 'connectionError',
+    BadRequestFailure(:final message) => message ?? 'registrationFailed',
+    _ => 'unexpectedError',
+  };
+
+  String _emailKey(Failure f) => switch (f) {
+    NetworkFailure() => 'connectionError',
+    _ => 'unexpectedError',
+  };
 }
