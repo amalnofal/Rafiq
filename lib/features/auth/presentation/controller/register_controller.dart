@@ -16,13 +16,11 @@ class RegisterController extends ChangeNotifier {
   File? frontIdImage;
   File? backIdImage;
   File? unionCardImage;
-  File? profileImage;
 
   void setVetImages({File? front, File? back, File? union, File? profile}) {
     if (front != null) frontIdImage = front;
     if (back != null) backIdImage = back;
     if (union != null) unionCardImage = union;
-    if (profile != null) profileImage = profile;
     notifyListeners();
   }
 

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +7,6 @@ import 'package:rafiq/core/helper/validation_helper.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
 import 'package:rafiq/core/widgets/loading_overlay.dart';
 import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
-import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
 import 'package:rafiq/features/auth/presentation/widgets/auth_layout.dart';
 import 'package:rafiq/features/auth/presentation/widgets/password_field.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/password_rules.dart';
@@ -40,7 +38,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.dispose();
   }
 
-  // دالة الحفظ
   void _submit(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       context.read<ForgetPasswordCubit>().resetNewPassword(
@@ -56,25 +53,20 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
-          log("تم تغيير كلمة المرور بنجاح");
-
           showSnackBar(
             context,
             AppLocalizations.of(context)!.passwordResetSuccess,
             isError: false,
           );
 
-          // مسح الستاك والعودة لشاشة الدخول
           Navigator.pushNamedAndRemoveUntil(
             context,
             '/login',
             (route) => false,
           );
         } else if (state is ForgetPasswordFailure) {
-          // ❌ 2. فشل: عرض رسالة خطأ
           String getLocalizedMessage(String key) {
             final lang = AppLocalizations.of(context)!;
-            // ممكن تضيفي حالات تانية حسب الحاجة
             if (key == 'connectionError') return lang.connectionError;
             return lang.unexpectedError;
           }
@@ -89,17 +81,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       builder: (context, state) {
         return Stack(
           children: [
-            // واجهة المستخدم الأصلية
             AuthLayout(
               showBackButton: false,
-              // زرار الرجوع
-              onBackTap: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                  (route) => route.isFirst,
-                );
-              },
 
               title: AppLocalizations.of(context)!.newPassword,
               subtitle: AppLocalizations.of(context)!.chooseStrongPassword,
@@ -108,7 +91,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    // --- 1. كلمة المرور الجديدة ---
                     PasswordField(
                       controller: _passController,
                       labelText: AppLocalizations.of(context)!.newPassword,
@@ -116,9 +98,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       validator: (val) =>
                           ValidationHelper.validateStrongPassword(val, context),
                     ),
-
                     SizedBox(height: 16.h),
-                    // --- 2. تأكيد كلمة المرور ---
+
                     PasswordField(
                       controller: _confirmPassController,
                       labelText: AppLocalizations.of(context)!.confirmPassword,
@@ -145,7 +126,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
             ),
 
-            // Loading Overlay
             if (state is ForgetPasswordLoading) const LoadingOverlay(),
           ],
         );

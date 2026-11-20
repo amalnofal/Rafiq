@@ -31,7 +31,9 @@ class _Step2ContactState extends State<Step2Contact> {
 
   void _validateAndProceed() {
     if (_formKey.currentState!.validate()) {
-      context.read<RegisterCubit>().verifyEmail(widget.emailController.text);
+      context.read<RegisterCubit>().verifyEmail(
+        widget.emailController.text.trim(),
+      );
     }
   }
 
@@ -39,20 +41,15 @@ class _Step2ContactState extends State<Step2Contact> {
   Widget build(BuildContext context) {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
-        // ✅ لو الإيميل متاح (مش مسجل قبل كده)، ننتقل للخطوة التالية
         if (state is EmailAvailable) {
           widget.onNext();
-        }
-        // 🔴 لو الإيميل مسجل قبل كده، نعرض SnackBar
-        else if (state is EmailTaken) {
+        } else if (state is EmailTaken) {
           showSnackBar(
             context,
             AppLocalizations.of(context)!.emailAlreadyExists,
             isError: true,
           );
-        }
-        // ⚠️ لو في خطأ في الاتصال أثناء فحص الإيميل
-        else if (state is RegisterFailure) {
+        } else if (state is RegisterFailure) {
           String getLocalizedMessage(String key) {
             final lang = AppLocalizations.of(context)!;
             switch (key) {
@@ -73,12 +70,10 @@ class _Step2ContactState extends State<Step2Contact> {
         }
       },
       builder: (context, state) {
-        // 🔥 هنا بنتحقق لو في تحميل جاري (أثناء فحص الإيميل)
         final bool isLoading = state is EmailCheckLoading;
 
         return Stack(
           children: [
-            // 1️⃣ المحتوى الأساسي للصفحة
             SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
               child: Form(
@@ -105,7 +100,6 @@ class _Step2ContactState extends State<Step2Contact> {
               ),
             ),
 
-            // 2️⃣ Loading Overlay
             if (isLoading) const LoadingOverlay(),
           ],
         );

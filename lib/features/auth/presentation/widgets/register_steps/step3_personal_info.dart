@@ -36,10 +36,8 @@ class _Step3PersonalInfoState extends State<Step3PersonalInfo> {
   void initState() {
     super.initState();
 
-    // 1. استرجاع النوع (مباشرة كـ int)
     _selectedGender = widget.selectedGender;
 
-    // 2. استرجاع التاريخ من الـ Controller
     if (widget.dobController.text.isNotEmpty) {
       try {
         _selectedDate = DateFormat(
@@ -53,7 +51,6 @@ class _Step3PersonalInfoState extends State<Step3PersonalInfo> {
 
   void _validateAndProceed() {
     setState(() {
-      // 👈 التحقق صار بالمقارنة مع null لأنها أرقام
       _showGenderError = _selectedGender == null;
     });
 
@@ -90,7 +87,7 @@ class _Step3PersonalInfoState extends State<Step3PersonalInfo> {
                   : null,
               onGenderChanged: (value) {
                 setState(() {
-                  _selectedGender = value; // الـ value هنا int (0 أو 1)
+                  _selectedGender = value; // 0 or 1
                   _showGenderError = false;
                 });
                 widget.onGenderChanged(value);
