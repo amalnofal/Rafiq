@@ -16,14 +16,18 @@ import 'package:rafiq/core/controller/store_provider.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/di/service_locator.dart';
 import 'package:rafiq/core/helper/cache_helper.dart';
+import 'package:rafiq/core/helper/custom_snackbar.dart';
+import 'package:rafiq/core/helper/l10n_extension.dart';
 import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:rafiq/core/theme/app_theme.dart';
 import 'package:rafiq/features/auth/presentation/cubit/forget_password_cubit/forget_password_cubit.dart';
 import 'package:rafiq/features/auth/presentation/cubit/login_cubit/login_cubit.dart';
 import 'package:rafiq/features/auth/presentation/cubit/register_cubit/register_cubit.dart';
+import 'package:rafiq/features/auth/presentation/cubit/session_cubit/session_cubit.dart';
 import 'package:rafiq/features/auth/presentation/pages/forget_pass.dart';
 import 'package:rafiq/features/auth/presentation/pages/register_screen.dart';
 import 'package:rafiq/features/auth/presentation/pages/login_screen.dart';
+import 'package:rafiq/features/auth/presentation/widgets/session_expired_dialog.dart';
 import 'package:rafiq/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:rafiq/features/chat/presentation/screens/conversations_screen.dart';
 import 'package:rafiq/features/clinics/presentation/pages/clinics_screen.dart';
@@ -41,13 +45,30 @@ import 'package:timeago/timeago.dart' as timeago;
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<ScaffoldMessengerState> snackbarKey =
     GlobalKey<ScaffoldMessengerState>();
+DateTime? _lastErrorTime;
+
+void _showNetworkError() {
+  final context = navigatorKey.currentContext;
+  if (context == null) return;
+
+  final now = DateTime.now();
+  if (_lastErrorTime != null &&
+      now.difference(_lastErrorTime!).inSeconds <= 3) {
+    return;
+  }
+  _lastErrorTime = now;
+
+  try {
+    showSnackBar(context, context.l10n.connectionError, isError: true);
+  } catch (_) {}
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await CacheHelper.init();
 
-  await setupServiceLocator();
+  await setupServiceLocator(onNetworkError: _showNetworkError);
 
   final appController = AppController();
   await appController.loadSettings();
@@ -66,8 +87,13 @@ void main() async {
   }
 
   runApp(
-    BlocProvider(
-      create: (context) => getIt<ChatCubit>()..connectAppWideRealtime(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: getIt<SessionCubit>()),
+        BlocProvider(
+          create: (context) => getIt<ChatCubit>()..connectAppWideRealtime(),
+        ),
+      ],
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => appController),
@@ -96,67 +122,78 @@ class RafiqApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final appController = Provider.of<AppController>(context);
 
-    return ScreenUtilInit(
-      designSize: const Size(393, 852),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          scaffoldMessengerKey: snackbarKey,
-          navigatorKey: navigatorKey,
-          scrollBehavior: const MaterialScrollBehavior().copyWith(
-            overscroll: false,
-          ),
-          builder: (context, child) {
-            return MediaQuery(
-              data: MediaQuery.of(
-                context,
-              ).copyWith(textScaler: const TextScaler.linear(1.0)),
-              child: child!,
-            );
-          },
-          debugShowCheckedModeBanner: false,
-          title: 'Rafiq - رفيق',
-          locale: appController.locale,
-          supportedLocales: const [Locale('en'), Locale('ar')],
-          localizationsDelegates: [
-            AppLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          theme: AppTheme.light(context),
-          darkTheme: AppTheme.dark(context),
-          themeMode: appController.isDarkMode
-              ? ThemeMode.dark
-              : ThemeMode.light,
-          initialRoute: initialRoute,
-          routes: {
-            '/onboarding': (context) => const OnboardingScreen(),
-            '/register': (context) => BlocProvider(
-              create: (context) => getIt<RegisterCubit>(),
-              child: const RegisterScreen(),
-            ),
-            '/login': (context) => BlocProvider(
-              create: (context) => getIt<LoginCubit>(),
-              child: const LoginScreen(),
-            ),
-            '/forget_pass': (context) => BlocProvider(
-              create: (context) => getIt<ForgetPasswordCubit>(),
-              child: const ForgetPass(),
-            ),
-            '/add_pet_screen': (context) => const AddPetScreen(),
-            '/add_clinic_screen': (context) => const AddClinicScreen(),
-            '/home': (context) => const MainLayout(),
-            '/notifications': (context) => const NotificationsScreen(),
-            '/conversations': (context) => const ConversationsScreen(),
-            '/community': (context) => const CommunityScreen(),
-            '/clinics': (context) => const ClinicsScreen(),
-            '/collar': (context) => const SmartCollarScreen(),
-            '/store': (context) => const StoreScreen(),
-          },
-        );
+    return BlocListener<SessionCubit, SessionState>(
+      listener: (context, state) {
+        if (state is! SessionExpired) return;
+        final navContext = navigatorKey.currentContext;
+        if (navContext == null) {
+          context.read<SessionCubit>().reset();
+          return;
+        }
+        showSessionExpiredDialog(navContext);
       },
+      child: ScreenUtilInit(
+        designSize: const Size(393, 852),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            scaffoldMessengerKey: snackbarKey,
+            navigatorKey: navigatorKey,
+            scrollBehavior: const MaterialScrollBehavior().copyWith(
+              overscroll: false,
+            ),
+            builder: (context, child) {
+              return MediaQuery(
+                data: MediaQuery.of(
+                  context,
+                ).copyWith(textScaler: const TextScaler.linear(1.0)),
+                child: child!,
+              );
+            },
+            debugShowCheckedModeBanner: false,
+            title: 'Rafiq - رفيق',
+            locale: appController.locale,
+            supportedLocales: const [Locale('en'), Locale('ar')],
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: AppTheme.light(context),
+            darkTheme: AppTheme.dark(context),
+            themeMode: appController.isDarkMode
+                ? ThemeMode.dark
+                : ThemeMode.light,
+            initialRoute: initialRoute,
+            routes: {
+              '/onboarding': (context) => const OnboardingScreen(),
+              '/register': (context) => BlocProvider(
+                create: (context) => getIt<RegisterCubit>(),
+                child: const RegisterScreen(),
+              ),
+              '/login': (context) => BlocProvider(
+                create: (context) => getIt<LoginCubit>(),
+                child: const LoginScreen(),
+              ),
+              '/forget_pass': (context) => BlocProvider(
+                create: (context) => getIt<ForgetPasswordCubit>(),
+                child: const ForgetPass(),
+              ),
+              '/add_pet_screen': (context) => const AddPetScreen(),
+              '/add_clinic_screen': (context) => const AddClinicScreen(),
+              '/home': (context) => const MainLayout(),
+              '/notifications': (context) => const NotificationsScreen(),
+              '/conversations': (context) => const ConversationsScreen(),
+              '/community': (context) => const CommunityScreen(),
+              '/clinics': (context) => const ClinicsScreen(),
+              '/collar': (context) => const SmartCollarScreen(),
+              '/store': (context) => const StoreScreen(),
+            },
+          );
+        },
+      ),
     );
   }
 }

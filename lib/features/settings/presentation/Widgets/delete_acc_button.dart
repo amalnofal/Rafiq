@@ -8,7 +8,6 @@ import 'package:rafiq/core/widgets/custom_container.dart';
 import 'package:rafiq/features/settings/presentation/Widgets/confirm_delete_dialog.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 import 'package:rafiq/core/controller/user_provider.dart';
-import 'package:rafiq/main.dart';
 import 'package:rafiq/core/helper/custom_snackbar.dart';
 
 class DeleteAccButton extends StatelessWidget {
@@ -59,11 +58,9 @@ class DeleteAccButton extends StatelessWidget {
 
                 Navigator.pop(context);
 
-                // التوجيه لشاشة الدخول
-                navigatorKey.currentState?.pushNamedAndRemoveUntil(
-                  '/login',
-                  (route) => false,
-                );
+                Navigator.of(
+                  context,
+                ).pushNamedAndRemoveUntil('/login', (route) => false);
               } catch (e) {
                 if (!context.mounted) return;
 
