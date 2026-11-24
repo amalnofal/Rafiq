@@ -74,14 +74,15 @@ Future<void> setupServiceLocator({
   getIt.registerFactory(() => ChatCubit(getIt()));
 
   getIt.registerLazySingleton(
-    () => SessionCubit(clearSession: _clearLocalSession),
+    () =>
+        SessionCubit(clearSession: _clearLocalSession, authRepository: getIt()),
   );
 }
 
 // Clears all user data after the server rejected the session.
 Future<void> _clearLocalSession() async {
   try {
-    await getIt<UserProvider>().logout(revoke: false);
+    await getIt<UserProvider>().logout();
   } catch (e) {
     log('[Session]: logout cleanup failed: $e');
     await CacheHelper.clearSession();

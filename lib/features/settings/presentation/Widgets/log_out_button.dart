@@ -2,8 +2,8 @@ import 'package:material_ui/material_ui.dart';
 import 'package:provider/provider.dart';
 import 'package:rafiq/core/constants/app_colors.dart';
 import 'package:rafiq/core/constants/app_dimensions.dart';
-import 'package:rafiq/core/controller/user_provider.dart';
 import 'package:rafiq/core/widgets/custom_button.dart';
+import 'package:rafiq/features/auth/presentation/cubit/session_cubit/session_cubit.dart';
 import 'package:rafiq/l10n/app_localizations.dart';
 
 class LogOutButton extends StatelessWidget {
@@ -22,7 +22,7 @@ class LogOutButton extends StatelessWidget {
         height: AppDimensions.buttonHeightL,
         elevation: 1,
         onPressed: () async {
-          await context.read<UserProvider>().logout();
+          await context.read<SessionCubit>().logout();
           if (context.mounted) {
             Navigator.pushNamedAndRemoveUntil(
               context,

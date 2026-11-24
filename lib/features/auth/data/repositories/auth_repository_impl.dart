@@ -56,4 +56,13 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> register(RegisterParams params) =>
       _guard(() => _remote.register(params));
+
+  @override
+  Future<void> logout() async {
+    final refresh = _tokenStorage.refreshToken;
+    if (refresh == null || refresh.isEmpty) return;
+    try {
+      await _remote.revokeToken(refresh).timeout(const Duration(seconds: 5));
+    } catch (_) {} // best effort
+  }
 }

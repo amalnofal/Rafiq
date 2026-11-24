@@ -10,7 +10,6 @@ import 'package:rafiq/core/helper/cache_helper.dart';
 import 'package:rafiq/core/models/user_model.dart';
 import 'package:rafiq/core/services/auth_service.dart';
 import 'package:rafiq/core/services/user_service.dart';
-import 'package:rafiq/core/storage/token_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rafiq/features/community/data/models/post_model.dart';
 
@@ -101,34 +100,7 @@ class UserProvider extends ChangeNotifier {
     await _saveDataToPrefs();
   }
 
-  Future<void> logout({bool revoke = true}) async {
-    final refreshToken = getIt<TokenStorage>().refreshToken;
-    if (revoke && refreshToken != null && refreshToken.isNotEmpty) {
-      try {
-        await getIt<AuthService>()
-            .revokeToken(refreshToken)
-            .timeout(const Duration(seconds: 5));
-      } catch (e) {
-        log('[UserProvider]: revoke failed (ignored): $e');
-      }
-    }
-
-    // // Clear in-memory state.
-    // _user = null;
-    // _localProfileImage = null;
-    // _localCoverImage = null;
-    // _hasError = false;
-    // _followCache.clear();
-    // _followersCountCache.clear();
-
-    // getIt<PetProvider>().reset();
-    // getIt<ClinicProvider>().setClinicsFromProfile(null);
-    // getIt<AppointmentProvider>().reset();
-    // getIt<CommunityProvider>().reset();
-    // getIt<CollarProvider>().reset();
-    // getIt<StoreProvider>().reset();
-    // VideoCacheManager.clearAllCache();
-
+  Future<void> logout() async {
     // Clear all local data except device preferences (whitelist).
     await CacheHelper.clearSession();
 
@@ -560,7 +532,7 @@ class UserProvider extends ChangeNotifier {
       final authService = getIt<AuthService>();
       await authService.deleteAccount(password: password);
 
-      await logout(revoke: false);
+      await logout();
     } catch (e) {
       log("❌ [UserProvider]: فشل حذف الحساب: $e");
 

@@ -20,4 +20,7 @@ abstract class AuthRepository {
 
   /// Creates an account. Throws a [Failure] on error.
   Future<void> register(RegisterParams params);
+
+  /// Revokes the refresh token on the server. Never throws.
+  Future<void> logout();
 }

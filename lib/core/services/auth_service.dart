@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 
@@ -6,15 +5,6 @@ class AuthService {
   final Dio _dio;
 
   AuthService(this._dio);
-
-  // Logout
-  Future<void> revokeToken(String refreshToken) async {
-    await _dio.post(
-      '/Account/RevokeToken',
-      data: jsonEncode(refreshToken),
-      options: Options(contentType: Headers.jsonContentType),
-    );
-  }
 
   // ==========================================
   // تغيير كلمة المرور من الإعدادات

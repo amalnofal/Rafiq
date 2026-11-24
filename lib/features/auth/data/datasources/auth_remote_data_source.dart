@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:rafiq/core/error/failure.dart';
 import 'package:rafiq/features/auth/data/models/auth_response_model.dart';
@@ -14,6 +16,7 @@ class AuthRemoteDataSource {
   static const _resetPasswordPath = '/Account/Reset-Password';
   static const _registerPath = '/Account/Register';
   static const _checkEmailPath = '/Account/check-email';
+  static const _revokePath = '/Account/RevokeToken';
 
   Future<AuthResponseModel> login({
     required String email,
@@ -108,5 +111,16 @@ class AuthRemoteDataSource {
     if (body is Map && body['isSuccess'] == false) {
       throw BadRequestFailure(body['message']?.toString());
     }
+  }
+
+  Future<void> revokeToken(String refreshToken) async {
+    await _dio.post(
+      _revokePath,
+      data: jsonEncode(refreshToken),
+      options: Options(
+        contentType: Headers.jsonContentType,
+        extra: {'retried': true}, // skip refresh, see note below
+      ),
+    );
   }
 }
